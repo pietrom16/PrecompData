@@ -98,6 +98,8 @@ int  PrecompData<T>::Set(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)     //
 
 		x += step;
 	}
+	
+	Init();
 
 	return line.size();
 }
