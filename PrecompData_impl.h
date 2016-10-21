@@ -141,7 +141,10 @@ int  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
 // Range UNchecked, 0 degree interpolation accessors
 
 template<typename T>
-T PrecompData<T>::operator()(T x) const;
+T PrecompData<T>::operator()(T x) const
+{
+    return line[RtoI(x)];
+}
 
 template<typename T>
 T PrecompData<T>::operator()(T x, T y) const;
