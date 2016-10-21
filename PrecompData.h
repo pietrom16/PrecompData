@@ -39,6 +39,13 @@ public:
 	std::string  FunctionName() const;
 	std::string  Comment()      const;
 	
+	// Set up conversion constants
+	int Init();
+
+	// Coordinate <--> index transformation
+	size_t RtoI(T x)      const;     // real --> integer
+	T      ItoR(size_t i) const;     // integer --> real
+	
 	/// Data loading
 	
 	// Regular grid, computed

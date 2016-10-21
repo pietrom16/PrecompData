@@ -48,7 +48,36 @@ std::string  PrecompData<T>::Comment() const
 }
 
 
-// Regular grid
+// Set up conversion constants
+
+template<typename T>
+int PrecompData<T>::Init()
+{
+    kRealInt = line.size()/(xMax - xMin);
+    kIntReal = 1/kRealInt;
+
+    return 0;
+}
+
+
+// Coordinate <--> index transformations
+
+template<typename T>
+size_t PrecompData<T>::RtoI(T x) const     // real --> integer/index
+{
+    return size_t(kRealInt*(x - xMin));
+}
+
+template<typename T>
+T PrecompData<T>::ItoR(size_t i) const     // integer/index --> real
+{
+    return xMin + kIntReal*T(i);
+}
+
+
+/// Data loading
+
+// Regular grid, computed
 
 template<typename T>
 int  PrecompData<T>::Set(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)     // line
