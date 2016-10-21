@@ -82,10 +82,13 @@ T PrecompData<T>::ItoR(size_t i) const     // integer/index --> real
 template<typename T>
 int  PrecompData<T>::Set(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)     // line
 {
+	xMin = xmin;
+	xMax = xmax;
+	
 	line.resize(nPoints);
-	const T step = (xmax - xmin)/nPoints;
+	step = (xMax - xMin)/nPoints;
 
-	T x = xmin;
+	T x = xMin;
 
 	for(size_t i = 0; i < nPoints; ++i)
 	{
