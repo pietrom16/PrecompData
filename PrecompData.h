@@ -77,14 +77,14 @@ public:
 	T operator()(T x, T y, T z) const;
 
 	// Range checked accessors; check Status()
-	T get(T x)           const;
-	T get(T x, T y)      const;
-	T get(T x, T y, T z) const;
+	T get(T x);
+	T get(T x, T y);
+	T get(T x, T y, T z);
 
 	// Range checked accessors, interpolated; check Status()
-	T Interpolate(T x)           const;
-	T Interpolate(T x, T y)      const;
-	T Interpolate(T x, T y, T z) const;
+	T Interpolate(T x);
+	T Interpolate(T x, T y);
+	T Interpolate(T x, T y, T z);
 
 	int Status() const { return status; }
 

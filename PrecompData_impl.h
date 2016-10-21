@@ -112,24 +112,24 @@ T PrecompData<T>::operator()(T x, T y, T z) const;
 // Range checked accessors; check Status()
 
 template<typename T>
-T PrecompData<T>::get(T x) const;
+T PrecompData<T>::get(T x);
 
 template<typename T>
-T PrecompData<T>::get(T x, T y) const;
+T PrecompData<T>::get(T x, T y);
 
 template<typename T>
-T PrecompData<T>::get(T x, T y, T z) const;
+T PrecompData<T>::get(T x, T y, T z);
 
 // Range checked accessors, interpolated; check Status()
 
 template<typename T>
-T PrecompData<T>::Interpolate(T x) const;
+T PrecompData<T>::Interpolate(T x);
 
 template<typename T>
-T PrecompData<T>::Interpolate(T x, T y) const;
+T PrecompData<T>::Interpolate(T x, T y);
 
 template<typename T>
-T PrecompData<T>::Interpolate(T x, T y, T z) const;
+T PrecompData<T>::Interpolate(T x, T y, T z);
 
 
 template<typename T>
