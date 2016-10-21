@@ -6,7 +6,7 @@
 	---
 	
 	Container of precalculated values, returned with interpolation/regression.
-	Purpose: improve performance avoiding the online computation of complex functions.
+	Purpose: improve performance avoiding the realtime computation of complex functions.
 	
 	- Use constant tables for non linear functions' values.
 	- Approximations:
@@ -49,7 +49,7 @@ public:
 	                                    T ymin, T ymax, size_t ynPoints,
 	                                    T zmin, T zmax, size_t znPoints);    // volume
 	
-	// Regualr grid, load from file
+	// Regular grid, load from file
 	int  Set(const std::string &dataFilename, T xmin, T xmax);    // line
 	int  Set(const std::string &dataFilename, T xmin, T xmax,
 	                                          T ymin, T ymax);    // line
@@ -71,7 +71,7 @@ public:
 
 	/// Data retrieval
 
-	// Range UNchecked accessors
+	// Range UNchecked, 0 degree interpolation accessors
 	T operator()(T x)           const;
 	T operator()(T x, T y)      const;
 	T operator()(T x, T y, T z) const;
