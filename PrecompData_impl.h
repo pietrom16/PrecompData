@@ -111,7 +111,9 @@ int  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
                       T ymin, T ymax, size_t ynPoints,
                       T zmin, T zmax, size_t znPoints);    // volume
 
-// Irregular grid
+//+TODO Regular grid, load from file
+
+// Irregular grid, computed
 
 template<typename T>
 int  PrecompData<T>::Set(T (*Func1)(T x), const std::vector<T> &x);      // line
@@ -127,7 +129,11 @@ int  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
                       const std::vector<T> &y,
                       const std::vector<T> &z);      // volume
 
-// Range UNchecked accessors
+//+TODO Irregular grid, load from file
+
+/// Data retrieval
+
+// Range UNchecked, 0 degree interpolation accessors
 
 template<typename T>
 T PrecompData<T>::operator()(T x) const;
@@ -164,6 +170,8 @@ T PrecompData<T>::Interpolate(T x, T y, T z);
 template<typename T>
 void PrecompData<T>::Interpolate(int order);
 
+
+/// GPGPU
 
 template<typename T>
 int PrecompData<T>::CopyOnGPU();
