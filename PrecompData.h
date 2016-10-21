@@ -107,6 +107,8 @@ private:
 	int             status;
 
 	std::vector<T>  line;
+	T               xMin, xMax, step;
+	T               kRealInt, kIntReal;     // conversion factors
 	//+TODO: plane, volume
 };
 
