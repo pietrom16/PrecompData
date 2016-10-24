@@ -128,6 +128,13 @@ private:
 	T               xMin, xMax, step;
 	T               kRealInt, kIntReal;     // conversion factors
 	//+TODO: plane, volume
+
+#ifdef PRECOMPDATA_GPU
+    boost::compute::device         device;
+    boost::compute::context        context;
+    boost::compute::command_queue  queue;
+#endif
+
 };
 
 } // Utilities
