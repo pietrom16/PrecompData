@@ -15,6 +15,8 @@
 		- Interpolations: linear, cubic, spline, ...
 		- Regressions: linear, cubic, ...
 	- Store data in RAM and/or GPU memory.
+
+    To enable GPU memory usage, define the PRECOMPDATA_GPU macro.
 	
 	Warning: the function to be interpolated had better have a certain complexity,
 	         otherwise it may be better to compute it straight away.
@@ -22,6 +24,8 @@
 
 #ifndef PRECOMP_DATA_H
 #define PRECOMP_DATA_H
+
+#define PRECOMPDATA_GPU
 
 #include <string>
 #include <vector>

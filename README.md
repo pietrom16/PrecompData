@@ -13,8 +13,8 @@ Purpose: improve performance avoiding the realtime computation of complex functi
 
 #### TODO
 
-- First degree (linear) interpolation.
 - Copy data on GPU memory.
+- First degree (linear) interpolation.
 - Precompute regular grid, higher dimensional functions, passed as function pointers.
 - Precompute irregular grid, n dimensional functions, passed as function pointers.
 - Load data from file.
