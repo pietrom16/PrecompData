@@ -133,6 +133,7 @@ private:
     boost::compute::device         device;
     boost::compute::context        context;
     boost::compute::command_queue  queue;
+    boost::compute::vector<T>      device_line;
 #endif
 
 };
