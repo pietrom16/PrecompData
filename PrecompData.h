@@ -49,31 +49,31 @@ public:
 	/// Data loading
 	
 	// Regular grid, computed
-	int  Set(T (*Func1)(T x),           T xmin, T xmax, size_t nPoints);     // line
-	int  Set(T (*Func2)(T x, T y),      T xmin, T xmax, size_t xnPoints,
-	                                    T ymin, T ymax, size_t ynPoints);    // plane
-	int  Set(T (*Func3)(T x, T y, T z), T xmin, T xmax, size_t xnPoints,
-	                                    T ymin, T ymax, size_t ynPoints,
-	                                    T zmin, T zmax, size_t znPoints);    // volume
+    size_t  Set(T (*Func1)(T x),           T xmin, T xmax, size_t nPoints);     // line
+    size_t  Set(T (*Func2)(T x, T y),      T xmin, T xmax, size_t xnPoints,
+	                                       T ymin, T ymax, size_t ynPoints);    // plane
+    size_t  Set(T (*Func3)(T x, T y, T z), T xmin, T xmax, size_t xnPoints,
+	                                       T ymin, T ymax, size_t ynPoints,
+	                                       T zmin, T zmax, size_t znPoints);    // volume
 	
 	// Regular grid, load from file
-	int  Set(const std::string &dataFilename, T xmin, T xmax);    // line
-	int  Set(const std::string &dataFilename, T xmin, T xmax,
-	                                          T ymin, T ymax);    // line
-	int  Set(const std::string &dataFilename, T xmin, T xmax,
-	                                          T ymin, T ymax,
-	                                          T zmin, T zmax);    // volume
+    size_t  Set(const std::string &dataFilename, T xmin, T xmax);    // line
+    size_t  Set(const std::string &dataFilename, T xmin, T xmax,
+	                                             T ymin, T ymax);    // line
+    size_t  Set(const std::string &dataFilename, T xmin, T xmax,
+	                                             T ymin, T ymax,
+	                                             T zmin, T zmax);    // volume
 
 	// Irregular grid, computed
-	int  Set(T (*Func1)(T x),           const std::vector<T> &x);    // line
-	int  Set(T (*Func2)(T x, T y),      const std::vector<T> &x,
-	                                    const std::vector<T> &y);    // plane
-	int  Set(T (*Func3)(T x, T y, T z), const std::vector<T> &x,
-	                                    const std::vector<T> &y,
-	                                    const std::vector<T> &z);    // volume
+    size_t  Set(T (*Func1)(T x),           const std::vector<T> &x);    // line
+    size_t  Set(T (*Func2)(T x, T y),      const std::vector<T> &x,
+	                                       const std::vector<T> &y);    // plane
+    size_t  Set(T (*Func3)(T x, T y, T z), const std::vector<T> &x,
+	                                       const std::vector<T> &y,
+	                                       const std::vector<T> &z);    // volume
 
 	// Irregular grid, load from file
-	int  Set(const std::string &dataFilename);      // grid contained in the file
+    size_t  Set(const std::string &dataFilename);      // grid contained in the file
 
 
 	/// Data retrieval

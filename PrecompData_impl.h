@@ -81,7 +81,8 @@ T PrecompData<T>::ItoR(size_t i) const     // integer/index --> real
 // Regular grid, computed
 
 template<typename T>
-int  PrecompData<T>::Set(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)     // line
+size_t  PrecompData<T>::Set(T (*Func1)(T x),
+                            T xmin, T xmax, size_t nPoints)     // line
 {
 	xMin = xmin;
 	xMax = xmax;
@@ -107,33 +108,33 @@ int  PrecompData<T>::Set(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)     //
 
 
 template<typename T>
-int  PrecompData<T>::Set(T (*Func2)(T x, T y),
-                      T xmin, T xmax, size_t xnPoints,
-                      T ymin, T ymax, size_t ynPoints);    // plane
+size_t  PrecompData<T>::Set(T (*Func2)(T x, T y),
+                            T xmin, T xmax, size_t xnPoints,
+                            T ymin, T ymax, size_t ynPoints);    // plane
 
 template<typename T>
-int  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
-                      T xmin, T xmax, size_t xnPoints,
-                      T ymin, T ymax, size_t ynPoints,
-                      T zmin, T zmax, size_t znPoints);    // volume
+size_t  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
+                            T xmin, T xmax, size_t xnPoints,
+                            T ymin, T ymax, size_t ynPoints,
+                            T zmin, T zmax, size_t znPoints);    // volume
 
 //+TODO Regular grid, load from file
 
 // Irregular grid, computed
 
 template<typename T>
-int  PrecompData<T>::Set(T (*Func1)(T x), const std::vector<T> &x);      // line
+size_t  PrecompData<T>::Set(T (*Func1)(T x), const std::vector<T> &x);      // line
 
 template<typename T>
-int  PrecompData<T>::Set(T (*Func2)(T x, T y),
-                      const std::vector<T> &x,
-                      const std::vector<T> &y);      // plane
+size_t  PrecompData<T>::Set(T (*Func2)(T x, T y),
+                            const std::vector<T> &x,
+                            const std::vector<T> &y);      // plane
 
 template<typename T>
-int  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
-                      const std::vector<T> &x,
-                      const std::vector<T> &y,
-                      const std::vector<T> &z);      // volume
+size_t  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
+                            const std::vector<T> &x,
+                            const std::vector<T> &y,
+                            const std::vector<T> &z);      // volume
 
 //+TODO Irregular grid, load from file
 
