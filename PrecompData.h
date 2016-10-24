@@ -39,8 +39,8 @@ public:
 	std::string  FunctionName() const;
 	std::string  Comment()      const;
 	
-	// Set up conversion constants
-	int Init();
+    // Precompute constant values
+	int PreComputeValues();
 
 	// Coordinate <--> index transformation
 	size_t RtoI(T x)      const;     // real --> integer

@@ -48,11 +48,12 @@ std::string  PrecompData<T>::Comment() const
 }
 
 
-// Set up conversion constants
+// Precompute constant values
 
 template<typename T>
-int PrecompData<T>::Init()
+int PrecompData<T>::PreComputeValues()
 {
+    // Set up conversion constants
     kRealInt = line.size()/(xMax - xMin);
     kIntReal = 1/kRealInt;
 
@@ -99,7 +100,7 @@ int  PrecompData<T>::Set(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)     //
 		x += step;
 	}
 	
-	Init();
+	PreComputeValues();
 
 	return line.size();
 }
