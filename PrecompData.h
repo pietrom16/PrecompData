@@ -49,12 +49,12 @@ public:
 	/// Data loading
 	
 	// Regular grid, computed
-    size_t  Set(T (*Func1)(T x),           T xmin, T xmax, size_t nPoints);     // line
+    size_t  Set(T (*Func1)(T x),           T xmin, T xmax, size_t nPoints);     // line: 1D --> 1D
     size_t  Set(T (*Func2)(T x, T y),      T xmin, T xmax, size_t xnPoints,
-	                                       T ymin, T ymax, size_t ynPoints);    // plane
+	                                       T ymin, T ymax, size_t ynPoints);    // plane: 2D --> 1D
     size_t  Set(T (*Func3)(T x, T y, T z), T xmin, T xmax, size_t xnPoints,
 	                                       T ymin, T ymax, size_t ynPoints,
-	                                       T zmin, T zmax, size_t znPoints);    // volume
+	                                       T zmin, T zmax, size_t znPoints);    // volume: 3D --> 1D
 	
 	// Regular grid, load from file
     size_t  Set(const std::string &dataFilename, T xmin, T xmax);    // line
