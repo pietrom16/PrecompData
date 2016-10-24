@@ -8,7 +8,7 @@ Purpose: improve performance avoiding the realtime computation of complex functi
 #### Currently implemented features
 
 - Precompute regular grid, one dimensional functions, passed as function pointers.
-- Zero degree interpolation.
+- Zero degree (nearest-neighbor/point sampling/Voronoi) interpolation.
 
 
 #### TODO
