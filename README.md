@@ -20,3 +20,14 @@ Purpose: improve performance avoiding the realtime computation of complex functi
 - Load data from file.
 - Second degree (quadratic) interpolation.
 
+
+#### Requirements
+
+- C++11
+- To copy data on GPU memory:
+    - Boost:   http://www.boost.org (from 1.61.0)
+    - OpenCL:  http://www.opencl.org
+
+
+#### Building
+
