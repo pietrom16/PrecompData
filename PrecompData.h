@@ -111,16 +111,26 @@ public:
 
 	/// GPGPU
 
-	int CopyOnGPU();
-	
+#ifdef PRECOMPDATA_GPU
+    int InitGPU();
+
+    int CopyOnGPU();
+
+    int CopyOnGPU(boost::compute::device         &device,
+                  boost::compute::context        &context,
+                  boost::compute::command_queue  &queue,
+                  boost::compute::vector<T>      &device_line);
+
 	// Copy a subset
 	int CopyOnGPU(T xbeg, T xend);
 	int CopyOnGPU(T xbeg, T xend, T ybeg, T yend);
 	int CopyOnGPU(T xbeg, T xend, T ybeg, T yend, T zbeg, T zend);
-	
+#endif // PRECOMPDATA_GPU
+
 public:
     // Return values
-    static const int err_gpu_not_available = -1;
+    static const int err_no_data           = -1,
+                     err_gpu_not_available = -2;
 
 private:
 	
@@ -134,9 +144,9 @@ private:
 	//+TODO: plane, volume
 
 #ifdef PRECOMPDATA_GPU
-    boost::compute::device         device;
-    boost::compute::context        context;
-    boost::compute::command_queue  queue;
+    //+D? boost::compute::device         device;
+    //+D? boost::compute::context        context;   //+? How to make this a member variable?
+    //+D? boost::compute::command_queue  queue;     //+? How to make this a member variable?
     boost::compute::vector<T>      device_line;
 #endif
 
