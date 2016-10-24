@@ -30,6 +30,11 @@
 #include <string>
 #include <vector>
 
+#ifdef PRECOMPDATA_GPU
+#include <boost/compute/algorithm/copy.hpp>
+#include <boost/compute/container/vector.hpp>
+#endif
+
 namespace Utilities {
 
 template<typename T>
