@@ -128,6 +128,8 @@ private:
 } // Utilities
 
 
-#include "PrecompData_impl.h"	// implementation
+// Implementation include files
+#include "PrecompData_impl.h"
+#include "PrecompDataGPU_impl.h"
 
 #endif // PRECOMP_DATA_H
