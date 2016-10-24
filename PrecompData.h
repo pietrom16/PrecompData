@@ -118,6 +118,10 @@ public:
 	int CopyOnGPU(T xbeg, T xend, T ybeg, T yend);
 	int CopyOnGPU(T xbeg, T xend, T ybeg, T yend, T zbeg, T zend);
 	
+public:
+    // Return values
+    static const int err_gpu_not_available = -1;
+
 private:
 	
 	std::string     funcName, comment;
