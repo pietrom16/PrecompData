@@ -4,7 +4,7 @@
     Apache License 2.0
 */
 
-#ifdef PRECOMPDATA_GPU
+#ifdef PRECOMPDATA_DEVICE
 
 #include "PrecompData.h"
 

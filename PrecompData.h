@@ -25,12 +25,12 @@
 #ifndef PRECOMP_DATA_H
 #define PRECOMP_DATA_H
 
-#define PRECOMPDATA_GPU
+#define PRECOMPDATA_DEVICE
 
 #include <string>
 #include <vector>
 
-#ifdef PRECOMPDATA_GPU
+#ifdef PRECOMPDATA_DEVICE
 #include <boost/compute/algorithm/copy.hpp>
 #include <boost/compute/container/vector.hpp>
 #endif
@@ -111,7 +111,7 @@ public:
 
 	/// GPGPU
 
-#ifdef PRECOMPDATA_GPU
+#ifdef PRECOMPDATA_DEVICE
     int InitGPU();
 
     int CopyOnDevice(boost::compute::device         &device,
@@ -146,7 +146,7 @@ private:
 	T               kRealInt, kIntReal;     // conversion factors
 	//+TODO: plane, volume
 
-#ifdef PRECOMPDATA_GPU
+#ifdef PRECOMPDATA_DEVICE
     //+D? boost::compute::device         device;
     //+D? boost::compute::context        context;   //+? How to make this a member variable?
     //+D? boost::compute::command_queue  queue;     //+? How to make this a member variable?
