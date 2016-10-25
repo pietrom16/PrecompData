@@ -26,7 +26,7 @@ Purpose: improve performance avoiding the realtime computation of complex functi
 - C++11
 - To copy data on GPU memory:
     - Boost:   http://www.boost.org (from 1.61.0)
-    - OpenCL:  http://www.opencl.org
+    - OpenCL:  https://www.khronos.org/opencl/
 
 
 #### Building
