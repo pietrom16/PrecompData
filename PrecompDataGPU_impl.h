@@ -30,7 +30,7 @@ int PrecompData<T>::CopyOnGPU(boost::compute::device         &device,
         return err_no_data;
 
     // Resize vector on device
-    device_line.resize(line.size(), context);
+    device_line.resize(line.size(), queue);
 
     // Copy data from host to device
     boost::compute::copy(
