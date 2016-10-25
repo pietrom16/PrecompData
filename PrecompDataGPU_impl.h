@@ -41,6 +41,29 @@ int PrecompData<T>::CopyOnGPU(boost::compute::device         &device,
 }
 
 
+template<typename T>
+int PrecompData<T>::CopyOnGPU(boost::compute::device         *device,
+                              boost::compute::context        *context,
+                              boost::compute::command_queue  *queue,
+                              boost::compute::vector<T>      *device_line)
+{
+    //+TODO - Create if null
+
+    if(line.empty())
+        return err_no_data;
+
+    // Resize vector on device
+    device_line->resize(line.size(), &context);
+
+    // Copy data from host to device
+    boost::compute::copy(
+        line.data(), &line.back(), device_line->begin(), &queue
+    );
+
+    return 0;
+}
+
+
 } // Utilities
 
 

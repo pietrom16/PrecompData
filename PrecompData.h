@@ -114,14 +114,17 @@ public:
 #ifdef PRECOMPDATA_GPU
     int InitGPU();
 
-    int CopyOnGPU();
-
     int CopyOnGPU(boost::compute::device         &device,
                   boost::compute::context        &context,
                   boost::compute::command_queue  &queue,
                   boost::compute::vector<T>      &device_line);
 
-	// Copy a subset
+    int CopyOnGPU(boost::compute::device         *device = 0,
+                  boost::compute::context        *context = 0,
+                  boost::compute::command_queue  *queue = 0,
+                  boost::compute::vector<T>      *device_line = 0);
+
+    // Copy a subset
 	int CopyOnGPU(T xbeg, T xend);
 	int CopyOnGPU(T xbeg, T xend, T ybeg, T yend);
 	int CopyOnGPU(T xbeg, T xend, T ybeg, T yend, T zbeg, T zend);

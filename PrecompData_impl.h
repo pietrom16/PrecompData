@@ -186,9 +186,6 @@ void PrecompData<T>::Interpolate(int order)
 
 /// GPGPU
 
-template<typename T>
-int PrecompData<T>::CopyOnGPU();
-
 // Copy a subset
 
 template<typename T>
