@@ -119,10 +119,10 @@ public:
                   boost::compute::command_queue  &queue,
                   boost::compute::vector<T>      &device_line);
 
-    int CopyOnGPU(boost::compute::device         *device = 0,
-                  boost::compute::context        *context = 0,
-                  boost::compute::command_queue  *queue = 0,
-                  boost::compute::vector<T>      *device_line = 0);
+    int CopyOnGPU(boost::compute::device         **device      = nullptr,
+                  boost::compute::context        **context     = nullptr,
+                  boost::compute::command_queue  **queue       = nullptr,
+                  boost::compute::vector<T>      **device_line = nullptr);
 
     // Copy a subset
 	int CopyOnGPU(T xbeg, T xend);

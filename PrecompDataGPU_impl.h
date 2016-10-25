@@ -46,6 +46,10 @@ int PrecompData<T>::CopyOnGPU(boost::compute::device         *device,
                               boost::compute::context        *context,
                               boost::compute::command_queue  *queue,
                               boost::compute::vector<T>      *device_line)
+int PrecompData<T>::CopyOnGPU(boost::compute::device         **device,
+                              boost::compute::context        **context,
+                              boost::compute::command_queue  **queue,
+                              boost::compute::vector<T>      **device_line)
 {
     //+TODO - Create if null
 
