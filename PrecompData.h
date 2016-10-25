@@ -25,7 +25,7 @@
 #ifndef PRECOMP_DATA_H
 #define PRECOMP_DATA_H
 
-#define PRECOMPDATA_DEVICE
+//#define PRECOMPDATA_DEVICE
 
 #include <string>
 #include <vector>
