@@ -1,4 +1,4 @@
-/**  PrecompDataGPU_impl.h
+/**  PrecompDataDevice_impl.h
 
     Copyright 2016 Pietro Mele
     Apache License 2.0
