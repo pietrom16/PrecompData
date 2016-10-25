@@ -147,10 +147,7 @@ private:
 	//+TODO: plane, volume
 
 #ifdef PRECOMPDATA_DEVICE
-    //+D? boost::compute::device         device;
-    //+D? boost::compute::context        context;   //+? How to make this a member variable?
-    //+D? boost::compute::command_queue  queue;     //+? How to make this a member variable?
-    boost::compute::vector<T>      device_line;
+    boost::compute::vector<T>  device_line;
 #endif
 
 };
