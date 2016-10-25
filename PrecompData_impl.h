@@ -189,12 +189,12 @@ void PrecompData<T>::Interpolate(int order)
 // Copy a subset
 
 template<typename T>
-int PrecompData<T>::CopyOnGPU(T xbeg, T xend);
+int PrecompData<T>::CopyOnDevice(T xbeg, T xend);
 
 template<typename T>
-int PrecompData<T>::CopyOnGPU(T xbeg, T xend, T ybeg, T yend);
+int PrecompData<T>::CopyOnDevice(T xbeg, T xend, T ybeg, T yend);
 
 template<typename T>
-int PrecompData<T>::CopyOnGPU(T xbeg, T xend, T ybeg, T yend, T zbeg, T zend);
+int PrecompData<T>::CopyOnDevice(T xbeg, T xend, T ybeg, T yend, T zbeg, T zend);
 
 } // Utilities

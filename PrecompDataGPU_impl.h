@@ -12,7 +12,7 @@ namespace Utilities {
 
 
 template<typename T>
-int PrecompData<T>::InitGPU()
+int PrecompData<T>::InitDevice()
 {
     //+D? device = boost::compute::system::default_device();
     
@@ -102,7 +102,7 @@ int PrecompData<T>::CopyOnDevice(boost::compute::device         **device,
 } // Utilities
 
 
-#else // PRECOMPDATA_GPU
+#else // PRECOMPDATA_DEVICE
 
 
-#endif // PRECOMPDATA_GPU
+#endif // PRECOMPDATA_DEVICE

@@ -14,9 +14,9 @@
 	- Approximations:
 		- Interpolations: linear, cubic, spline, ...
 		- Regressions: linear, cubic, ...
-	- Store data in RAM and/or GPU memory.
+	- Store data in RAM and/or device memory.
 
-    To enable GPU memory usage, define the PRECOMPDATA_GPU macro.
+    To enable device memory usage, define the PRECOMPDATA_DEVICE macro.
 	
 	Warning: the function to be interpolated had better have a certain complexity,
 	         otherwise it may be better to compute it straight away.
@@ -112,7 +112,7 @@ public:
 	/// GPGPU
 
 #ifdef PRECOMPDATA_DEVICE
-    int InitGPU();
+    int InitDevice();
 
     int CopyOnDevice(boost::compute::device         &device,
                      boost::compute::context        &context,
@@ -125,15 +125,15 @@ public:
                      boost::compute::vector<T>      **device_line = nullptr);
 
     // Copy a subset
-	int CopyOnGPU(T xbeg, T xend);
-	int CopyOnGPU(T xbeg, T xend, T ybeg, T yend);
-	int CopyOnGPU(T xbeg, T xend, T ybeg, T yend, T zbeg, T zend);
-#endif // PRECOMPDATA_GPU
+	int CopyOnDevice(T xbeg, T xend);
+	int CopyOnDevice(T xbeg, T xend, T ybeg, T yend);
+	int CopyOnDevice(T xbeg, T xend, T ybeg, T yend, T zbeg, T zend);
+#endif // PRECOMPDATA_DEVICE
 
 public:
     // Return values
-    static const int err_no_data           = -1,
-                     err_gpu_not_available = -2;
+    static const int err_no_data              = -1,
+                     err_device_not_available = -2;
 
 private:
 	
