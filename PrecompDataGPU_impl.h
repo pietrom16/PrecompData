@@ -20,11 +20,12 @@ int PrecompData<T>::InitGPU()
 }
 
 
+//+TEST
 template<typename T>
-int PrecompData<T>::CopyOnGPU(boost::compute::device         &device,
-                              boost::compute::context        &context,
-                              boost::compute::command_queue  &queue,
-                              boost::compute::vector<T>      &device_line)
+int PrecompData<T>::CopyOnDevice(boost::compute::device         &device,
+                                 boost::compute::context        &context,
+                                 boost::compute::command_queue  &queue,
+                                 boost::compute::vector<T>      &device_line)
 {
     if(line.empty())
         return err_no_data;
@@ -42,10 +43,10 @@ int PrecompData<T>::CopyOnGPU(boost::compute::device         &device,
 
 //+TEST
 template<typename T>
-int PrecompData<T>::CopyOnGPU(boost::compute::device         **device,
-                              boost::compute::context        **context,
-                              boost::compute::command_queue  **queue,
-                              boost::compute::vector<T>      **device_line)
+int PrecompData<T>::CopyOnDevice(boost::compute::device         **device,
+                                 boost::compute::context        **context,
+                                 boost::compute::command_queue  **queue,
+                                 boost::compute::vector<T>      **device_line)
 {
     if(line.empty())
         return err_no_data;
