@@ -1,6 +1,6 @@
 /**  PrecompData.h
 
-    Version 1.0
+    Version 1.1.0
 
 	Copyright 2016 Pietro Mele
 	Apache License 2.0
