@@ -165,14 +165,29 @@ T PrecompData<T>::get(T x, T y);
 template<typename T>
 T PrecompData<T>::get(T x, T y, T z);
 
+
 // Range checked accessors, interpolated; check Status()
 
 template<typename T>
 T PrecompData<T>::Interpolate(T x)
 {
-    //+TODO
-    return line[RtoI(x)];
+    RangeCheck(x);
+
+    const size_t i = RtoI(x);
+
+    if(i >= line.size() - 2)
+        return line.back();
+
+    const T x0 = ItoR(i);
+    const T x1 = ItoR(i + 1);
+
+    const T y = line[i] + (line[i + 1] - line[i])*(x - x0)/(x1 - x0);
+
+    //+TEST
+
+    return y;
 }
+
 
 template<typename T>
 T PrecompData<T>::Interpolate(T x, T y);
@@ -187,7 +202,9 @@ void PrecompData<T>::Interpolation(int order)
     interpolation = order;
 }
 
+
 // Range check
+
 template<typename T>
 int PrecompData<T>::RangeCheck(T x)
 {
