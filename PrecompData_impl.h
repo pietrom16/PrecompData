@@ -168,7 +168,11 @@ T PrecompData<T>::get(T x, T y, T z);
 // Range checked accessors, interpolated; check Status()
 
 template<typename T>
-T PrecompData<T>::Interpolate(T x);
+T PrecompData<T>::Interpolate(T x)
+{
+    //+TODO
+    return line[RtoI(x)];
+}
 
 template<typename T>
 T PrecompData<T>::Interpolate(T x, T y);

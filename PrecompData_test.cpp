@@ -36,6 +36,23 @@ int main()
 		}
 	}
 
-	return 0;
+    { // Test 2
+        cout << "\n\nTest 2: Linear interpolation:" << endl;
+        const string funcName = "TestFunc";
+        PrecompData<float> itp(funcName);
+        const float x0 = 0.0f, x1 = 6.28f;
+        const int nValues = 10;
+        const float step = 0.5*(x1 - x0)/nValues;
+        itp.Set(&TestFunc, x0, x1, nValues);
+        float x = x0;
+        itp.Interpolation(1);
+        cout << "Interpolation: " << itp.Interpolation() << endl;
+        for(int i = 0; i < nValues; ++i) {
+            cout << i << ":\t" << funcName << "(" << x << ") = " << TestFunc(x) << " ~ " << itp.Interpolate(x) << endl;
+            x += step;
+        }
+    }
+
+    return 0;
 }
 
