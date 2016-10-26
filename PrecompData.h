@@ -151,6 +151,7 @@ private:
 	int             interpolation;
 	int             status;
 
+    std::vector<T>  xData;
     std::vector<T>  yData;
     T               xMin, xMax, step;
 	T               kRealInt, kIntReal;     // conversion factors
