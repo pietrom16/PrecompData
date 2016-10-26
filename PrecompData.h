@@ -151,9 +151,11 @@ private:
 	int             interpolation;
 	int             status;
 
-	std::vector<T>  line;
-	T               xMin, xMax, step;
+    std::vector<T>  yData;
+    T               xMin, xMax, step;
 	T               kRealInt, kIntReal;     // conversion factors
+
+
 	//+TODO: plane, volume
 
 #ifdef PRECOMPDATA_DEVICE

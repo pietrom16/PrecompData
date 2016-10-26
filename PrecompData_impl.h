@@ -54,7 +54,7 @@ template<typename T>
 int PrecompData<T>::PreComputeValues()
 {
     // Set up conversion constants
-    kRealInt = line.size()/(xMax - xMin);
+    kRealInt = yData.size()/(xMax - xMin);
     kIntReal = 1/kRealInt;
 
     return 0;
@@ -87,7 +87,7 @@ size_t  PrecompData<T>::Set(T (*Func1)(T x),
 	xMin = xmin;
 	xMax = xmax;
 	
-	line.resize(nPoints);
+	yData.resize(nPoints);
 	step = (xMax - xMin)/nPoints;
 
 	T x = xMin;
@@ -96,14 +96,14 @@ size_t  PrecompData<T>::Set(T (*Func1)(T x),
 	{
 		const T y = Func1(x);
 
-		line[i] = y;
+		yData[i] = y;
 
 		x += step;
 	}
 	
 	PreComputeValues();
 
-	return line.size();
+	return yData.size();
 }
 
 
@@ -145,7 +145,7 @@ size_t  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
 template<typename T>
 T PrecompData<T>::operator()(T x) const
 {
-    return line[RtoI(x)];
+    return yData[RtoI(x)];
 }
 
 template<typename T>
@@ -175,13 +175,13 @@ T PrecompData<T>::Interpolate(T x)
 
     const size_t i = RtoI(x);
 
-    if(i >= line.size() - 2)
-        return line.back();
+    if(i >= yData.size() - 2)
+        return yData.back();
 
     const T x0 = ItoR(i);
     const T x1 = ItoR(i + 1);
 
-    const T y = line[i] + (line[i + 1] - line[i])*(x - x0)/(x1 - x0);
+    const T y = yData[i] + (yData[i + 1] - yData[i])*(x - x0)/(x1 - x0);
 
     //+TEST
 

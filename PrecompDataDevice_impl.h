@@ -27,15 +27,15 @@ int PrecompData<T>::CopyOnDevice(boost::compute::device         &device,
                                  boost::compute::command_queue  &queue,
                                  boost::compute::vector<T>      &device_line)
 {
-    if(line.empty())
+    if(yData.empty())
         return err_no_data;
 
     // Resize vector on device
-    device_line.resize(line.size(), queue);
+    device_line.resize(yData.size(), queue);
 
     // Copy data from host to device
     boost::compute::copy(
-        line.data(), &line.back(), device_line.begin(), queue
+        yData.data(), &yData.back(), device_line.begin(), queue
     );
 
     return 0;
@@ -48,7 +48,7 @@ int PrecompData<T>::CopyOnDevice(boost::compute::device         **device,
                                  boost::compute::command_queue  **queue,
                                  boost::compute::vector<T>      **device_line)
 {
-    if(line.empty())
+    if(yData.empty())
         return err_no_data;
     
     // Create what does not exist, only
@@ -88,11 +88,11 @@ int PrecompData<T>::CopyOnDevice(boost::compute::device         **device,
     }
     
     // Resize vector on device
-    device_line->resize(line.size(), &queue);
+    device_line->resize(yData.size(), &queue);
 
     // Copy data from host to device
     boost::compute::copy(
-        line.data(), &line.back(), device_line->begin(), &queue
+        yData.data(), &yData.back(), device_line->begin(), &queue
     );
 
     return 0;
