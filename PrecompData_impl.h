@@ -133,6 +133,41 @@ size_t  PrecompData<T>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)
 {
     //+TODO
 
+    xMin = xmin;
+    xMax = xmax;
+
+    xData.resize(nPoints);
+    yData.resize(nPoints);
+    
+    T x = xMin;
+
+    // Find average |curvature|
+    T avgCurvature = 0.0;
+    {
+        T absCurvature;
+        const size_t nSamples = 2*nPoints;
+        const T step = (xMax - xMin)/nSamples;
+        T x1, y1, x2, y2, x3, y3;
+
+        x1 = xMin;
+        y1 = Func1(x1);
+        x2 = x1 + step;
+        y2 = Func1(x2);
+        x3 = x2 + step;
+        y3 = Func1(x3);
+
+        for(size_t i = 2; i < nSamples; ++i)
+        {
+            absCurvature = fabs(SecondDerivative(x1, y1, x2, y2, x3, y3));
+            avgCurvature += absCurvature;
+
+            x1 = x2; y1 = y2;
+            x2 = x3; y2 = y3;
+            x3 += step; y3 = Func1(x3);
+        }
+
+        avgCurvature /= nSamples;
+    }
 
 }
 
