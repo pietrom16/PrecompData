@@ -132,6 +132,7 @@ size_t  PrecompData<T>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)
 {
     //+TODO
 
+    /// Second derivative (central differences):  d2 = [f(x-1) - 2f(x) + f(x+1)] / [(x+1) - (x-1)]^2
 
 }
 
