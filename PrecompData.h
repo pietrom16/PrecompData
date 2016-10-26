@@ -75,7 +75,10 @@ public:
 	                                             T ymin, T ymax,
 	                                             T zmin, T zmax);    // volume
 
-	// Irregular grid, computed
+    // Automatic irregular grid, computed
+    size_t  AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints = 100);     // line: 1D --> 1D
+
+    // Irregular grid, computed
     size_t  Set(T (*Func1)(T x),           const std::vector<T> &x);    // line
     size_t  Set(T (*Func2)(T x, T y),      const std::vector<T> &x,
 	                                       const std::vector<T> &y);    // plane
