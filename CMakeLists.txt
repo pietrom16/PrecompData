@@ -8,6 +8,7 @@ set (${PROJECT}_VERSION_MAJOR 1)
 set (${PROJECT}_VERSION_MINOR 1)
 set (${PROJECT}_VERSION_PATCH 0)
 
+# add_definitions (-DPRECOMPDATA_DEVICE)
 
 add_executable(PrecompData_test PrecompData_test.cpp)
 
