@@ -9,13 +9,14 @@ Purpose: improve performance avoiding the realtime computation of complex functi
 
 - Precompute regular grid, one dimensional functions, passed as function pointers.
 - Zero degree (nearest-neighbor/point sampling/Voronoi) interpolation.
+- First degree (linear) interpolation for functions of one variable.
 - Copy data on GPU/device memory. [TEST]
 
 
 #### TODO
 
-- First degree (linear) interpolation.
-- Precompute regular grid, higher dimensional functions, passed as function pointers.
+- Precompute irregular grid, one dimensional functions, passed as function pointers.
+- Precompute regular grid, n dimensional functions, passed as function pointers.
 - Precompute irregular grid, n dimensional functions, passed as function pointers.
 - Load data from file.
 - Second degree (quadratic) interpolation.
