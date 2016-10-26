@@ -156,7 +156,7 @@ size_t  PrecompData<T>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)
         x3 = x2 + step;
         y3 = Func1(x3);
 
-        for(size_t i = 2; i < nSamples; ++i)
+        for(size_t i = 3; i < nSamples; ++i)
         {
             absCurvature = fabs(SecondDerivative(x1, y1, x2, y2, x3, y3));
             avgCurvature += absCurvature;
