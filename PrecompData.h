@@ -133,9 +133,14 @@ public:
 #endif // PRECOMPDATA_DEVICE
 
 public:
-    // Return values
+    // Error return values
     static const int err_no_data              = -1,
                      err_device_not_available = -2;
+    
+    // Warning return values
+    static const int wrn_x_less_than_min      = -101,
+                     wrn_x_more_than_max      = -102;
+
 
 private:
 	
