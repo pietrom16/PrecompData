@@ -5,6 +5,7 @@
 */
 
 #include "PrecompData.h"
+#include <cmath>
 
 namespace Utilities {
 
@@ -132,7 +133,6 @@ size_t  PrecompData<T>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)
 {
     //+TODO
 
-    /// Second derivative (central differences):  d2 = [f(x-1) - 2f(x) + f(x+1)] / [(x+1) - (x-1)]^2
 
 }
 
@@ -233,6 +233,24 @@ int PrecompData<T>::RangeCheck(T x)
         status = wrn_x_more_than_max;
 
     return status;
+}
+
+
+/// Math functions
+
+template<typename T>
+T PrecompData<T>::FirstDerivative(T x1, T y1, T x2, T y2) const
+{
+    /// First derivative (central differences):  d1 = [f(x+1) - f(x)] / [(x+1) - x]
+    return  (y2 - y1)/(x2 - x1);
+}
+
+
+template<typename T>
+T PrecompData<T>::SecondDerivative(T x1, T y1, T x2, T y2, T x3, T y3) const
+{
+    /// Second derivative (central differences):  d2 = [f(x-1) - 2f(x) + f(x+1)] / [(x+1) - (x-1)]^2
+    return  (y1 - 2*y2 + y3)/std::pow(x3 - x1, 2);
 }
 
 
