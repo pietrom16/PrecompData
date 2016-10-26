@@ -30,10 +30,14 @@ int main()
 		const float step = 0.5*(x1 - x0)/nValues;
 		itp.Set(&TestFunc, x0, x1, nValues);
 		float x = x0;
+        float err = 0.0;
 		for(int i = 0; i < nValues; ++i) {
-			cout << i << ":\t" << funcName << "(" << x << ") = " << TestFunc(x) << " ~ " << itp(x) << endl;
+            const float y = itp(x);
+            err += fabs(TestFunc(x) - y);
+			cout << i << ":\t" << funcName << "(" << x << ") = " << TestFunc(x) << " ~ " << y << endl;
 			x += step;
 		}
+        cout << "Total error = " << err << endl;
 	}
 
     { // Test 2
@@ -45,12 +49,16 @@ int main()
         const float step = 0.5*(x1 - x0)/nValues;
         itp.Set(&TestFunc, x0, x1, nValues);
         float x = x0;
+        float err = 0.0;
         itp.Interpolation(1);
         cout << "Interpolation: " << itp.Interpolation() << endl;
         for(int i = 0; i < nValues; ++i) {
-            cout << i << ":\t" << funcName << "(" << x << ") = " << TestFunc(x) << " ~ " << itp.Interpolate(x) << endl;
+            const float y = itp.Interpolate(x);
+            err += fabs(TestFunc(x) - y);
+            cout << i << ":\t" << funcName << "(" << x << ") = " << TestFunc(x) << " ~ " << y << endl;
             x += step;
         }
+        cout << "Total error = " << err << endl;
     }
 
     return 0;
