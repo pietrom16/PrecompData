@@ -183,5 +183,15 @@ void PrecompData<T>::Interpolation(int order)
     interpolation = order;
 }
 
+// Range check
+template<typename T>
+int PrecompData<T>::RangeCheck( T x )
+{
+    if(x < xMin) return -1;
+    if(x > xMax) return  1;
+
+    return 0;
+}
+
 
 } // Utilities

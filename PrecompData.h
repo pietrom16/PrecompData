@@ -109,7 +109,9 @@ public:
 	int  Interpolation() const { return interpolation; }
 	void Interpolation(int order);
 
-	/// GPGPU
+    int RangeCheck(T x);
+
+    /// GPGPU
 
 #ifdef PRECOMPDATA_DEVICE
     int InitDevice();
