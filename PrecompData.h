@@ -107,7 +107,6 @@ public:
 	int Status() const { return status; }
 
 	int  Interpolation() const { return interpolation; }
-	void Interpolate(int order = 0);
 	void Interpolation(int order);
 
 	/// GPGPU
