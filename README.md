@@ -38,3 +38,34 @@ Purpose: improve performance avoiding the realtime computation of complex functi
     - Link with the system's OpenCL library.
     - GCC example:  `g++ -I/path/to/compute/include main.cpp -lOpenCL`
 
+#### Examples
+
+- Here is a basic example of PrecompData usage:
+
+```C++
+#include "PrecompData.h"
+#include <cmath>
+using namespace std;
+
+// Function to precalculate
+float MyFunction(float x) {
+	return  sin(x) + cos(2*x);
+}
+
+int main()
+{
+  using namespace Utilities;
+  
+  const float x0 = 0.0f, x1 = 6.28f;
+  const int nValues = 10;
+
+  PrecompData<float> func;
+
+  func.Set(&MyFunction, x0, x1, nValues);
+
+  float x = 1.234;
+  float y = func.Interpolate(x);
+}
+```
+
+- For a full set of examples, look at the test file `PrecompData_test.cpp`.
