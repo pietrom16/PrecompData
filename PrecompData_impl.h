@@ -189,12 +189,16 @@ void PrecompData<T>::Interpolation(int order)
 
 // Range check
 template<typename T>
-int PrecompData<T>::RangeCheck( T x )
+int PrecompData<T>::RangeCheck(T x)
 {
-    if(x < xMin) return -1;
-    if(x > xMax) return  1;
+    status = 0;
 
-    return 0;
+    if(x < xMin)
+        status = wrn_x_less_than_min;
+    else if(x > xMax)
+        status = wrn_x_more_than_max;
+
+    return status;
 }
 
 
