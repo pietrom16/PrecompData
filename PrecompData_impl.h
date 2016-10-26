@@ -179,6 +179,7 @@ T PrecompData<T>::Interpolate(T x, T y, T z);
 
 template<typename T>
 void PrecompData<T>::Interpolate(int order)
+void PrecompData<T>::Interpolation(int order)
 {
     interpolation = order;
 }
