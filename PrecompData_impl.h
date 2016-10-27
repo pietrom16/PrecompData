@@ -285,7 +285,7 @@ int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const 
 
     struct PointCurv {     // abscissa and second derivative
         T x, d2;
-        PointCurv(T _x, T _d2) : x(_x), d2(_d2) {}
+        PointCurv(T _x = 0.0, T _d2 = 0.0) : x(_x), d2(_d2) {}
         bool operator> (const PointCurv &p) { return d2 > p.d2; }
     };
 
