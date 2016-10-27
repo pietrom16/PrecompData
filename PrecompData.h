@@ -147,6 +147,10 @@ public:
     static const int wrn_x_less_than_min      = -101,
                      wrn_x_more_than_max      = -102;
 
+public:
+    // Test
+    friend class PrecompData_test;
+
 protected:
     T FirstDerivative(T x1, T y1, T x2, T y2) const;
     T SecondDerivative(T x1, T y1, T x2, T y2, T x3, T y3) const;

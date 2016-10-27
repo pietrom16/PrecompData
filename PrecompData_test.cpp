@@ -4,6 +4,7 @@
  */
 
 #include "PrecompData.h"
+#include "PrecompData_test.h"
 #include <cmath>
 #include <iostream>
 #include <string>
@@ -28,7 +29,9 @@ float TestFuncNonLin2(float x) {        //   y = 1/(|x-2| + 0.1)
 }
 
 
-int main()
+namespace Utilities {
+
+PrecompData_test::PrecompData_test()
 {
 	using namespace Utilities;
 
@@ -89,7 +92,7 @@ int main()
         }
     }
 
-    { // Test 4 - AutoSet:  y = 1/(|x-2| + 0.1)
+    if(0) { // Test 4 - AutoSet:  y = 1/(|x-2| + 0.1)
         cout << "\n\nTest 4: Automatic irregular grid:    y = 1/(|x-2| + 0.1)" << endl;
         const string funcName = "y = 1/(|x-2| + 0.1)";
         PrecompData<float> itp(funcName);
@@ -104,6 +107,32 @@ int main()
         }
     }
 
-    return 0;
+    { // Test 5 - Derivatives
+        cout << "\n\nTest 5: Derivatives" << endl;
+        const string funcName = "Derivatives";
+        float x1, y1, x2, y2, x3, y3, expRes;
+
+        // First derivative
+        x1 = 0.0; y1 = 0.0; x2 = 1.0; y2 = 0.0; expRes =  0.0;
+        x1 = 0.0; y1 = 0.0; x2 = 1.0; y2 = 1.0; expRes =  1.0;
+        x1 = 1.0; y1 = 0.0; x2 = 0.0; y2 = 1.0; expRes = -1.0;
+        x1 = 0.0; y1 = 0.0; x2 = 2.0; y2 = 1.0; expRes =  2.0;
+        x1 = 0.0; y1 = -1.0; x2 = 1.0; y2 = 1.0; expRes = 2.0;
+
+        // Second derivative
+
+    }
 }
 
+
+} // Utilities
+
+
+int main()
+{
+    using namespace Utilities;
+
+    PrecompData_test test;
+
+    return 0;
+}
