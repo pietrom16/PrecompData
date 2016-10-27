@@ -301,16 +301,18 @@ T PrecompData<T>::AverageCurvature(const size_t nPoints, const int overSampling)
 template<typename T>
 int PrecompData<T>::PickBestPoints(const size_t nPoints, const int overSampling)
 {
+    struct Point {
+        T x, y;
+        Point(T _x, T _y) : x(_x), y(_y) {}
+        bool operator< (const Point &p) { return x < p.x; }
+        bool operator> (const Point &p) { return x > p.x; }
+    };
+
     struct PointCurv {     // abscissa and second derivative
         T x, d2;
         PointCurv(T _x, T _d2) : x(_x), d2(_d2) {}
         bool operator> (const PointCurv &p) { return d2 > p.d2; }
     };
-
-    xData.clear();
-    yData.clear();
-    xData.reserve(nPoints);
-    yData.reserve(nPoints);
 
     /// Oversample
 
@@ -346,14 +348,36 @@ int PrecompData<T>::PickBestPoints(const size_t nPoints, const int overSampling)
     //+TEST Sort based on decreasing second derivative
     std::sort(samples.begin(), samples.end(), std::greater<T>());
 
-    ///+TODO Pick the points with highest second derivative (curvature)
+    ///+TEST Pick the points with highest second derivative (curvature)
 
+    std::vector<Point> points;
+    points.resize(nPoints);
 
-    // Pick the first and last values by default; they cannot be discarded
-    xData.push_back(xMin);
-    xData.push_back(xMax);
+    points[0].x = xMin;               // always get the first point
 
-    //+TODO Sort the picked points based on increasing abscissa
+    for(size_t i = 1, j = 0; i < nPoints - 1; ++i, ++j)
+        points[i].x = samples[j].x;
+
+    points[nPoints - 1].x = xMax;     // always get the last point
+
+    for(size_t i = 0; i < nPoints; ++i)
+        points[i].y = Func1(points[i].x);
+
+    //+TEST Sort the picked points based on increasing abscissa
+    std::sort(points.begin(), points.end());
+
+    //+TEST Copy data in member variables
+
+    xData.clear();
+    yData.clear();
+    xData.reserve(nPoints);
+    yData.reserve(nPoints);
+
+    for(size_t i = 0; i < points.size(); ++i)
+    {
+        xData[i] = points[i].x;
+        yData[i] = points[i].y;
+    }
 
     return 0;
 }
