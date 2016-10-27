@@ -278,15 +278,15 @@ int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const 
 {
     struct Point {
         T x, y;
-        Point(T _x, T _y) : x(_x), y(_y) {}
-        bool operator< (const Point &p) { return x < p.x; }
-        bool operator> (const Point &p) { return x > p.x; }
+        Point(T _x = 0.0, T _y = 0.0) : x(_x), y(_y) {}
+        bool operator< (const Point &p) const { return x < p.x; }
+        bool operator> (const Point &p) const { return x > p.x; }
     };
 
     struct PointCurv {     // abscissa and second derivative
         T x, d2;
         PointCurv(T _x = 0.0, T _d2 = 0.0) : x(_x), d2(_d2) {}
-        bool operator> (const PointCurv &p) { return d2 > p.d2; }
+        bool operator> (const PointCurv &p) const { return d2 > p.d2; }
     };
 
     /// Oversample
