@@ -124,8 +124,7 @@ size_t  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
 
 /** AutoSet() : Automatic irregular grid, computed
  *
- *  Irregular grid found on the basis of the second derivative: 
- *  sampling points are closer when the this is above the average.
+ *  Irregular grid found picking the points with largest second derivative.
  */
 
 template<typename T>
