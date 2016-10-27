@@ -15,12 +15,24 @@ float TestFunc(float x) {
 	return sin(x);
 }
 
+float TestFuncLin(float x) {            //   y = 2x
+    return 2*x;
+}
+
+float TestFuncNonLin1(float x) {        //   y = |x|
+    return fabs(x);
+}
+
+float TestFuncNonLin2(float x) {        //   y = 1/(|x-2| + 0.1)
+    return 1/(fabs(x - 2.0) + 0.1);
+}
+
 
 int main()
 {
 	using namespace Utilities;
 
-	{ // Test 1
+	{ // Test 1 - Interpolation
         cout << "\n\nTest 1: Zero-degree (nearest-neighbor/point sampling/Voronoi) interpolation:" << endl;
 		const string funcName = "TestFunc";
 		PrecompData<float> itp(funcName);
@@ -40,7 +52,7 @@ int main()
         cout << "Total error = " << err << endl;
 	}
 
-    { // Test 2
+    { // Test 2 - Interpolation
         cout << "\n\nTest 2: Linear interpolation:" << endl;
         const string funcName = "TestFunc";
         PrecompData<float> itp(funcName);
@@ -59,6 +71,10 @@ int main()
             x += step;
         }
         cout << "Total error = " << err << endl;
+    }
+
+    { // Test 3 - AutoSet
+        cout << "\n\nTest 3: Automatic irregular grid:" << endl;
     }
 
     return 0;
