@@ -110,14 +110,40 @@ PrecompData_test::PrecompData_test()
     { // Test 5 - Derivatives
         cout << "\n\nTest 5: Derivatives" << endl;
         const string funcName = "Derivatives";
-        float x1, y1, x2, y2, x3, y3, expRes;
+        float x1, y1, x2, y2, x3, y3, der1, der2, expRes;
+        PrecompData<float> test;
 
         // First derivative
-        x1 = 0.0; y1 = 0.0; x2 = 1.0; y2 = 0.0; expRes =  0.0;
-        x1 = 0.0; y1 = 0.0; x2 = 1.0; y2 = 1.0; expRes =  1.0;
+        x1 = 0.0; y1 = 0.0; x2 = 1.0; y2 = 0.0; expRes = 0.0;
+        der1 = test.FirstDerivative(x1, y1, x2, y2);
+        if(fabs(der1 - expRes) > 0.0001) {
+            cerr << "Error - First derivative 1" << endl;
+        }
+        x1 = 0.0; y1 = 0.0; x2 = 1.0; y2 = 1.0; expRes = 1.0;
+        der1 = test.FirstDerivative(x1, y1, x2, y2);
+        if(fabs(der1 - expRes) > 0.0001) {
+            cerr << "Error - First derivative 2" << endl;
+        }
         x1 = 1.0; y1 = 0.0; x2 = 0.0; y2 = 1.0; expRes = -1.0;
-        x1 = 0.0; y1 = 0.0; x2 = 2.0; y2 = 1.0; expRes =  2.0;
+        der1 = test.FirstDerivative(x1, y1, x2, y2);
+        if(fabs(der1 - expRes) > 0.0001) {
+            cerr << "Error - First derivative 3" << endl;
+        }
+        x1 = 0.0; y1 = 0.0; x2 = 2.0; y2 = 1.0; expRes = 0.5;
+        der1 = test.FirstDerivative(x1, y1, x2, y2);
+        if(fabs(der1 - expRes) > 0.0001) {
+            cerr << "Error - First derivative 4" << endl;
+        }
         x1 = 0.0; y1 = -1.0; x2 = 1.0; y2 = 1.0; expRes = 2.0;
+        der1 = test.FirstDerivative(x1, y1, x2, y2);
+        if(fabs(der1 - expRes) > 0.0001) {
+            cerr << "Error - First derivative 5" << endl;
+        }
+        x1 = 0.0; y1 = 1.0; x2 = 1.0; y2 = 1.0; expRes = 0.0;
+        der1 = test.FirstDerivative(x1, y1, x2, y2);
+        if(fabs(der1 - expRes) > 0.0001) {
+            cerr << "Error - First derivative 6" << endl;
+        }
 
         // Second derivative
 
