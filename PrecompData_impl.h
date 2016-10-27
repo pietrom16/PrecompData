@@ -243,6 +243,17 @@ int PrecompData<T>::RangeCheck(T x)
 }
 
 
+// Get the whole value set
+
+template<typename T>
+int PrecompData<T>::Get(std::vector<T> &_xData , std::vector<T> &_yData) const
+{
+    _xData = xData;
+    _yData = yData;
+    return 0;
+}
+
+
 /// Math functions
 
 template<typename T>

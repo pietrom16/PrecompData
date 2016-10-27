@@ -114,6 +114,9 @@ public:
 
     int RangeCheck(T x);
 
+    // Get the whole value set
+    int Get(std::vector<T> &_xData, std::vector<T> &_yData) const;
+
     /// GPGPU
 
 #ifdef PRECOMPDATA_DEVICE
