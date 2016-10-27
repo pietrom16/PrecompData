@@ -55,6 +55,7 @@ std::string  PrecompData<T>::Comment() const
 template<typename T>
 int PrecompData<T>::PreComputeValues()
 {
+    //+CHECK
     // Set up conversion constants
     kRealInt = yData.size()/(xMax - xMin);
     kIntReal = 1/kRealInt;
@@ -135,13 +136,11 @@ size_t  PrecompData<T>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)
     xMin = xmin;
     xMax = xmax;
 
-    xData.reserve(nPoints);
-    yData.reserve(nPoints);
-    
-    T x = xMin;
+    PickBestPoints(nPoints, 4);
 
-    T avgCurvature = AverageCurvature(nPoints);
+    PreComputeValues();
 
+    return yData.size();
 }
 
 
