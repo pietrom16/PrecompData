@@ -74,12 +74,28 @@ int main()
         cout << "Total error = " << err << endl;
     }
 
-    { // Test 3 - AutoSet:  y = 2x
+    if(0) { // Test 3 - AutoSet:  y = 2x
         cout << "\n\nTest 3: Automatic irregular grid:    y = 2x" << endl;
         const string funcName = "y = 2x";
         PrecompData<float> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
         itp.AutoSet(&TestFuncLin, x0, x1, nValues);
+        cerr << "x0 = " << x0 << "  x1 = " << x1 << "  nValues = " << nValues << endl;  //+T+
+        std::vector<float> vx, vy;
+        itp.Get(vx, vy);
+        cout << "Sizes:  x = " << vx.size() << ";  y = " << vy.size() << endl;
+        for(size_t i = 0; i < nValues; ++i) {
+            cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
+        }
+    }
+
+    { // Test 4 - AutoSet:  y = 1/(|x-2| + 0.1)
+        cout << "\n\nTest 4: Automatic irregular grid:    y = 1/(|x-2| + 0.1)" << endl;
+        const string funcName = "y = 1/(|x-2| + 0.1)";
+        PrecompData<float> itp(funcName);
+        const float x0 = 0.0f, x1 = 6.28f;
+        itp.AutoSet(&TestFuncNonLin2, x0, x1, nValues);
+        cerr << "x0 = " << x0 << "  x1 = " << x1 << "  nValues = " << nValues << endl;  //+T+
         std::vector<float> vx, vy;
         itp.Get(vx, vy);
         cout << "Sizes:  x = " << vx.size() << ";  y = " << vy.size() << endl;
