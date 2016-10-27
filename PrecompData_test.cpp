@@ -32,13 +32,15 @@ int main()
 {
 	using namespace Utilities;
 
+    const int nValues = 10;
+
+
 	{ // Test 1 - Interpolation
         cout << "\n\nTest 1: Zero-degree (nearest-neighbor/point sampling/Voronoi) interpolation:" << endl;
 		const string funcName = "TestFunc";
 		PrecompData<float> itp(funcName);
 		itp.SetComment("TestFunc approximation");
 		const float x0 = 0.0f, x1 = 6.28f;
-		const int nValues = 10;
 		const float step = 0.5*(x1 - x0)/nValues;
 		itp.Set(&TestFunc, x0, x1, nValues);
 		float x = x0;
@@ -57,7 +59,6 @@ int main()
         const string funcName = "TestFunc";
         PrecompData<float> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
-        const int nValues = 10;
         const float step = 0.5*(x1 - x0)/nValues;
         itp.Set(&TestFunc, x0, x1, nValues);
         float x = x0;
@@ -73,8 +74,18 @@ int main()
         cout << "Total error = " << err << endl;
     }
 
-    { // Test 3 - AutoSet
-        cout << "\n\nTest 3: Automatic irregular grid:" << endl;
+    { // Test 3 - AutoSet:  y = 2x
+        cout << "\n\nTest 3: Automatic irregular grid:    y = 2x" << endl;
+        const string funcName = "y = 2x";
+        PrecompData<float> itp(funcName);
+        const float x0 = 0.0f, x1 = 6.28f;
+        itp.AutoSet(&TestFuncLin, x0, x1, nValues);
+        std::vector<float> vx, vy;
+        itp.Get(vx, vy);
+        cout << "Sizes:  x = " << vx.size() << ";  y = " << vy.size() << endl;
+        for(size_t i = 0; i < nValues; ++i) {
+            cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
+        }
     }
 
     return 0;
