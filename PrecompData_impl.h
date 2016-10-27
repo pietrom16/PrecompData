@@ -5,6 +5,7 @@
 */
 
 #include "PrecompData.h"
+#include <algorithm>
 #include <cmath>
 
 namespace Utilities {
@@ -119,8 +120,6 @@ size_t  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
                             T ymin, T ymax, size_t ynPoints,
                             T zmin, T zmax, size_t znPoints);    // volume
 
-//+TODO Regular grid, load from file
-
 
 /** AutoSet() : Automatic irregular grid, computed
  *
@@ -162,6 +161,7 @@ size_t  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
                             const std::vector<T> &y,
                             const std::vector<T> &z);      // volume
 
+//+TODO Regular grid, load from file
 //+TODO Irregular grid, load from file
 
 /// Data retrieval
@@ -295,6 +295,66 @@ T PrecompData<T>::AverageCurvature(const size_t nPoints, const int overSampling)
     avgCurvature /= nSamples;
 
     return avgCurvature;
+}
+
+
+template<typename T>
+int PrecompData<T>::PickBestPoints(const size_t nPoints, const int overSampling)
+{
+    struct Point {     // abscissa and second derivative
+        T x, d2;
+        Point(T _x, T _d2) : x(_x), d2(_d2) {}
+        bool operator> (const Point &p) { return d2 > p.d2; }
+    };
+
+    xData.clear();
+    yData.clear();
+    xData.reserve(nPoints);
+    yData.reserve(nPoints);
+
+    /// Oversample
+
+    const size_t nSamples = overSampling*nPoints;
+    const T step = (xMax - xMin)/nSamples;
+
+    std::vector<Point> samples;
+    samples.reserve(nSamples);
+
+    T x1 = xMin;
+    T x2 = x1 + step;
+    T x3 = x2 + step;
+    T y1 = Func1(x1);
+    T y2 = Func1(x2);
+    T y3 = Func1(x3);
+
+    Point p;
+
+    for(size_t i = 0; i < nSamples - 1; ++i)    // first and last points added later
+    {
+        p.x = x2;   // central point
+        p.d2 = SecondDerivative(x1, y1, x2, y2, x3, y3);
+        samples.push_back(p);
+        
+        x1 = x2;
+        x2 = x3;
+        x3 += step;
+        y1 = y2;
+        y2 = y3;
+        y3 = Func1(x3);
+    }
+
+    //+TEST Sort based on decreasing second derivative
+    std::sort(samples.begin(), samples.end(), std::greater<T>());
+
+    ///+TODO Pick the points with highest second derivative (curvature)
+
+    // Pick the first and last values by default; they cannot be discarded
+    xData.push_back(xMin);
+    xData.push_back(xMax);
+
+    //+TODO Sort the picked points based on increasing abscissa
+
+    return 0;
 }
 
 
