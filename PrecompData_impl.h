@@ -7,6 +7,7 @@
 #include "PrecompData.h"
 #include <algorithm>
 #include <cmath>
+#include <functional>
 
 namespace Utilities {
 
