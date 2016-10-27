@@ -301,10 +301,10 @@ T PrecompData<T>::AverageCurvature(const size_t nPoints, const int overSampling)
 template<typename T>
 int PrecompData<T>::PickBestPoints(const size_t nPoints, const int overSampling)
 {
-    struct Point {     // abscissa and second derivative
+    struct PointCurv {     // abscissa and second derivative
         T x, d2;
-        Point(T _x, T _d2) : x(_x), d2(_d2) {}
-        bool operator> (const Point &p) { return d2 > p.d2; }
+        PointCurv(T _x, T _d2) : x(_x), d2(_d2) {}
+        bool operator> (const PointCurv &p) { return d2 > p.d2; }
     };
 
     xData.clear();
@@ -317,7 +317,7 @@ int PrecompData<T>::PickBestPoints(const size_t nPoints, const int overSampling)
     const size_t nSamples = overSampling*nPoints;
     const T step = (xMax - xMin)/nSamples;
 
-    std::vector<Point> samples;
+    std::vector<PointCurv> samples;
     samples.reserve(nSamples);
 
     T x1 = xMin;
@@ -327,7 +327,7 @@ int PrecompData<T>::PickBestPoints(const size_t nPoints, const int overSampling)
     T y2 = Func1(x2);
     T y3 = Func1(x3);
 
-    Point p;
+    PointCurv p;
 
     for(size_t i = 0; i < nSamples - 1; ++i)    // first and last points added later
     {
@@ -347,6 +347,7 @@ int PrecompData<T>::PickBestPoints(const size_t nPoints, const int overSampling)
     std::sort(samples.begin(), samples.end(), std::greater<T>());
 
     ///+TODO Pick the points with highest second derivative (curvature)
+
 
     // Pick the first and last values by default; they cannot be discarded
     xData.push_back(xMin);
