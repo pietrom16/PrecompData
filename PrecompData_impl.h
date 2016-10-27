@@ -321,7 +321,7 @@ int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const 
     }
 
     //+TEST Sort based on decreasing second derivative
-    std::sort(samples.begin(), samples.end(), std::greater<T>());
+    std::sort(samples.begin(), samples.end(), greater<PointCurv>());
 
     ///+TEST Pick the points with highest second derivative (curvature)
 
