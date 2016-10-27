@@ -262,7 +262,7 @@ T PrecompData<T>::SecondDerivative(T x1, T y1, T x2, T y2, T x3, T y3) const
 
 
 template<typename T>
-int PrecompData<T>::PickBestPoints(const size_t nPoints, const int overSampling)
+int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const int overSampling)
 {
     struct Point {
         T x, y;
