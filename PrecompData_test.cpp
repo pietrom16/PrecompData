@@ -159,6 +159,34 @@ PrecompData_test::PrecompData_test()
         }
 
         // Second derivative
+        x1 = 0.0; y1 = 0.0; x2 = 1.0; y2 = 0.0; x3 = 2.0; y3 = 0.0; expRes = 0.0;
+        der2 = test.SecondDerivative(x1, y1, x2, y2, x3, y3);
+        ++nTests;
+        if(fabs(der2 - expRes) > 0.0001) {
+            ++nFailed;
+            cerr << "Error - Second derivative 1" << endl;
+        }
+        x1 = 0.0; y1 = 1.0; x2 = 1.0; y2 = 1.0; x3 = 2.0; y3 = 1.0; expRes = 0.0;
+        der2 = test.SecondDerivative(x1, y1, x2, y2, x3, y3);
+        ++nTests;
+        if(fabs(der2 - expRes) > 0.0001) {
+            ++nFailed;
+            cerr << "Error - Second derivative 2" << endl;
+        }
+        x1 = 0.0; y1 = 0.0; x2 = 1.0; y2 = 1.0; x3 = 2.0; y3 = 2.0; expRes = 0.0;
+        der2 = test.SecondDerivative(x1, y1, x2, y2, x3, y3);
+        ++nTests;
+        if(fabs(der2 - expRes) > 0.0001) {
+            ++nFailed;
+            cerr << "Error - Second derivative 3" << endl;
+        }
+        x1 = 0.0; y1 = 0.0; x2 = 1.0; y2 = 1.0; x3 = 2.0; y3 = 4.0; expRes = 2.0;
+        der2 = test.SecondDerivative(x1, y1, x2, y2, x3, y3);
+        ++nTests;
+        if(fabs(der2 - expRes) > 0.0001) {
+            ++nFailed;
+            cerr << "Error - Second derivative 4: Result = " << der2 << "; Expected = " << expRes << endl;
+        }
 
         cout << "Derivatives:  Number of tests = " << nTests << ";  Number of failures = " << nFailed << endl;
     }
