@@ -39,7 +39,7 @@ PrecompData_test::PrecompData_test()
 {
 	using namespace Utilities;
 
-    const int nValues = 10;
+    const int nValues = 100;
 
     // Test 1 - Interpolation
 	{
