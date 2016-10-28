@@ -213,6 +213,23 @@ PrecompData_test::PrecompData_test()
         for(size_t i = 0; i < nValues; ++i) {
             cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
         }
+        int n = 100;
+        cout << "Compare approximation with real sin(x) function (done on " << n << " points):" << endl;
+        float error = 0.0, avgErr = 0.0;
+        float minErrX = 0.0, minErrY = 1.0e20;
+        float maxErrX = 0.0, maxErrY = 0.0;
+        float x = x0, step = (x1 - x0)/n;
+        for(int i = 0; i < n; ++i) {
+            error = fabs(sin(x) - itp.Interpolate(x));
+            if(error < minErrY) { minErrX = x; minErrY = error; }
+            if(error > maxErrY) { maxErrX = x; maxErrY = error; }
+            avgErr += error;
+            x += step;
+        }
+        avgErr /= n;
+        cout << "Result:  minimum error = [" << minErrX << ", " << minErrY
+             <<      "];  maximum error = [" << maxErrX << ", " << maxErrY
+             <<      "];  average error = " << avgErr << endl;
     }
 
 
