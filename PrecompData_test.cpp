@@ -200,6 +200,7 @@ PrecompData_test::PrecompData_test()
     }
 
     // Test 6 - AutoSet:  y = sin(x)
+    // Result: values too concentrated in the points with high absolute second derivative
     {
         cout << "\n\nTest 6: Automatic irregular grid:    y = sin(x)" << endl;
         const string funcName = "y = sin(x)";
