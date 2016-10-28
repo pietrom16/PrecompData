@@ -28,6 +28,10 @@ float TestFuncNonLin2(float x) {        //   y = 1/(|x-2| + 0.1)
     return 1/(fabs(x - 2.0) + 0.1);
 }
 
+float TestFuncNonLinSin(float x) {        //   y = sin(x)
+    return sin(x);
+}
+
 
 namespace Utilities {
 
@@ -194,6 +198,24 @@ PrecompData_test::PrecompData_test()
 
         cout << "Derivatives:  Number of tests = " << nTests << ";  Number of failures = " << nFailed << endl;
     }
+
+    // Test 6 - AutoSet:  y = sin(x)
+    {
+        cout << "\n\nTest 6: Automatic irregular grid:    y = sin(x)" << endl;
+        const string funcName = "y = sin(x)";
+        PrecompData<float> itp(funcName);
+        const float x0 = 0.0f, x1 = 6.28f;
+        itp.AutoSet(&TestFuncNonLinSin, x0, x1, nValues);
+        cerr << "x0 = " << x0 << "  x1 = " << x1 << "  nValues = " << nValues << endl;  //+T+
+        std::vector<float> vx, vy;
+        itp.Get(vx, vy);
+        cout << "Sizes:  x = " << vx.size() << ";  y = " << vy.size() << endl;
+        for(size_t i = 0; i < nValues; ++i) {
+            cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
+        }
+    }
+
+
 }
 
 
