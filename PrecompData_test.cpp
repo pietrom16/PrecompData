@@ -37,8 +37,8 @@ PrecompData_test::PrecompData_test()
 
     const int nValues = 10;
 
-
-	{ // Test 1 - Interpolation
+    // Test 1 - Interpolation
+	{
         cout << "\n\nTest 1: Zero-degree (nearest-neighbor/point sampling/Voronoi) interpolation:" << endl;
 		const string funcName = "TestFunc";
 		PrecompData<float> itp(funcName);
@@ -57,7 +57,8 @@ PrecompData_test::PrecompData_test()
         cout << "Total error = " << err << endl;
 	}
 
-    { // Test 2 - Interpolation
+    // Test 2 - Interpolation
+    {
         cout << "\n\nTest 2: Linear interpolation:" << endl;
         const string funcName = "TestFunc";
         PrecompData<float> itp(funcName);
@@ -77,7 +78,8 @@ PrecompData_test::PrecompData_test()
         cout << "Total error = " << err << endl;
     }
 
-    if(0) { // Test 3 - AutoSet:  y = 2x
+    // Test 3 - AutoSet:  y = 2x
+    if(0) {
         cout << "\n\nTest 3: Automatic irregular grid:    y = 2x" << endl;
         const string funcName = "y = 2x";
         PrecompData<float> itp(funcName);
@@ -92,7 +94,8 @@ PrecompData_test::PrecompData_test()
         }
     }
 
-    if(0) { // Test 4 - AutoSet:  y = 1/(|x-2| + 0.1)
+    // Test 4 - AutoSet:  y = 1/(|x-2| + 0.1)
+    if(0) {
         cout << "\n\nTest 4: Automatic irregular grid:    y = 1/(|x-2| + 0.1)" << endl;
         const string funcName = "y = 1/(|x-2| + 0.1)";
         PrecompData<float> itp(funcName);
@@ -107,7 +110,8 @@ PrecompData_test::PrecompData_test()
         }
     }
 
-    { // Test 5 - Derivatives
+    // Test 5 - Derivatives
+    {
         cout << "\n\nTest 5: Derivatives" << endl;
         int nTests = 0, nFailed = 0;
         const string funcName = "Derivatives";
