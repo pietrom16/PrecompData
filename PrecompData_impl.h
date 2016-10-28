@@ -131,8 +131,6 @@ size_t  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
 template<typename T>
 size_t  PrecompData<T>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)     // line
 {
-    //+TODO
-
     xMin = xmin;
     xMax = xmax;
 
@@ -208,8 +206,6 @@ T PrecompData<T>::Interpolate(T x)
 
     const T y = yData[i] + (yData[i + 1] - yData[i])*(x - x0)/(x1 - x0);
 
-    //+TEST
-
     return y;
 }
 
@@ -249,8 +245,6 @@ int PrecompData<T>::RangeCheck(T x)
 template<typename T>
 int PrecompData<T>::Get(std::vector<T> &_xData , std::vector<T> &_yData) const
 {
-    cerr << "1) Copying " << xData.size() << " points." << endl; //+T+
-    cerr << "2) Copying " << yData.size() << " points." << endl; //+T+
     _xData = xData;
     _yData = yData;
     return 0;
@@ -311,7 +305,7 @@ int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const 
     for(size_t i = 0; i < nSamples - 1; ++i)    // first and last points added later
     {
         p.x = x2;   // central point
-        p.d2 = SecondDerivative(x1, y1, x2, y2, x3, y3);    //+B+ always returns 0 - OK for a straight line
+        p.d2 = SecondDerivative(x1, y1, x2, y2, x3, y3);
         samples.push_back(p);
         
         x1 = x2;
