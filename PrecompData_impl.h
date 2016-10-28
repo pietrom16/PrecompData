@@ -343,7 +343,7 @@ int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const 
     // Sort the picked points based on increasing abscissa
     std::sort(points.begin(), points.end());
 
-    //+TEST Copy data in member variables
+    // Copy data in member variables
 
     xData.clear();
     yData.clear();

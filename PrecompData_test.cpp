@@ -39,7 +39,7 @@ PrecompData_test::PrecompData_test()
 {
 	using namespace Utilities;
 
-    const int nValues = 100;
+    const int nValues = 20;
 
     // Test 1 - Interpolation
 	{
@@ -83,7 +83,7 @@ PrecompData_test::PrecompData_test()
     }
 
     // Test 3 - AutoSet:  y = 2x
-    if(0) {
+    {
         cout << "\n\nTest 3: Automatic irregular grid:    y = 2x" << endl;
         const string funcName = "y = 2x";
         PrecompData<float> itp(funcName);
@@ -99,7 +99,7 @@ PrecompData_test::PrecompData_test()
     }
 
     // Test 4 - AutoSet:  y = 1/(|x-2| + 0.1)
-    if(0) {
+    {
         cout << "\n\nTest 4: Automatic irregular grid:    y = 1/(|x-2| + 0.1)" << endl;
         const string funcName = "y = 1/(|x-2| + 0.1)";
         PrecompData<float> itp(funcName);
