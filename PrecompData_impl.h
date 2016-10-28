@@ -288,7 +288,7 @@ int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const 
     struct PointCurv {     // abscissa and second derivative
         T x, d2;
         PointCurv(T _x = 0.0, T _d2 = 0.0) : x(_x), d2(_d2) {}
-        bool operator> (const PointCurv &p) const { return d2 > p.d2; }
+        bool operator> (const PointCurv &p) const { return fabs(d2) > fabs(p.d2); }
     };
 
     /// Oversample
@@ -322,7 +322,7 @@ int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const 
         y3 = Func1(x3);
     }
 
-    //+TEST Sort based on decreasing second derivative
+    // Sort based on decreasing second derivative absolute value
     std::sort(samples.begin(), samples.end(), greater<PointCurv>());
 
     ///+TEST Pick the points with highest second derivative (curvature)
