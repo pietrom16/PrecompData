@@ -221,6 +221,7 @@ PrecompData_test::PrecompData_test()
         float x = x0, step = (x1 - x0)/n;
         for(int i = 0; i < n; ++i) {
             error = fabs(sin(x) - itp.Interpolate(x));
+            cout << i << ": \t" << x << ", \t " << sin(x) << ", \t " << itp.Interpolate(x) << ", \t " << error << endl;
             if(error < minErrY) { minErrX = x; minErrY = error; }
             if(error > maxErrY) { maxErrX = x; maxErrY = error; }
             avgErr += error;
