@@ -325,7 +325,7 @@ int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const 
     // Sort based on decreasing second derivative absolute value
     std::sort(samples.begin(), samples.end(), greater<PointCurv>());
 
-    ///+TEST Pick the points with highest second derivative (curvature)
+    /// Pick the points with highest second derivative (curvature)
 
     std::vector<Point> points;
     points.resize(nPoints);
@@ -340,15 +340,15 @@ int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const 
     for(size_t i = 0; i < nPoints; ++i)
         points[i].y = Func1(points[i].x);
 
-    //+TEST Sort the picked points based on increasing abscissa
+    // Sort the picked points based on increasing abscissa
     std::sort(points.begin(), points.end());
 
     //+TEST Copy data in member variables
 
     xData.clear();
     yData.clear();
-    xData.reserve(nPoints);
-    yData.reserve(nPoints);
+    xData.resize(points.size());
+    yData.resize(points.size());
 
     for(size_t i = 0; i < points.size(); ++i)
     {
