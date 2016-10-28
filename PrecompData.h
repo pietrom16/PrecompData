@@ -11,12 +11,16 @@
 	Purpose: improve performance avoiding the realtime computation of complex functions.
 	
 	- Use constant tables for non linear functions' values.
-	- Approximations:
-		- Interpolations: linear, cubic, spline, ...
-		- Regressions: linear, cubic, ...
-	- Store data in RAM and/or device memory.
+	
+    - Approximations:
+        - Functions: f(x) [TODO: f(x,y), f(x,y,z), vector fields, ...]
+		- Interpolations: step, linear [TODO: cubic, spline, ...]
+		- Regressions: [TODO: linear, minimal least squares, ...]
+        - Extrapolations: [TODO: linear, polynomial, ...]
+	
+    - Store data in RAM and/or device memory.
 
-    To enable device memory usage, define the PRECOMPDATA_DEVICE macro.
+    To enable device memory usage (e.g. GPGPU), define the PRECOMPDATA_DEVICE macro.
 	
 	Warning: the function to be interpolated had better have a certain complexity,
 	         otherwise it may be better to compute it straight away.
