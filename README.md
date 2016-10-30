@@ -5,7 +5,7 @@ Container of pre-calculated values, returned with interpolation/regression.
 Purpose: improve performance avoiding the realtime computation of complex functions.
 
 
-#### Currently implemented features
+### Currently implemented features
 
 - Precompute regular grid, one dimensional functions, passed as function pointers.
 - Zero degree (nearest-neighbor/point sampling/Voronoi) interpolation.
@@ -14,7 +14,7 @@ Purpose: improve performance avoiding the realtime computation of complex functi
 - Precompute irregular grid, one dimensional functions, passed as function pointers. [OPTIMIZE/TEST]
 
 
-#### TODO
+### TODO
 
 - Precompute regular grid, n dimensional functions, passed as function pointers.
 - Precompute irregular grid, n dimensional functions, passed as function pointers.
@@ -22,7 +22,7 @@ Purpose: improve performance avoiding the realtime computation of complex functi
 - Second degree (quadratic) interpolation.
 
 
-#### Requirements
+### Requirements
 
 - C++11
 - To copy data on GPU/device memory:
@@ -30,7 +30,7 @@ Purpose: improve performance avoiding the realtime computation of complex functi
     - OpenCL:  https://www.khronos.org/opencl/
 
 
-#### Building
+### Building
 
 - To enable coping data on GPU/device memory:
     - `#define PRECOMPDATA_DEVICE` either in the `PrecompData.h` header or in the build system.
@@ -38,7 +38,7 @@ Purpose: improve performance avoiding the realtime computation of complex functi
     - Link with the system's OpenCL library.
     - GCC example:  `g++ -I/path/to/compute/include main.cpp -lOpenCL`
 
-#### Examples
+### Examples
 
 - Here is a basic example of PrecompData usage:
 
