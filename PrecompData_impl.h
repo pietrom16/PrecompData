@@ -134,7 +134,7 @@ size_t  PrecompData<T>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)
     xMin = xmin;
     xMax = xmax;
 
-    PickBestPoints(Func1, nPoints, 4);
+    PickBestPoints(Func1, nPoints, 2);
 
     PreComputeValues();
 
