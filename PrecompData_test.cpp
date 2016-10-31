@@ -39,6 +39,8 @@ PrecompData_test::PrecompData_test()
 {
 	using namespace Utilities;
 
+    cout << std::fixed;
+
     const int nValues = 20;
 
     // Test 1 - Interpolation
