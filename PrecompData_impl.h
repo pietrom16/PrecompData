@@ -136,7 +136,7 @@ size_t  PrecompData<T>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)
     xMin = xmin;
     xMax = xmax;
 
-    PickBestPoints(Func1, nPoints, 2);
+    PickBestPoints(Func1, nPoints, 1.5);
 
     PreComputeValues();
 
@@ -275,7 +275,7 @@ T PrecompData<T>::SecondDerivative(T x1, T y1, T x2, T y2, T x3, T y3) const
 
 
 template<typename T>
-int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const int overSampling)
+int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const float overSampling)
 {
     struct Point {
         T x, y;

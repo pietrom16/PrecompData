@@ -158,7 +158,7 @@ public:
 protected:
     T FirstDerivative(T x1, T y1, T x2, T y2) const;
     T SecondDerivative(T x1, T y1, T x2, T y2, T x3, T y3) const;
-    int PickBestPoints(T (*Func1)(T x), const size_t nPoints, const int overSampling = 2);
+    int PickBestPoints(T (*Func1)(T x), const size_t nPoints, const float overSampling = 2.0f);
 
 private:
 	
