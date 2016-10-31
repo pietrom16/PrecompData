@@ -114,13 +114,15 @@ size_t  PrecompData<T>::Set(T (*Func1)(T x),
 template<typename T>
 size_t  PrecompData<T>::Set(T (*Func2)(T x, T y),
                             T xmin, T xmax, size_t xnPoints,
-                            T ymin, T ymax, size_t ynPoints);    // plane
+                            T ymin, T ymax, size_t ynPoints)    // plane
+{} //+TODO
 
 template<typename T>
 size_t  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
                             T xmin, T xmax, size_t xnPoints,
                             T ymin, T ymax, size_t ynPoints,
-                            T zmin, T zmax, size_t znPoints);    // volume
+                            T zmin, T zmax, size_t znPoints)    // volume
+{} //+TODO
 
 
 /** AutoSet() : Automatic irregular grid, computed
@@ -145,18 +147,21 @@ size_t  PrecompData<T>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)
 // Irregular grid, computed
 
 template<typename T>
-size_t  PrecompData<T>::Set(T (*Func1)(T x), const std::vector<T> &x);      // line
+size_t  PrecompData<T>::Set(T (*Func1)(T x), const std::vector<T> &x)      // line
+{} //+TODO
 
 template<typename T>
 size_t  PrecompData<T>::Set(T (*Func2)(T x, T y),
                             const std::vector<T> &x,
-                            const std::vector<T> &y);      // plane
+                            const std::vector<T> &y)      // plane
+{} //+TODO
 
 template<typename T>
 size_t  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
                             const std::vector<T> &x,
                             const std::vector<T> &y,
-                            const std::vector<T> &z);      // volume
+                            const std::vector<T> &z)      // volume
+{} //+TODO
 
 //+TODO Regular grid, load from file
 //+TODO Irregular grid, load from file
@@ -172,21 +177,21 @@ T PrecompData<T>::operator()(T x) const
 }
 
 template<typename T>
-T PrecompData<T>::operator()(T x, T y) const;
+T PrecompData<T>::operator()(T x, T y) const {} //+TODO
 
 template<typename T>
-T PrecompData<T>::operator()(T x, T y, T z) const;
+T PrecompData<T>::operator()(T x, T y, T z) const {} //+TODO
 
 // Range checked accessors; check Status()
 
 template<typename T>
-T PrecompData<T>::get(T x);
+T PrecompData<T>::get(T x) {} //+TODO
 
 template<typename T>
-T PrecompData<T>::get(T x, T y);
+T PrecompData<T>::get(T x, T y) {} //+TODO
 
 template<typename T>
-T PrecompData<T>::get(T x, T y, T z);
+T PrecompData<T>::get(T x, T y, T z) {} //+TODO
 
 
 // Range checked accessors, interpolated; check Status()
@@ -211,10 +216,10 @@ T PrecompData<T>::Interpolate(T x)
 
 
 template<typename T>
-T PrecompData<T>::Interpolate(T x, T y);
+T PrecompData<T>::Interpolate(T x, T y) {} //+TODO
 
 template<typename T>
-T PrecompData<T>::Interpolate(T x, T y, T z);
+T PrecompData<T>::Interpolate(T x, T y, T z) {} //+TODO
 
 
 template<typename T>
@@ -317,7 +322,7 @@ int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const 
     }
 
     // Sort based on decreasing second derivative absolute value
-    std::sort(samples.begin(), samples.end(), greater<PointCurv>());
+	std::sort(samples.begin(), samples.end(), std::greater<PointCurv>());
 
     /// Pick the points with highest second derivative (curvature)
 
