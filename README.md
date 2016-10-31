@@ -69,3 +69,8 @@ int main()
 ```
 
 - For a full set of examples, look at the test file `PrecompData_test.cpp`.
+
+
+### References
+
+http://mech.fsv.cvut.cz/~dr/papers/Thesis98/node40.html
