@@ -280,7 +280,7 @@ template<typename T>
 T PrecompData<T>::SecondDerivative(T x1, T y1, T x2, T y2, T x3, T y3) const
 {
     /// Second derivative (central differences):  d2 = [f(x-1) - 2f(x) + f(x+1)] / {[(x+1) - (x-1)]/2}^2
-    return  (y1 - 2*y2 + y3)/std::pow(0.5*(x3 - x1), 2);
+    return  (y1 - 2*y2 + y3)/std::pow(0.5f*(x3 - x1), 2);
 }
 
 

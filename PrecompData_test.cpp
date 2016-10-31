@@ -25,7 +25,7 @@ float TestFuncNonLin1(float x) {        //   y = |x|
 }
 
 float TestFuncNonLin2(float x) {        //   y = 1/(|x-2| + 0.1)
-    return 1/(fabs(x - 2.0) + 0.1);
+    return 1/(fabs(x - 2.0f) + 0.1f);
 }
 
 float TestFuncNonLinSin(float x) {        //   y = sin(x)
@@ -217,9 +217,9 @@ PrecompData_test::PrecompData_test()
         }
         int n = 100;
         cout << "Compare approximation with real sin(x) function (done on " << n << " points):" << endl;
-        float error = 0.0, avgErr = 0.0;
-        float minErrX = 0.0, minErrY = 1.0e20;
-        float maxErrX = 0.0, maxErrY = 0.0;
+        float error = 0.0f, avgErr = 0.0f;
+        float minErrX = 1.0e20f, minErrY = 1.0e20f;
+        float maxErrX = 0.0f,    maxErrY = 0.0f;
         float x = x0, step = (x1 - x0)/n;
         for(int i = 0; i < n; ++i) {
             error = fabs(sin(x) - itp.Interpolate(x));
