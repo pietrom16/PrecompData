@@ -73,4 +73,5 @@ int main()
 
 ### References
 
-http://mech.fsv.cvut.cz/~dr/papers/Thesis98/node40.html
+["Sequential and Parallel Generation of Unstructured 3D Meshes"](http://mech.fsv.cvut.cz/~dr/papers/Thesis98/thesis.html)
+   ["Curve Discretization"](http://mech.fsv.cvut.cz/~dr/papers/Thesis98/node40.html)
