@@ -13,13 +13,13 @@ namespace Utilities {
 
 template<typename T>
 PrecompData<T>::PrecompData()
-	: interpolation(0), status(0)
+	: interpolation(0), status(0), overSampling(2.0f)
 {
 }
 
 template<typename T>
 PrecompData<T>::PrecompData(const std::string _funcName)
-	: interpolation(0), status(0), funcName(_funcName)
+	: interpolation(0), status(0), overSampling(2.0f), funcName(_funcName)
 {
 }
 
@@ -48,6 +48,16 @@ template<typename T>
 std::string  PrecompData<T>::Comment() const
 {
 	return comment;
+}
+
+template<typename T>
+int  PrecompData<T>::SetOversampling(float ovs)
+{
+    if(ovs < 1.0f)
+        return wrn_invalid_oversampling;
+
+    overSampling = ovs;
+    return 0;
 }
 
 
@@ -136,7 +146,7 @@ size_t  PrecompData<T>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)
     xMin = xmin;
     xMax = xmax;
 
-    PickBestPoints(Func1, nPoints, 1.5);
+    PickBestPoints(Func1, nPoints, overSampling);
 
     PreComputeValues();
 
@@ -292,7 +302,7 @@ int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const 
 
     /// Oversample
 
-    const size_t nSamples = overSampling*nPoints;
+    const size_t nSamples = size_t(overSampling*nPoints);
     const T step = (xMax - xMin)/nSamples;
 
     std::vector<PointCurv> samples;

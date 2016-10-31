@@ -206,6 +206,7 @@ PrecompData_test::PrecompData_test()
         const string funcName = "y = sin(x)";
         PrecompData<float> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
+        itp.SetOversampling(1.5f);
         itp.AutoSet(&TestFuncNonLinSin, x0, x1, nValues);
         cerr << "x0 = " << x0 << "  x1 = " << x1 << "  nValues = " << nValues << endl;  //+T+
         std::vector<float> vx, vy;
