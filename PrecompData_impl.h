@@ -101,7 +101,9 @@ size_t  PrecompData<T>::Set(T (*Func1)(T x),
 	xMin = xmin;
 	xMax = xmax;
 	
+    xData.resize(nPoints);
 	yData.resize(nPoints);
+    
 	step = (xMax - xMin)/nPoints;
 
 	T x = xMin;
@@ -110,6 +112,7 @@ size_t  PrecompData<T>::Set(T (*Func1)(T x),
 	{
 		const T y = Func1(x);
 
+        xData[i] = x;
 		yData[i] = y;
 
 		x += step;
