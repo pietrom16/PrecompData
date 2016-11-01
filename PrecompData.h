@@ -22,6 +22,9 @@
 
     To enable device memory usage (e.g. GPGPU), define the PRECOMPDATA_DEVICE macro.
 	
+    Tradeoff: Templates do not allow to have objects with number of dimensions defined at run time.
+              However they provide better run time performance.
+
 	Warning: the function to be interpolated had better have a certain complexity,
 	         otherwise it may be better to compute it straight away.
 */
