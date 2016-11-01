@@ -34,6 +34,7 @@
 
 //#define PRECOMPDATA_DEVICE
 
+#include <array>
 #include <string>
 #include <vector>
 
@@ -43,6 +44,20 @@
 #endif
 
 namespace Utilities {
+
+
+/// DataPoint - point in the multidimensional space
+
+template<typename T = float, int nx = 1, int ny = 1>
+struct DataPoint
+{
+    std::array<T, nx> X;
+    std::array<T, ny> Y;
+};
+
+
+
+/// PrecompData - set of points approximating a multidimensional function
 
 template<
     typename T = float,   /* data type */
@@ -62,6 +77,7 @@ public:
 	std::string  Comment()      const;
     int          SetOversampling(float ovs);
     float        Oversamping()  const { return overSampling; }
+
     int          nxDimensions() const { return nx; }
     int          nyDimensions() const { return ny; }
 
