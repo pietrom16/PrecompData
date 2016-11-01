@@ -41,7 +41,7 @@
 
 namespace Utilities {
 
-template<typename T>
+template<typename T, int nx = 1, int ny = 1>
 class PrecompData
 {
 public:
@@ -55,7 +55,9 @@ public:
 	std::string  Comment()      const;
     int          SetOversampling(float ovs);
     float        Oversamping() const { return overSampling; }
-	
+    int          nxDimensions() const { return nx; }
+    int          nyDimensions() const { return ny; }
+
     // Precompute constant values
 	int PreComputeValues();
 

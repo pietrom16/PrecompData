@@ -11,47 +11,47 @@
 
 namespace Utilities {
 
-template<typename T>
-PrecompData<T>::PrecompData()
+template<typename T, int nx, int ny>
+PrecompData<T, nx, ny>::PrecompData()
 	: interpolation(0), status(0), overSampling(2.0f)
 {
 }
 
-template<typename T>
-PrecompData<T>::PrecompData(const std::string _funcName)
+template<typename T, int nx, int ny>
+PrecompData<T, nx, ny>::PrecompData(const std::string _funcName)
 	: interpolation(0), status(0), overSampling(2.0f), funcName(_funcName)
 {
 }
 
 
-template<typename T>
-int  PrecompData<T>::SetFunctionName(const std::string &_funcName)
+template<typename T, int nx, int ny>
+int  PrecompData<T, nx, ny>::SetFunctionName(const std::string &_funcName)
 {
 	funcName = _funcName;
 	return 0;
 }
 
-template<typename T>
-int  PrecompData<T>::SetComment(const std::string &_comment)
+template<typename T, int nx, int ny>
+int  PrecompData<T, nx, ny>::SetComment(const std::string &_comment)
 {
 	comment = _comment;
 	return 0;
 }
 
-template<typename T>
-std::string  PrecompData<T>::FunctionName() const
+template<typename T, int nx, int ny>
+std::string  PrecompData<T, nx, ny>::FunctionName() const
 {
 	return funcName;
 }
 
-template<typename T>
-std::string  PrecompData<T>::Comment() const
+template<typename T, int nx, int ny>
+std::string  PrecompData<T, nx, ny>::Comment() const
 {
 	return comment;
 }
 
-template<typename T>
-int  PrecompData<T>::SetOversampling(float ovs)
+template<typename T, int nx, int ny>
+int  PrecompData<T, nx, ny>::SetOversampling(float ovs)
 {
     if(ovs < 1.0f)
         return wrn_invalid_oversampling;
@@ -63,8 +63,8 @@ int  PrecompData<T>::SetOversampling(float ovs)
 
 // Precompute constant values
 
-template<typename T>
-int PrecompData<T>::PreComputeValues()
+template<typename T, int nx, int ny>
+int PrecompData<T, nx, ny>::PreComputeValues()
 {
     //+CHECK
     // Set up conversion constants
@@ -77,14 +77,14 @@ int PrecompData<T>::PreComputeValues()
 
 // Coordinate <--> index transformations
 
-template<typename T>
-size_t PrecompData<T>::RtoI(T x) const     // real --> integer/index
+template<typename T, int nx, int ny>
+size_t PrecompData<T, nx, ny>::RtoI(T x) const     // real --> integer/index
 {
     return size_t(kRealInt*(x - xMin));
 }
 
-template<typename T>
-T PrecompData<T>::ItoR(size_t i) const     // integer/index --> real
+template<typename T, int nx, int ny>
+T PrecompData<T, nx, ny>::ItoR(size_t i) const     // integer/index --> real
 {
     return xMin + kIntReal*T(i);
 }
@@ -94,9 +94,9 @@ T PrecompData<T>::ItoR(size_t i) const     // integer/index --> real
 
 // Regular grid, computed
 
-template<typename T>
-size_t  PrecompData<T>::Set(T (*Func1)(T x),
-                            T xmin, T xmax, size_t nPoints)     // line
+template<typename T, int nx, int ny>
+size_t  PrecompData<T, nx, ny>::Set(T (*Func1)(T x),
+                                    T xmin, T xmax, size_t nPoints)     // line
 {
 	xMin = xmin;
 	xMax = xmax;
@@ -124,17 +124,17 @@ size_t  PrecompData<T>::Set(T (*Func1)(T x),
 }
 
 
-template<typename T>
-size_t  PrecompData<T>::Set(T (*Func2)(T x, T y),
-                            T xmin, T xmax, size_t xnPoints,
-                            T ymin, T ymax, size_t ynPoints)    // plane
+template<typename T, int nx, int ny>
+size_t  PrecompData<T, nx, ny>::Set(T (*Func2)(T x, T y),
+                                       T xmin, T xmax, size_t xnPoints,
+                                       T ymin, T ymax, size_t ynPoints)    // plane
 {} //+TODO
 
-template<typename T>
-size_t  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
-                            T xmin, T xmax, size_t xnPoints,
-                            T ymin, T ymax, size_t ynPoints,
-                            T zmin, T zmax, size_t znPoints)    // volume
+template<typename T, int nx, int ny>
+size_t  PrecompData<T, nx, ny>::Set(T (*Func3)(T x, T y, T z),
+                                    T xmin, T xmax, size_t xnPoints,
+                                    T ymin, T ymax, size_t ynPoints,
+                                    T zmin, T zmax, size_t znPoints)    // volume
 {} //+TODO
 
 
@@ -145,8 +145,8 @@ size_t  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
  *    - Pick the remaining points from regions of the function with largest second derivative.
  */
 
-template<typename T>
-size_t  PrecompData<T>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)     // line
+template<typename T, int nx, int ny>
+size_t  PrecompData<T, nx, ny>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)     // line
 {
     xMin = xmin;
     xMax = xmax;
@@ -161,21 +161,21 @@ size_t  PrecompData<T>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)
 
 // Irregular grid, computed
 
-template<typename T>
-size_t  PrecompData<T>::Set(T (*Func1)(T x), const std::vector<T> &x)      // line
+template<typename T, int nx, int ny>
+size_t  PrecompData<T, nx, ny>::Set(T (*Func1)(T x), const std::vector<T> &x)      // line
 {} //+TODO
 
-template<typename T>
-size_t  PrecompData<T>::Set(T (*Func2)(T x, T y),
-                            const std::vector<T> &x,
-                            const std::vector<T> &y)      // plane
+template<typename T, int nx, int ny>
+size_t  PrecompData<T, nx, ny>::Set(T (*Func2)(T x, T y),
+                                    const std::vector<T> &x,
+                                    const std::vector<T> &y)      // plane
 {} //+TODO
 
-template<typename T>
-size_t  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
-                            const std::vector<T> &x,
-                            const std::vector<T> &y,
-                            const std::vector<T> &z)      // volume
+template<typename T, int nx, int ny>
+size_t  PrecompData<T, nx, ny>::Set(T (*Func3)(T x, T y, T z),
+                                    const std::vector<T> &x,
+                                    const std::vector<T> &y,
+                                    const std::vector<T> &z)      // volume
 {} //+TODO
 
 //+TODO Regular grid, load from file
@@ -185,34 +185,34 @@ size_t  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
 
 // Range UNchecked, 0 degree interpolation accessors
 
-template<typename T>
-T PrecompData<T>::operator()(T x) const
+template<typename T, int nx, int ny>
+T PrecompData<T, nx, ny>::operator()(T x) const
 {
     return yData[RtoI(x)];
 }
 
-template<typename T>
-T PrecompData<T>::operator()(T x, T y) const {} //+TODO
+template<typename T, int nx, int ny>
+T PrecompData<T, nx, ny>::operator()(T x, T y) const {} //+TODO
 
-template<typename T>
-T PrecompData<T>::operator()(T x, T y, T z) const {} //+TODO
+template<typename T, int nx, int ny>
+T PrecompData<T, nx, ny>::operator()(T x, T y, T z) const {} //+TODO
 
 // Range checked accessors; check Status()
 
-template<typename T>
-T PrecompData<T>::get(T x) {} //+TODO
+template<typename T, int nx, int ny>
+T PrecompData<T, nx, ny>::get(T x) {} //+TODO
 
-template<typename T>
-T PrecompData<T>::get(T x, T y) {} //+TODO
+template<typename T, int nx, int ny>
+T PrecompData<T, nx, ny>::get(T x, T y) {} //+TODO
 
-template<typename T>
-T PrecompData<T>::get(T x, T y, T z) {} //+TODO
+template<typename T, int nx, int ny>
+T PrecompData<T, nx, ny>::get(T x, T y, T z) {} //+TODO
 
 
 // Range checked accessors, interpolated; check Status()
 
-template<typename T>
-T PrecompData<T>::Interpolate(T x)
+template<typename T, int nx, int ny>
+T PrecompData<T, nx, ny>::Interpolate(T x)
 {
     RangeCheck(x);
 
@@ -230,15 +230,15 @@ T PrecompData<T>::Interpolate(T x)
 }
 
 
-template<typename T>
-T PrecompData<T>::Interpolate(T x, T y) {} //+TODO
+template<typename T, int nx, int ny>
+T PrecompData<T, nx, ny>::Interpolate(T x, T y) {} //+TODO
 
-template<typename T>
-T PrecompData<T>::Interpolate(T x, T y, T z) {} //+TODO
+template<typename T, int nx, int ny>
+T PrecompData<T, nx, ny>::Interpolate(T x, T y, T z) {} //+TODO
 
 
-template<typename T>
-void PrecompData<T>::Interpolation(int order)
+template<typename T, int nx, int ny>
+void PrecompData<T, nx, ny>::Interpolation(int order)
 {
     interpolation = order;
 }
@@ -246,8 +246,8 @@ void PrecompData<T>::Interpolation(int order)
 
 // Range check
 
-template<typename T>
-int PrecompData<T>::RangeCheck(T x)
+template<typename T, int nx, int ny>
+int PrecompData<T, nx, ny>::RangeCheck(T x)
 {
     status = 0;
 
@@ -262,8 +262,8 @@ int PrecompData<T>::RangeCheck(T x)
 
 // Get the whole value set
 
-template<typename T>
-int PrecompData<T>::Get(std::vector<T> &_xData , std::vector<T> &_yData) const
+template<typename T, int nx, int ny>
+int PrecompData<T, nx, ny>::Get(std::vector<T> &_xData , std::vector<T> &_yData) const
 {
     _xData = xData;
     _yData = yData;
@@ -273,24 +273,24 @@ int PrecompData<T>::Get(std::vector<T> &_xData , std::vector<T> &_yData) const
 
 /// Math functions
 
-template<typename T>
-T PrecompData<T>::FirstDerivative(T x1, T y1, T x2, T y2) const
+template<typename T, int nx, int ny>
+T PrecompData<T, nx, ny>::FirstDerivative(T x1, T y1, T x2, T y2) const
 {
     /// First derivative (central differences):  d1 = [f(x+1) - f(x)] / [(x+1) - x]
     return  (y2 - y1)/(x2 - x1);
 }
 
 
-template<typename T>
-T PrecompData<T>::SecondDerivative(T x1, T y1, T x2, T y2, T x3, T y3) const
+template<typename T, int nx, int ny>
+T PrecompData<T, nx, ny>::SecondDerivative(T x1, T y1, T x2, T y2, T x3, T y3) const
 {
     /// Second derivative (central differences):  d2 = [f(x-1) - 2f(x) + f(x+1)] / {[(x+1) - (x-1)]/2}^2
     return  (y1 - 2*y2 + y3)/std::pow(0.5f*(x3 - x1), 2);
 }
 
 
-template<typename T>
-int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const float overSampling)
+template<typename T, int nx, int ny>
+int PrecompData<T, nx, ny>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const float overSampling)
 {
     struct Point {
         T x, y;
