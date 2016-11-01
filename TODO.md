@@ -1,9 +1,9 @@
 # PrecompData - TODO
 
 
-- Precompute irregular grid, one dimensional functions, passed as function pointers.
-- Precompute regular grid, n dimensional functions, passed as function pointers.
-- Precompute irregular grid, n dimensional functions, passed as function pointers.
+- Precompute irregular grid, one dimensional functions.
+- Precompute regular grid, n dimensional functions.
+- Precompute irregular grid, n dimensional functions.
 - Load data from file.
 - Second degree (quadratic) interpolation.
 
