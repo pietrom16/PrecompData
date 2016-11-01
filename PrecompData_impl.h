@@ -102,9 +102,9 @@ size_t  PrecompData<T>::Set(T (*Func1)(T x),
 	xMax = xmax;
 	
     xData.resize(nPoints);
-	yData.resize(nPoints);
+    yData.resize(nPoints);
     
-	step = (xMax - xMin)/nPoints;
+    step = (xMax - xMin)/nPoints;
 
 	T x = xMin;
 
@@ -113,7 +113,7 @@ size_t  PrecompData<T>::Set(T (*Func1)(T x),
 		const T y = Func1(x);
 
         xData[i] = x;
-		yData[i] = y;
+        yData[i] = y;
 
 		x += step;
 	}
@@ -151,7 +151,12 @@ size_t  PrecompData<T>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)
     xMin = xmin;
     xMax = xmax;
 
-    PickBestPoints(Func1, nPoints, overSampling);
+    const size_t nPointsUniform   = 0.25f*nPoints;
+    const size_t nPointsIrregular = nPoints - nPointsUniform;
+
+    Set(Func1, xMin, xMax, nPointsUniform);
+
+    PickBestPoints(Func1, nPointsIrregular, overSampling);
 
     PreComputeValues();
 
