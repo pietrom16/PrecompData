@@ -13,7 +13,7 @@
 	- Use constant tables for non linear functions' values.
 	
     - Approximations:
-        - Functions: f(x) [TODO: f(x,y), f(x,y,z), vector fields, ...]
+        - Functions: Y = f(X),  where X and Y are vectors.
 		- Interpolations: step, linear [TODO: cubic, spline, ...]
 		- Regressions: [TODO: linear, minimal least squares, ...]
         - Extrapolations: [TODO: linear, polynomial, ...]
@@ -41,7 +41,11 @@
 
 namespace Utilities {
 
-template<typename T, int nx = 1, int ny = 1>
+template<
+    typename T = float,   /* data type */
+    int nx = 1,           /* number of dimensions of the independent vector */
+    int ny = 1            /* number of dimensions of the dependent vector   */
+>
 class PrecompData
 {
 public:
@@ -54,7 +58,7 @@ public:
 	std::string  FunctionName() const;
 	std::string  Comment()      const;
     int          SetOversampling(float ovs);
-    float        Oversamping() const { return overSampling; }
+    float        Oversamping()  const { return overSampling; }
     int          nxDimensions() const { return nx; }
     int          nyDimensions() const { return ny; }
 
@@ -68,6 +72,7 @@ public:
 	/// Data loading
 	
 	// Regular grid, computed
+    size_t  Set();   //+TODO  T{nx} --> T{ny}
     size_t  Set(T (*Func1)(T x),           T xmin, T xmax, size_t nPoints);     // line: 1D --> 1D
     size_t  Set(T (*Func2)(T x, T y),      T xmin, T xmax, size_t xnPoints,
 	                                       T ymin, T ymax, size_t ynPoints);    // plane: 2D --> 1D
@@ -185,6 +190,7 @@ private:
 #endif
 
 };
+
 
 } // Utilities
 
