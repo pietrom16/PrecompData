@@ -68,6 +68,10 @@ class PrecompData
 {
 public:
 
+    struct DataPoint : Utilities::DataPoint<T, nx, ny> {};
+
+public:
+
 	PrecompData();
 	PrecompData(const std::string _funcName);
 
@@ -195,10 +199,10 @@ private:
 	int             interpolation;
 	int             status;
 
-    std::vector<T>  xData;
-    std::vector<T>  yData;
-    T               xMin, xMax, step;
-	T               kRealInt, kIntReal;     // conversion factors
+    std::vector<DataPoint>  data;
+    DataPoint               min, max, step;
+    DataPoint               kRealInt, kIntReal;     // conversion factors
+
 
     float           overSampling;
 
