@@ -219,15 +219,9 @@ PrecompData_test::PrecompData_test()
         }
         int n = 100;
         cout << "Compare approximation with real sin(x) function (done on " << n << " points):" << endl;
-<<<<<<< .merge_file_R6FDfJ
-        float error = 0.0, avgErr = 0.0;
-		float minErrX = 1.0e20, minErrY = 1.0e20;
-		float maxErrX = 0.0,    maxErrY = 0.0;
-=======
         float error = 0.0f, avgErr = 0.0f;
         float minErrX = 1.0e20f, minErrY = 1.0e20f;
         float maxErrX = 0.0f,    maxErrY = 0.0f;
->>>>>>> .merge_file_Kn5us0
         float x = x0, step = (x1 - x0)/n;
         for(int i = 0; i < n; ++i) {
             error = fabs(sin(x) - itp.Interpolate(x));
