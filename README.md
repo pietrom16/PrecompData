@@ -7,17 +7,18 @@ Purpose: improve performance avoiding the realtime computation of complex functi
 
 ### Currently implemented features
 
-- Precompute regular grid, one dimensional functions, passed as function pointers.
+- Get data through function pointers.
+- Precompute regular grid, one dimensional functions.
 - Zero degree (nearest-neighbor/point sampling/Voronoi) interpolation.
 - First degree (linear) interpolation for functions of one variable.
 - Copy data on GPU/device memory. [TEST]
-- Precompute irregular grid, one dimensional functions, passed as function pointers. [OPTIMIZE/TEST]
+- Precompute irregular grid, one dimensional functions. [OPTIMIZE/TEST]
 
 
 ### TODO
 
-- Precompute regular grid, n dimensional functions, passed as function pointers.
-- Precompute irregular grid, n dimensional functions, passed as function pointers.
+- Precompute regular grid, n dimensional functions.
+- Precompute irregular grid, n dimensional functions.
 - Load data from file.
 - Second degree (quadratic) interpolation.
 
@@ -69,3 +70,9 @@ int main()
 ```
 
 - For a full set of examples, look at the test file `PrecompData_test.cpp`.
+
+
+### References
+
+["Sequential and Parallel Generation of Unstructured 3D Meshes"](http://mech.fsv.cvut.cz/~dr/papers/Thesis98/thesis.html)
+- Chapter: ["Curve Discretization"](http://mech.fsv.cvut.cz/~dr/papers/Thesis98/node40.html)

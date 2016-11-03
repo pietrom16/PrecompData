@@ -13,13 +13,13 @@ namespace Utilities {
 
 template<typename T>
 PrecompData<T>::PrecompData()
-	: interpolation(0), status(0)
+	: interpolation(0), status(0), overSampling(2.0f)
 {
 }
 
 template<typename T>
 PrecompData<T>::PrecompData(const std::string _funcName)
-	: interpolation(0), status(0), funcName(_funcName)
+	: interpolation(0), status(0), overSampling(2.0f), funcName(_funcName)
 {
 }
 
@@ -48,6 +48,16 @@ template<typename T>
 std::string  PrecompData<T>::Comment() const
 {
 	return comment;
+}
+
+template<typename T>
+int  PrecompData<T>::SetOversampling(float ovs)
+{
+    if(ovs < 1.0f)
+        return wrn_invalid_oversampling;
+
+    overSampling = ovs;
+    return 0;
 }
 
 
@@ -91,8 +101,10 @@ size_t  PrecompData<T>::Set(T (*Func1)(T x),
 	xMin = xmin;
 	xMax = xmax;
 	
-	yData.resize(nPoints);
-	step = (xMax - xMin)/nPoints;
+    xData.resize(nPoints);
+    yData.resize(nPoints);
+    
+    step = (xMax - xMin)/nPoints;
 
 	T x = xMin;
 
@@ -100,7 +112,8 @@ size_t  PrecompData<T>::Set(T (*Func1)(T x),
 	{
 		const T y = Func1(x);
 
-		yData[i] = y;
+        xData[i] = x;
+        yData[i] = y;
 
 		x += step;
 	}
@@ -127,7 +140,9 @@ size_t  PrecompData<T>::Set(T (*Func3)(T x, T y, T z),
 
 /** AutoSet() : Automatic irregular grid, computed
  *
- *  Irregular grid found picking the points with largest second derivative.
+ *  Irregular grid:
+ *    - Pick 25% of the points on a regular grid, for minimum uniform coverage.
+ *    - Pick the remaining points from regions of the function with largest second derivative.
  */
 
 template<typename T>
@@ -136,7 +151,12 @@ size_t  PrecompData<T>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)
     xMin = xmin;
     xMax = xmax;
 
-    PickBestPoints(Func1, nPoints, 2);
+    const size_t nPointsUniform   = 0.25f*nPoints;
+    const size_t nPointsIrregular = nPoints - nPointsUniform;
+
+    Set(Func1, xMin, xMax, nPointsUniform);
+
+    PickBestPoints(Func1, nPointsIrregular, overSampling);
 
     PreComputeValues();
 
@@ -270,12 +290,12 @@ template<typename T>
 T PrecompData<T>::SecondDerivative(T x1, T y1, T x2, T y2, T x3, T y3) const
 {
     /// Second derivative (central differences):  d2 = [f(x-1) - 2f(x) + f(x+1)] / {[(x+1) - (x-1)]/2}^2
-    return  (y1 - 2*y2 + y3)/std::pow(0.5*(x3 - x1), 2);
+    return  (y1 - 2*y2 + y3)/std::pow(0.5f*(x3 - x1), 2);
 }
 
 
 template<typename T>
-int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const int overSampling)
+int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const float overSampling)
 {
     struct Point {
         T x, y;
@@ -292,7 +312,7 @@ int PrecompData<T>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const 
 
     /// Oversample
 
-    const size_t nSamples = overSampling*nPoints;
+    const size_t nSamples = size_t(overSampling*nPoints);
     const T step = (xMax - xMin)/nSamples;
 
     std::vector<PointCurv> samples;

@@ -53,6 +53,8 @@ public:
 	int          SetComment(const std::string &_comment);
 	std::string  FunctionName() const;
 	std::string  Comment()      const;
+    int          SetOversampling(float ovs);
+    float        Oversamping() const { return overSampling; }
 	
     // Precompute constant values
 	int PreComputeValues();
@@ -149,7 +151,8 @@ public:
     
     // Warning return values
     static const int wrn_x_less_than_min      = -101,
-                     wrn_x_more_than_max      = -102;
+                     wrn_x_more_than_max      = -102,
+                     wrn_invalid_oversampling = -103;
 
 public:
     // Test
@@ -158,7 +161,7 @@ public:
 protected:
     T FirstDerivative(T x1, T y1, T x2, T y2) const;
     T SecondDerivative(T x1, T y1, T x2, T y2, T x3, T y3) const;
-    int PickBestPoints(T (*Func1)(T x), const size_t nPoints, const int overSampling = 2);
+    int PickBestPoints(T (*Func1)(T x), const size_t nPoints, const float overSampling = 2.0f);
 
 private:
 	
@@ -171,6 +174,7 @@ private:
     T               xMin, xMax, step;
 	T               kRealInt, kIntReal;     // conversion factors
 
+    float           overSampling;
 
 	//+TODO: plane, volume
 
