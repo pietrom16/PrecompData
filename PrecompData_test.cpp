@@ -217,8 +217,8 @@ PrecompData_test::PrecompData_test()
         int n = 100;
         cout << "Compare approximation with real sin(x) function (done on " << n << " points):" << endl;
         float error = 0.0, avgErr = 0.0;
-        float minErrX = 0.0, minErrY = 1.0e20;
-        float maxErrX = 0.0, maxErrY = 0.0;
+		float minErrX = 1.0e20, minErrY = 1.0e20;
+		float maxErrX = 0.0,    maxErrY = 0.0;
         float x = x0, step = (x1 - x0)/n;
         for(int i = 0; i < n; ++i) {
             error = fabs(sin(x) - itp.Interpolate(x));
