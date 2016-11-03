@@ -48,27 +48,28 @@ namespace Utilities {
 
 /// DataPoint - point in the multidimensional space
 
-template<typename T = float, int nx = 1, int ny = 1>
+template<
+    typename T = float,   /* data type of independent vector */
+    typename U = float,   /* data type of dependent vector   */
+    int nx = 1,           /* number of dimensions of the independent vector */
+    int ny = 1            /* number of dimensions of the dependent vector   */
+>
 struct DataPoint
 {
     std::array<T, nx> X;
-    std::array<T, ny> Y;
+    std::array<U, ny> Y;
 };
 
 
 
 /// PrecompData - set of points approximating a multidimensional function
 
-template<
-    typename T = float,   /* data type */
-    int nx = 1,           /* number of dimensions of the independent vector */
-    int ny = 1            /* number of dimensions of the dependent vector   */
->
+template<typename T = float, typename U = float, int nx = 1, int ny = 1>
 class PrecompData
 {
 public:
 
-    struct DataPoint : Utilities::DataPoint<T, nx, ny> {};
+    struct DataPoint : Utilities::DataPoint<T, U, nx, ny> {};
 
 public:
 
