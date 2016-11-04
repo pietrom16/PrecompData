@@ -4,7 +4,7 @@
 	Apache License 2.0
 */
 
-#include "PrecompData.h"
+//#include "PrecompData.h"
 #include <algorithm>
 #include <cmath>
 #include <functional>
@@ -101,37 +101,29 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
                                          size_t  nPoints)
 {
     //+TODO
-    return size_t();
-}
+    min = xmin;
+    max = xmax;
 
-
-template<typename TX, typename TY, int nx, int ny>
-size_t  PrecompData<TX, TY, nx, ny>::Set(T (*Func1)(T x),
-                                    T xmin, T xmax, size_t nPoints)     // line
-{
-	xMin = xmin;
-	xMax = xmax;
-	
     xData.resize(nPoints);
-	yData.resize(nPoints);
-    
-	step = (xMax - xMin)/nPoints;
+    yData.resize(nPoints);
 
-	T x = xMin;
+    step = (max - min)/nPoints;
 
-	for(size_t i = 0; i < nPoints; ++i)
-	{
-		const T y = Func1(x);
+    X x = min;
+
+    for(size_t i = 0; i < nPoints; ++i)
+    {
+        const Y y = Func(x);
 
         xData[i] = x;
-		yData[i] = y;
+        yData[i] = y;
 
-		x += step;
-	}
-	
-	PreComputeValues();
+        x += step;
+    }
 
-	return yData.size();
+    PreComputeValues();
+
+    return yData.size();
 }
 
 
