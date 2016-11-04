@@ -78,13 +78,14 @@ int PrecompData<TX, TY, nx, ny>::PreComputeValues()
 // Coordinate <--> index transformations
 
 template<typename TX, typename TY, int nx, int ny>
-size_t PrecompData<TX, TY, nx, ny>::RtoI(TX x) const     // real --> integer/index
+size_t PrecompData<TX, TY, nx, ny>::RtoI(X x) const     // real --> integer/index
 {
     return size_t(kRealInt*(x - xMin));
 }
 
+
 template<typename TX, typename TY, int nx, int ny>
-T PrecompData<TX, TY, nx, ny>::ItoR(size_t i) const     // integer/index --> real
+PrecompData<TX, TY, nx, ny>::X PrecompData<TX, TY, nx, ny>::ItoR(size_t i) const     // integer/index --> real
 {
     return xMin + kIntReal*T(i);
 }
