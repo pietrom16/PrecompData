@@ -4,7 +4,6 @@
 	Apache License 2.0
 */
 
-//#include "PrecompData.h"
 #include <algorithm>
 #include <cmath>
 #include <functional>
@@ -153,7 +152,7 @@ size_t  PrecompData<TX, TY, nx, ny>::AutoSet(Y (*Func)(X x), X xmin, X xmax, siz
 // Range UNchecked, 0 degree interpolation accessors
 
 template<typename TX, typename TY, int nx, int ny>
-PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::operator()(X x) const
+typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::operator()(X x) const
 {
     return yData[RtoI(x)];
 }
@@ -162,13 +161,13 @@ PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::operator()(X x) cons
 // Range checked accessors; check Status()
 
 template<typename TX, typename TY, int nx, int ny>
-PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::get(X x) {} //+TODO
+typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::get(X x) {} //+TODO
 
 
 // Range checked accessors, interpolated; check Status()
 
 template<typename TX, typename TY, int nx, int ny>
-PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::Interpolate(X x)
+typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::Interpolate(X x)
 {
     RangeCheck(x);
 
