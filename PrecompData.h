@@ -7,7 +7,7 @@
 
 	---
 	
-	Container of precalculated values, returned with interpolation/regression.
+	Container of precalculated n-dimensional values, returned with interpolation/regression.
 	Purpose: improve performance avoiding the realtime computation of complex functions.
 	
 	- Use constant tables for non linear functions' values.
@@ -46,30 +46,24 @@
 namespace Utilities {
 
 
-/// DataPoint - point in the multidimensional space
+/** PrecompData
+    Set of points approximating a multidimensional function/hypersurface
+    f: X --> Y
+  */
 
 template<
-    typename T = float,   /* data type of independent vector */
-    typename U = float,   /* data type of dependent vector   */
-    int nx = 1,           /* number of dimensions of the independent vector */
-    int ny = 1            /* number of dimensions of the dependent vector   */
+    typename TX = float,   /* data type of independent vector */
+    typename TY = float,   /* data type of dependent vector   */
+    int nx = 1,            /* number of dimensions of the independent vector */
+    int ny = 1             /* number of dimensions of the dependent vector   */
 >
-struct DataPoint
-{
-    std::array<T, nx> X;
-    std::array<U, ny> Y;
-};
-
-
-
-/// PrecompData - set of points approximating a multidimensional function
-
-template<typename T = float, typename U = float, int nx = 1, int ny = 1>
 class PrecompData
 {
 public:
 
-    struct DataPoint : Utilities::DataPoint<T, U, nx, ny> {};
+    // Data types for the dependent and independent variables
+    typedef std::array<TX, nx> X;
+    typedef std::array<TY, ny> Y;
 
 public:
 
@@ -90,69 +84,44 @@ public:
 	int PreComputeValues();
 
 	// Coordinate <--> index transformation
-	size_t RtoI(T x)      const;     // real --> integer
-	T      ItoR(size_t i) const;     // integer --> real
+	size_t RtoI(X x)      const;     // real --> integer
+	X      ItoR(size_t i) const;     // integer --> real
 	
 	/// Data loading
 	
 	// Regular grid, computed
-    size_t  Set();   //+TODO  T{nx} --> T{ny}
-    size_t  Set(T (*Func1)(T x),           T xmin, T xmax, size_t nPoints);     // line: 1D --> 1D
-    size_t  Set(T (*Func2)(T x, T y),      T xmin, T xmax, size_t xnPoints,
-	                                       T ymin, T ymax, size_t ynPoints);    // plane: 2D --> 1D
-    size_t  Set(T (*Func3)(T x, T y, T z), T xmin, T xmax, size_t xnPoints,
-	                                       T ymin, T ymax, size_t ynPoints,
-	                                       T zmin, T zmax, size_t znPoints);    // volume: 3D --> 1D
+    size_t  Set(Y (*Func)(X x), X xmin, X xmax, size_t nPoints);
 	
-	// Regular grid, load from file
-    size_t  Set(const std::string &dataFilename, T xmin, T xmax);    // line
-    size_t  Set(const std::string &dataFilename, T xmin, T xmax,
-	                                             T ymin, T ymax);    // line
-    size_t  Set(const std::string &dataFilename, T xmin, T xmax,
-	                                             T ymin, T ymax,
-	                                             T zmin, T zmax);    // volume
-
     // Automatic irregular grid, computed
-    size_t  AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints = 100);     // line: 1D --> 1D
+    size_t  AutoSet(Y (*Func)(X x), X xmin, X xmax, size_t nPoints = 100);
 
-    // Irregular grid, computed
-    size_t  Set(T (*Func1)(T x),           const std::vector<T> &x);    // line
-    size_t  Set(T (*Func2)(T x, T y),      const std::vector<T> &x,
-	                                       const std::vector<T> &y);    // plane
-    size_t  Set(T (*Func3)(T x, T y, T z), const std::vector<T> &x,
-	                                       const std::vector<T> &y,
-	                                       const std::vector<T> &z);    // volume
+    // Regular grid, load from file
+    size_t  Set(const std::string &dataFilename, X xmin, X xmax);
 
-	// Irregular grid, load from file
+    // Irregular grid, load from file
     size_t  Set(const std::string &dataFilename);      // grid contained in the file
 
 
 	/// Data retrieval
 
 	// Range UNchecked, 0 degree interpolation accessors
-	T operator()(T x)           const;
-	T operator()(T x, T y)      const;
-	T operator()(T x, T y, T z) const;
+	Y operator()(X x) const;
 
 	// Range checked accessors; check Status()
-	T get(T x);
-	T get(T x, T y);
-	T get(T x, T y, T z);
+	Y get(X x);
 
 	// Range checked accessors, interpolated; check Status()
-	T Interpolate(T x);
-	T Interpolate(T x, T y);
-	T Interpolate(T x, T y, T z);
+	Y Interpolate(X x);
 
 	int Status() const { return status; }
 
 	int  Interpolation() const { return interpolation; }
 	void Interpolation(int order);
 
-    int RangeCheck(T x);
+    int RangeCheck(X x);
 
     // Get the whole value set
-    int Get(std::vector<T> &_xData, std::vector<T> &_yData) const;
+    int Get(std::vector<X> &_xData, std::vector<Y> &_yData) const;
 
     /// GPGPU
 
@@ -190,9 +159,9 @@ public:
     friend class PrecompData_test;
 
 protected:
-    T FirstDerivative(T x1, T y1, T x2, T y2) const;
-    T SecondDerivative(T x1, T y1, T x2, T y2, T x3, T y3) const;
-    int PickBestPoints(T (*Func1)(T x), const size_t nPoints, const float overSampling = 2.0f);
+    TY FirstDerivative(TX x1, TY y1, TX x2, TY y2) const;
+    TY SecondDerivative(TX x1, TY y1, TX x2, TY y2, TX x3, TY y3) const;
+    int PickBestPoints(Y (*Func)(X x), const size_t nPoints, const float overSampling = 2.0f);
 
 private:
 	
@@ -200,14 +169,13 @@ private:
 	int             interpolation;
 	int             status;
 
-    std::vector<DataPoint>  data;
-    DataPoint               min, max, step;
-    DataPoint               kRealInt, kIntReal;     // conversion factors
+    std::vector<X>  xData;
+    std::vector<Y>  yData;
+    X               min, max, step;
+    X               kRealInt, kIntReal;     // conversion factors
 
 
     float           overSampling;
-
-	//+TODO: plane, volume
 
 #ifdef PRECOMPDATA_DEVICE
     boost::compute::vector<T>  device_line;

@@ -11,46 +11,46 @@
 
 namespace Utilities {
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 PrecompData<T, U, nx, ny>::PrecompData()
 	: interpolation(0), status(0), overSampling(2.0f)
 {
 }
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 PrecompData<T, U, nx, ny>::PrecompData(const std::string _funcName)
 	: interpolation(0), status(0), overSampling(2.0f), funcName(_funcName)
 {
 }
 
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 int  PrecompData<T, U, nx, ny>::SetFunctionName(const std::string &_funcName)
 {
 	funcName = _funcName;
 	return 0;
 }
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 int  PrecompData<T, U, nx, ny>::SetComment(const std::string &_comment)
 {
 	comment = _comment;
 	return 0;
 }
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 std::string  PrecompData<T, U, nx, ny>::FunctionName() const
 {
 	return funcName;
 }
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 std::string  PrecompData<T, U, nx, ny>::Comment() const
 {
 	return comment;
 }
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 int  PrecompData<T, U, nx, ny>::SetOversampling(float ovs)
 {
     if(ovs < 1.0f)
@@ -63,7 +63,7 @@ int  PrecompData<T, U, nx, ny>::SetOversampling(float ovs)
 
 // Precompute constant values
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 int PrecompData<T, U, nx, ny>::PreComputeValues()
 {
     //+CHECK
@@ -77,24 +77,34 @@ int PrecompData<T, U, nx, ny>::PreComputeValues()
 
 // Coordinate <--> index transformations
 
-template<typename T, typename U, int nx, int ny>
-size_t PrecompData<T, U, nx, ny>::RtoI(T x) const     // real --> integer/index
+template<typename TX, typename TY, int nx, int ny>
+size_t PrecompData<T, U, nx, ny>::RtoI(TX x) const     // real --> integer/index
 {
     return size_t(kRealInt*(x - xMin));
 }
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 T PrecompData<T, U, nx, ny>::ItoR(size_t i) const     // integer/index --> real
 {
     return xMin + kIntReal*T(i);
 }
 
-
 /// Data loading
 
 // Regular grid, computed
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
+size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x), 
+                                         X       xmin,
+                                         X       xmax,
+                                         size_t  nPoints)
+{
+    //+TODO
+    return size_t();
+}
+
+
+template<typename TX, typename TY, int nx, int ny>
 size_t  PrecompData<T, U, nx, ny>::Set(T (*Func1)(T x),
                                     T xmin, T xmax, size_t nPoints)     // line
 {
@@ -124,20 +134,6 @@ size_t  PrecompData<T, U, nx, ny>::Set(T (*Func1)(T x),
 }
 
 
-template<typename T, typename U, int nx, int ny>
-size_t  PrecompData<T, U, nx, ny>::Set(T (*Func2)(T x, T y),
-                                       T xmin, T xmax, size_t xnPoints,
-                                       T ymin, T ymax, size_t ynPoints)    // plane
-{} //+TODO
-
-template<typename T, typename U, int nx, int ny>
-size_t  PrecompData<T, U, nx, ny>::Set(T (*Func3)(T x, T y, T z),
-                                    T xmin, T xmax, size_t xnPoints,
-                                    T ymin, T ymax, size_t ynPoints,
-                                    T zmin, T zmax, size_t znPoints)    // volume
-{} //+TODO
-
-
 /** AutoSet() : Automatic irregular grid, computed
  *
  *  Irregular grid:
@@ -145,7 +141,7 @@ size_t  PrecompData<T, U, nx, ny>::Set(T (*Func3)(T x, T y, T z),
  *    - Pick the remaining points from regions of the function with largest second derivative.
  */
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 size_t  PrecompData<T, U, nx, ny>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)     // line
 {
     xMin = xmin;
@@ -159,59 +155,37 @@ size_t  PrecompData<T, U, nx, ny>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size
 }
 
 
-// Irregular grid, computed
-
-template<typename T, typename U, int nx, int ny>
-size_t  PrecompData<T, U, nx, ny>::Set(T (*Func1)(T x), const std::vector<T> &x)      // line
-{} //+TODO
-
-template<typename T, typename U, int nx, int ny>
-size_t  PrecompData<T, U, nx, ny>::Set(T (*Func2)(T x, T y),
-                                    const std::vector<T> &x,
-                                    const std::vector<T> &y)      // plane
-{} //+TODO
-
-template<typename T, typename U, int nx, int ny>
-size_t  PrecompData<T, U, nx, ny>::Set(T (*Func3)(T x, T y, T z),
-                                    const std::vector<T> &x,
-                                    const std::vector<T> &y,
-                                    const std::vector<T> &z)      // volume
-{} //+TODO
-
-//+TODO Regular grid, load from file
-//+TODO Irregular grid, load from file
-
 /// Data retrieval
 
 // Range UNchecked, 0 degree interpolation accessors
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 T PrecompData<T, U, nx, ny>::operator()(T x) const
 {
     return yData[RtoI(x)];
 }
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 T PrecompData<T, U, nx, ny>::operator()(T x, T y) const {} //+TODO
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 T PrecompData<T, U, nx, ny>::operator()(T x, T y, T z) const {} //+TODO
 
 // Range checked accessors; check Status()
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 T PrecompData<T, U, nx, ny>::get(T x) {} //+TODO
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 T PrecompData<T, U, nx, ny>::get(T x, T y) {} //+TODO
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 T PrecompData<T, U, nx, ny>::get(T x, T y, T z) {} //+TODO
 
 
 // Range checked accessors, interpolated; check Status()
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 T PrecompData<T, U, nx, ny>::Interpolate(T x)
 {
     RangeCheck(x);
@@ -230,14 +204,14 @@ T PrecompData<T, U, nx, ny>::Interpolate(T x)
 }
 
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 T PrecompData<T, U, nx, ny>::Interpolate(T x, T y) {} //+TODO
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 T PrecompData<T, U, nx, ny>::Interpolate(T x, T y, T z) {} //+TODO
 
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 void PrecompData<T, U, nx, ny>::Interpolation(int order)
 {
     interpolation = order;
@@ -246,7 +220,7 @@ void PrecompData<T, U, nx, ny>::Interpolation(int order)
 
 // Range check
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 int PrecompData<T, U, nx, ny>::RangeCheck(T x)
 {
     status = 0;
@@ -262,7 +236,7 @@ int PrecompData<T, U, nx, ny>::RangeCheck(T x)
 
 // Get the whole value set
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 int PrecompData<T, U, nx, ny>::Get(std::vector<T> &_xData , std::vector<T> &_yData) const
 {
     _xData = xData;
@@ -273,7 +247,7 @@ int PrecompData<T, U, nx, ny>::Get(std::vector<T> &_xData , std::vector<T> &_yDa
 
 /// Math functions
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 T PrecompData<T, U, nx, ny>::FirstDerivative(T x1, T y1, T x2, T y2) const
 {
     /// First derivative (central differences):  d1 = [f(x+1) - f(x)] / [(x+1) - x]
@@ -281,7 +255,7 @@ T PrecompData<T, U, nx, ny>::FirstDerivative(T x1, T y1, T x2, T y2) const
 }
 
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 T PrecompData<T, U, nx, ny>::SecondDerivative(T x1, T y1, T x2, T y2, T x3, T y3) const
 {
     /// Second derivative (central differences):  d2 = [f(x-1) - 2f(x) + f(x+1)] / {[(x+1) - (x-1)]/2}^2
@@ -289,7 +263,7 @@ T PrecompData<T, U, nx, ny>::SecondDerivative(T x1, T y1, T x2, T y2, T x3, T y3
 }
 
 
-template<typename T, typename U, int nx, int ny>
+template<typename TX, typename TY, int nx, int ny>
 int PrecompData<T, U, nx, ny>::PickBestPoints(T (*Func1)(T x), const size_t nPoints, const float overSampling)
 {
     struct Point {
