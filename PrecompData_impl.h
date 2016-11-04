@@ -158,22 +158,11 @@ T PrecompData<TX, TY, nx, ny>::operator()(T x) const
     return yData[RtoI(x)];
 }
 
-template<typename TX, typename TY, int nx, int ny>
-T PrecompData<TX, TY, nx, ny>::operator()(T x, T y) const {} //+TODO
-
-template<typename TX, typename TY, int nx, int ny>
-T PrecompData<TX, TY, nx, ny>::operator()(T x, T y, T z) const {} //+TODO
 
 // Range checked accessors; check Status()
 
 template<typename TX, typename TY, int nx, int ny>
 T PrecompData<TX, TY, nx, ny>::get(T x) {} //+TODO
-
-template<typename TX, typename TY, int nx, int ny>
-T PrecompData<TX, TY, nx, ny>::get(T x, T y) {} //+TODO
-
-template<typename TX, typename TY, int nx, int ny>
-T PrecompData<TX, TY, nx, ny>::get(T x, T y, T z) {} //+TODO
 
 
 // Range checked accessors, interpolated; check Status()
@@ -195,13 +184,6 @@ T PrecompData<TX, TY, nx, ny>::Interpolate(T x)
 
     return y;
 }
-
-
-template<typename TX, typename TY, int nx, int ny>
-T PrecompData<TX, TY, nx, ny>::Interpolate(T x, T y) {} //+TODO
-
-template<typename TX, typename TY, int nx, int ny>
-T PrecompData<TX, TY, nx, ny>::Interpolate(T x, T y, T z) {} //+TODO
 
 
 template<typename TX, typename TY, int nx, int ny>
