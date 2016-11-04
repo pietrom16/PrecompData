@@ -223,7 +223,7 @@ int PrecompData<TX, TY, nx, ny>::Get(std::vector<T> &_xData , std::vector<T> &_y
 /// Math functions
 
 template<typename TX, typename TY, int nx, int ny>
-T PrecompData<TX, TY, nx, ny>::FirstDerivative(T x1, T y1, T x2, T y2) const
+TY PrecompData<TX, TY, nx, ny>::FirstDerivative(TX x1, TY y1, TX x2, TY y2) const
 {
     /// First derivative (central differences):  d1 = [f(x+1) - f(x)] / [(x+1) - x]
     return  (y2 - y1)/(x2 - x1);
@@ -231,7 +231,7 @@ T PrecompData<TX, TY, nx, ny>::FirstDerivative(T x1, T y1, T x2, T y2) const
 
 
 template<typename TX, typename TY, int nx, int ny>
-T PrecompData<TX, TY, nx, ny>::SecondDerivative(T x1, T y1, T x2, T y2, T x3, T y3) const
+TY PrecompData<TX, TY, nx, ny>::SecondDerivative(TX x1, TY y1, TX x2, TY y2, TX x3, TY y3) const
 {
     /// Second derivative (central differences):  d2 = [f(x-1) - 2f(x) + f(x+1)] / {[(x+1) - (x-1)]/2}^2
     return  (y1 - 2*y2 + y3)/std::pow(0.5f*(x3 - x1), 2);
