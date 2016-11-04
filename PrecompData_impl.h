@@ -153,7 +153,7 @@ size_t  PrecompData<TX, TY, nx, ny>::AutoSet(Y (*Func)(X x), X xmin, X xmax, siz
 // Range UNchecked, 0 degree interpolation accessors
 
 template<typename TX, typename TY, int nx, int ny>
-T PrecompData<TX, TY, nx, ny>::operator()(T x) const
+PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::operator()(X x) const
 {
     return yData[RtoI(x)];
 }
@@ -162,13 +162,13 @@ T PrecompData<TX, TY, nx, ny>::operator()(T x) const
 // Range checked accessors; check Status()
 
 template<typename TX, typename TY, int nx, int ny>
-T PrecompData<TX, TY, nx, ny>::get(T x) {} //+TODO
+PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::get(X x) {} //+TODO
 
 
 // Range checked accessors, interpolated; check Status()
 
 template<typename TX, typename TY, int nx, int ny>
-T PrecompData<TX, TY, nx, ny>::Interpolate(T x)
+PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::Interpolate(X x)
 {
     RangeCheck(x);
 
@@ -196,7 +196,7 @@ void PrecompData<TX, TY, nx, ny>::Interpolation(int order)
 // Range check
 
 template<typename TX, typename TY, int nx, int ny>
-int PrecompData<TX, TY, nx, ny>::RangeCheck(T x)
+int PrecompData<TX, TY, nx, ny>::RangeCheck(X x)
 {
     status = 0;
 
@@ -212,7 +212,7 @@ int PrecompData<TX, TY, nx, ny>::RangeCheck(T x)
 // Get the whole value set
 
 template<typename TX, typename TY, int nx, int ny>
-int PrecompData<TX, TY, nx, ny>::Get(std::vector<T> &_xData , std::vector<T> &_yData) const
+int PrecompData<TX, TY, nx, ny>::Get(std::vector<X> &_xData , std::vector<Y> &_yData) const
 {
     _xData = xData;
     _yData = yData;
