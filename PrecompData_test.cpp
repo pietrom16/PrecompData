@@ -11,6 +11,9 @@
 #include <vector>
 
 using namespace std;
+using Utilities::PrecompData;
+
+typedef PrecompData<float, float, 2, 1> pcd21;  // f: (X, Y) --> Z
 
 float TestFunc(float x) {
 	return sin(x);
@@ -28,8 +31,12 @@ float TestFuncNonLin2(float x) {        //   y = 1/(|x-2| + 0.1)
     return 1/(fabs(x - 2.0f) + 0.1f);
 }
 
-float TestFuncNonLinSin(float x) {        //   y = sin(x)
+float TestFuncNonLinSin(float x) {      //   y = sin(x)
     return sin(x);
+}
+
+pcd21::Y TestFunc21(pcd21::X x) {       //   y = sin(x0) + cos(x1)
+    return pcd21::Y { sin(x[0]) + cos(x[1]) };
 }
 
 
@@ -237,6 +244,32 @@ PrecompData_test::PrecompData_test()
              <<      "];  average error = " << avgErr << endl;
     }
 
+    // Test 7 - Multidimensions
+    {
+        cout << "\n\nTest 7: Storage of data in an NxM space:" << endl;
+        const string funcName = "Multidimensions";
+        pcd21 itp(funcName);
+        itp.SetComment("Y = f(X)    X = x(i,j), Y = y(i)");
+        pcd21::X x0 = { 0.00f, 0.00f };     // coordinates of the starting point
+        pcd21::X x1 = { 6.28f, 6.28f };     // coordinates of the end point
+        const pcd21::X step = { 0.5*(x1[0] - x0[0])/nValues, 0.5*(x1[1] - x0[1])/nValues };
+        itp.Set(&TestFunc21, x0, x1, nValues*nValues);
+        pcd21::X x = x0;
+        float err = 0.0;
+        for(int j = 0; j < nValues; ++j)
+        {
+            x[0] = x0[0];
+            for(int i = 0; i < nValues; ++i)
+            {
+                const pcd21::Y y = itp(x);
+                err += fabs(TestFunc21(x)[0] - y[0]);
+                cout << i << ":\t" << funcName << "[" << x[0] << ", " << x[1] << "] = " << TestFunc21(x)[0] << " ~ " << y[0] << endl;
+                x[0] += step[0];
+            }
+            x[1] += step[1];
+        }
+        cout << "Total error = " << err << endl;
+    }
 
 }
 
