@@ -83,13 +83,13 @@ size_t PrecompData<TX, TY, nx, ny>::RtoI(X x) const     // real --> integer/inde
     return size_t(kRealInt*(x - xMin));
 }
 
-
+/* //+?
 template<typename TX, typename TY, int nx, int ny>
 PrecompData<TX, TY, nx, ny>::X PrecompData<TX, TY, nx, ny>::ItoR(size_t i) const     // integer/index --> real
 {
     return xMin + kIntReal*T(i);
 }
-
+*/
 /// Data loading
 
 // Regular grid, computed
@@ -135,7 +135,7 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
  */
 
 template<typename TX, typename TY, int nx, int ny>
-size_t  PrecompData<TX, TY, nx, ny>::AutoSet(T (*Func1)(T x), T xmin, T xmax, size_t nPoints)     // line
+size_t  PrecompData<TX, TY, nx, ny>::AutoSet(Y (*Func)(X x), X xmin, X xmax, size_t nPoints)
 {
     xMin = xmin;
     xMax = xmax;
