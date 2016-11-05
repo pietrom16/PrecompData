@@ -15,3 +15,6 @@
 - How to share 'device_line' with the other tools? Getting 'device_line' as a parameter?
 
 
+#### References
+
+["SO/templates"](http://stackoverflow.com/questions/610245/where-and-why-do-i-have-to-put-the-template-and-typename-keywords)

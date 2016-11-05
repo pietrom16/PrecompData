@@ -1,6 +1,6 @@
 # PrecompData
 
-Container of pre-calculated values, returned with interpolation/regression. 
+Container of pre-calculated values, returned with interpolation/regression.
 
 Purpose: improve performance avoiding the realtime computation of complex functions.
 
@@ -28,16 +28,16 @@ Purpose: improve performance avoiding the realtime computation of complex functi
 - C++11
 - To copy data on GPU/device memory:
     - Boost:   http://www.boost.org (from 1.61.0)
-    - OpenCL:  https://www.khronos.org/opencl/
+	- OpenCL:  https://www.khronos.org/opencl/
 
 
 ### Building
 
 - To enable coping data on GPU/device memory:
     - `#define PRECOMPDATA_DEVICE` either in the `PrecompData.h` header or in the build system.
-    - Add the Boost compute include directory to the compilation flags.
-    - Link with the system's OpenCL library.
-    - GCC example:  `g++ -I/path/to/compute/include main.cpp -lOpenCL`
+	- Add the Boost compute include directory to the compilation flags.
+	- Link with the system's OpenCL library.
+	- GCC example:  `g++ -I/path/to/compute/include main.cpp -lOpenCL`
 
 ### Examples
 
@@ -50,13 +50,13 @@ using namespace std;
 
 // Function to precalculate
 float MyFunction(float x) {
-	return  sin(x) + cos(2*x);
+    return  sin(x) + cos(2*x);
 }
 
 int main()
 {
   using namespace Utilities;
-  
+
   const float x0 = 0.0f, x1 = 6.28f;
   const int nValues = 10;
 
