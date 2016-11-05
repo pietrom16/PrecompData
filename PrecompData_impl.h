@@ -67,7 +67,7 @@ int PrecompData<TX, TY, nx, ny>::PreComputeValues()
 {
     //+CHECK
     // Set up conversion constants
-    kRealInt = yData.size()/(xMax - xMin);
+	kRealInt = yData.size()/(max - min);
     kIntReal = 1/kRealInt;
 
     return 0;
@@ -79,7 +79,7 @@ int PrecompData<TX, TY, nx, ny>::PreComputeValues()
 template<typename TX, typename TY, int nx, int ny>
 size_t PrecompData<TX, TY, nx, ny>::RtoI(X x) const     // real --> integer/index
 {
-    return size_t(kRealInt*(x - xMin));
+	return size_t(kRealInt*(x - min));
 }
 
 /* //+?
@@ -136,10 +136,10 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
 template<typename TX, typename TY, int nx, int ny>
 size_t  PrecompData<TX, TY, nx, ny>::AutoSet(Y (*Func)(X x), X xmin, X xmax, size_t nPoints)
 {
-    xMin = xmin;
-    xMax = xmax;
+	min = xmin;
+	max = xmax;
 
-    PickBestPoints(Func1, nPoints, overSampling);
+	PickBestPoints(Func, nPoints, overSampling);
 
     PreComputeValues();
 
@@ -176,10 +176,10 @@ typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::Interpolate
     if(i >= yData.size() - 2)
         return yData.back();
 
-    const T x0 = ItoR(i);
-    const T x1 = ItoR(i + 1);
+	const TX x0 = ItoR(i);
+	const TX x1 = ItoR(i + 1);
 
-    const T y = yData[i] + (yData[i + 1] - yData[i])*(x - x0)/(x1 - x0);
+	const TY y = yData[i] + (yData[i + 1] - yData[i])*(x - x0)/(x1 - x0);
 
     return y;
 }
@@ -199,9 +199,9 @@ int PrecompData<TX, TY, nx, ny>::RangeCheck(X x)
 {
     status = 0;
 
-    if(x < xMin)
+	if(x < min)
         status = wrn_x_less_than_min;
-    else if(x > xMax)
+	else if(x > max)
         status = wrn_x_more_than_max;
 
     return status;
@@ -241,32 +241,32 @@ template<typename TX, typename TY, int nx, int ny>
 int PrecompData<TX, TY, nx, ny>::PickBestPoints(Y (*Func)(X x), const size_t nPoints, const float overSampling)
 {
     struct Point {
-        T x, y;
-        Point(T _x = 0.0, T _y = 0.0) : x(_x), y(_y) {}
+		TX x; TY y;
+		Point(TX _x = 0.0, TY _y = 0.0) : x(_x), y(_y) {}
         bool operator< (const Point &p) const { return x < p.x; }
         bool operator> (const Point &p) const { return x > p.x; }
     };
 
     struct PointCurv {     // abscissa and second derivative
-        T x, d2;
-        PointCurv(T _x = 0.0, T _d2 = 0.0) : x(_x), d2(_d2) {}
+		TX x; TY d2;
+		PointCurv(TX _x = 0.0, TY _d2 = 0.0) : x(_x), d2(_d2) {}
         bool operator> (const PointCurv &p) const { return fabs(d2) > fabs(p.d2); }
     };
 
     /// Oversample
 
     const size_t nSamples = size_t(overSampling*nPoints);
-    const T step = (xMax - xMin)/nSamples;
+	const TX step = (max - min)/nSamples;
 
     std::vector<PointCurv> samples;
     samples.reserve(nSamples);
 
-    T x1 = xMin;
-    T x2 = x1 + step;
-    T x3 = x2 + step;
-    T y1 = Func1(x1);
-    T y2 = Func1(x2);
-    T y3 = Func1(x3);
+	TX x1 = min;
+	TX x2 = x1 + step;
+	TX x3 = x2 + step;
+	TY y1 = Func(x1);
+	TY y2 = Func(x2);
+	TY y3 = Func(x3);
 
     PointCurv p;
 
@@ -292,12 +292,12 @@ int PrecompData<TX, TY, nx, ny>::PickBestPoints(Y (*Func)(X x), const size_t nPo
     std::vector<Point> points;
     points.resize(nPoints);
 
-    points[0].x = xMin;               // always get the first point
+	points[0].x = min;               // always get the first point
 
     for(size_t i = 1, j = 0; i < nPoints - 1; ++i, ++j)
         points[i].x = samples[j].x;
 
-    points[nPoints - 1].x = xMax;     // always get the last point
+	points[nPoints - 1].x = max;     // always get the last point
 
     for(size_t i = 0; i < nPoints; ++i)
         points[i].y = Func1(points[i].x);
