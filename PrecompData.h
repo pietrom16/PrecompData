@@ -84,8 +84,8 @@ public:
 	int PreComputeValues();
 
 	// Coordinate <--> index transformation
-	size_t RtoI(X x)      const;     // real --> integer
-	X      ItoR(size_t i) const;     // integer --> real
+	size_t RtoI(TX x)     const;     // real --> integer
+	TX     ItoR(size_t i) const;     // integer --> real
 	
 	/// Data loading
 	

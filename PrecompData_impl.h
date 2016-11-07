@@ -80,15 +80,17 @@ int PrecompData<TX, TY, nx, ny>::PreComputeValues()
 // Coordinate <--> index transformations
 
 template<typename TX, typename TY, int nx, int ny>
-size_t PrecompData<TX, TY, nx, ny>::RtoI(X x) const     // real --> integer/index
+size_t PrecompData<TX, TY, nx, ny>::RtoI(TX x) const     // real --> integer/index
 {
     //+CHECK
+    if(nx == 1 && ny == 1)
 	return size_t(kRealInt*(x - min));
+    //+TODO - Multidimensional case
 }
 
 /* //+?
 template<typename TX, typename TY, int nx, int ny>
-PrecompData<TX, TY, nx, ny>::X PrecompData<TX, TY, nx, ny>::ItoR(size_t i) const     // integer/index --> real
+PrecompData<TX, TY, nx, ny>::TX PrecompData<TX, TY, nx, ny>::ItoR(size_t i) const     // integer/index --> real
 {
     //+CHECK
     return xMin + kIntReal*T(i);
