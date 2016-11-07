@@ -176,7 +176,6 @@ private:
     X               min, max, step;
     X               kRealInt, kIntReal;     // conversion factors
 
-
     float           overSampling;
 
 #ifdef PRECOMPDATA_DEVICE
