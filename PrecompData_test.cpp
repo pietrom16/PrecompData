@@ -57,10 +57,10 @@ PrecompData_test::PrecompData_test()
 		PrecompData<> itp(funcName);    // default: float type
 		itp.SetComment("TestFunc approximation");
 		const float x0 = 0.0f, x1 = 6.28f;
-		const float step = 0.5*(x1 - x0)/nValues;
+		const float step = 0.5f*(x1 - x0)/nValues;
 		itp.Set(&TestFunc, x0, x1, nValues);
 		float x = x0;
-        float err = 0.0;
+        float err = 0.0f;
 		for(int i = 0; i < nValues; ++i) {
             const float y = itp(x);
             err += fabs(TestFunc(x) - y);
@@ -69,7 +69,7 @@ PrecompData_test::PrecompData_test()
 		}
         cout << "Total error = " << err << endl;
 	}
-
+#if 0
     // Test 2 - Interpolation
     {
         cout << "\n\nTest 2: Linear interpolation:" << endl;
@@ -271,7 +271,7 @@ PrecompData_test::PrecompData_test()
         }
         cout << "Total error = " << err << endl;
     }
-
+#endif
 }
 
 
