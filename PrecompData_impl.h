@@ -67,8 +67,11 @@ int PrecompData<TX, TY, nx, ny>::PreComputeValues()
 {
     //+CHECK
     // Set up conversion constants
-	kRealInt = yData.size()/(max - min);
-    kIntReal = 1/kRealInt;
+    for(int i = 0; i < nx; ++i)
+    {
+        kRealInt[i] = yData.size()/(max[i] - min[i]);
+        kIntReal[i] = 1/kRealInt[i];
+    }
 
     return 0;
 }
