@@ -176,6 +176,7 @@ private:
     X               min, max, step;
     X               kRealInt, kIntReal;     // conversion factors
 
+    bool            regularGrid;            // true if points are equally spaced on all axes
     float           overSampling;
 
 #ifdef PRECOMPDATA_DEVICE

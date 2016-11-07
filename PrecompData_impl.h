@@ -12,13 +12,13 @@ namespace Utilities {
 
 template<typename TX, typename TY, int nx, int ny>
 PrecompData<TX, TY, nx, ny>::PrecompData()
-	: interpolation(0), status(0), overSampling(2.0f)
+	: interpolation(0), status(0), regularGrid(false), overSampling(2.0f)
 {
 }
 
 template<typename TX, typename TY, int nx, int ny>
 PrecompData<TX, TY, nx, ny>::PrecompData(const std::string _funcName)
-	: interpolation(0), status(0), overSampling(2.0f), funcName(_funcName)
+	: interpolation(0), status(0), regularGrid(false), overSampling(2.0f), funcName(_funcName)
 {
 }
 
@@ -129,6 +129,8 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
 
     PreComputeValues();
 
+    regularGrid = true;
+
     return yData.size();
 }
 
@@ -164,6 +166,8 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(TY      (*Func)(TX x),
 
     PreComputeValues();
 
+    regularGrid = true;
+
     return yData.size();
 }
 
@@ -184,6 +188,8 @@ size_t  PrecompData<TX, TY, nx, ny>::AutoSet(Y (*Func)(X x), X xmin, X xmax, siz
 	PickBestPoints(Func, nPoints, overSampling);
 
     PreComputeValues();
+
+    regularGrid = false;
 
     return yData.size();
 }
