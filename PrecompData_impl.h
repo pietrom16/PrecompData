@@ -126,6 +126,41 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
 }
 
 
+template<typename TX, typename TY, int nx, int ny>
+size_t  PrecompData<TX, TY, nx, ny>::Set(TY      (*Func)(TX x), 
+                                         TX      xmin,
+                                         TX      xmax,
+                                         size_t  nPoints)
+{
+    static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
+    static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
+
+    min[0] = xmin;
+    max[0] = xmax;
+    
+    xData.resize(nPoints);
+    yData.resize(nPoints);
+
+    step[0] = (max[0] - min[0])/nPoints;
+
+    X x = min;
+
+    for(size_t i = 0; i < nPoints; ++i)
+    {
+        const TY y0 = Func(x[0]);
+
+        xData[i] = x;
+        yData[i][0] = y0;
+
+        x[0] += step[0];
+    }
+
+    PreComputeValues();
+
+    return yData.size();
+}
+
+
 /** AutoSet() : Automatic irregular grid, computed
  *
  *  Irregular grid:

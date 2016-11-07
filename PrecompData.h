@@ -91,7 +91,8 @@ public:
 	
 	// Regular grid, computed
     size_t  Set(Y (*Func)(X x), X xmin, X xmax, size_t nPoints);
-	
+    size_t  Set(TY (*Func)(TX x), TX xmin, TX xmax, size_t nPoints);
+
     // Automatic irregular grid, computed
     size_t  AutoSet(Y (*Func)(X x), X xmin, X xmax, size_t nPoints = 100);
 
@@ -105,7 +106,7 @@ public:
 	/// Data retrieval
 
 	// Range UNchecked, 0 degree interpolation accessors
-	Y operator()(X x) const;
+    Y  operator()(X x)  const;
 
 	// Range checked accessors; check Status()
 	Y get(X x);
