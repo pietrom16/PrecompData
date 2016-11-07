@@ -84,7 +84,7 @@ size_t PrecompData<TX, TY, nx, ny>::RtoI(TX x) const     // real --> integer/ind
 {
     //+CHECK
     if(nx == 1 && ny == 1)
-    	return size_t(kRealInt*(x - min));
+    	return size_t(kRealInt[0]*(x - min[0]));
     //+TODO - Multidimensional case
 }
 
