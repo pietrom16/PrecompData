@@ -107,6 +107,7 @@ public:
 
 	// Range UNchecked, 0 degree interpolation accessors
     Y  operator()(X x)  const;
+    TY operator()(TX x) const;
 
 	// Range checked accessors; check Status()
 	Y get(X x);
