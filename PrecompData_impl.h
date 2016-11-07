@@ -93,7 +93,9 @@ template<typename TX, typename TY, int nx, int ny>
 PrecompData<TX, TY, nx, ny>::TX PrecompData<TX, TY, nx, ny>::ItoR(size_t i) const     // integer/index --> real
 {
     //+CHECK
-    return xMin + kIntReal*T(i);
+    if(nx == 1 && ny == 1)
+        return min[0] + kIntReal[0]*TX(i);
+    //+TODO - Multidimensional case
 }
 */
 
