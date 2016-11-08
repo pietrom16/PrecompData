@@ -144,8 +144,8 @@ PrecompData_test::PrecompData_test()
         }
         cout << "Total error = " << err << endl;
     }
-#if 0
-    // Test - AutoSet:  y = 2x
+
+    // Test - AutoSet (R --> R):  y = 2x
     {
         cout << "\n\nTest: Automatic irregular grid:    y = 2x" << endl;
         const string funcName = "y = 2x";
@@ -160,7 +160,7 @@ PrecompData_test::PrecompData_test()
             cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
         }
     }
-
+#if 0
     // Test - AutoSet:  y = 1/(|x-2| + 0.1)
     {
         cout << "\n\nTest: Automatic irregular grid:    y = 1/(|x-2| + 0.1)" << endl;
