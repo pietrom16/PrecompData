@@ -160,8 +160,8 @@ PrecompData_test::PrecompData_test()
             cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
         }
     }
-#if 0
-    // Test - AutoSet:  y = 1/(|x-2| + 0.1)
+
+    // Test - AutoSet (R --> R):  y = 1/(|x-2| + 0.1)
     {
         cout << "\n\nTest: Automatic irregular grid:    y = 1/(|x-2| + 0.1)" << endl;
         const string funcName = "y = 1/(|x-2| + 0.1)";
@@ -176,7 +176,7 @@ PrecompData_test::PrecompData_test()
             cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
         }
     }
-
+#if 0
     // Test - Derivatives
     {
         cout << "\n\nTest: Derivatives" << endl;
