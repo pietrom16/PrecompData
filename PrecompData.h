@@ -95,6 +95,7 @@ public:
 
     // Automatic irregular grid, computed
     size_t  AutoSet(Y (*Func)(X x), X xmin, X xmax, size_t nPoints = 100);
+    size_t  AutoSet(TY (*Func)(TX x), TX xmin, TX xmax, size_t nPoints = 100);
 
     // Regular grid, load from file
     size_t  Set(const std::string &dataFilename, X xmin, X xmax);

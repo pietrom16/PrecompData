@@ -197,6 +197,25 @@ size_t  PrecompData<TX, TY, nx, ny>::AutoSet(Y (*Func)(X x), X xmin, X xmax, siz
 }
 
 
+template<typename TX, typename TY, int nx, int ny>
+size_t  PrecompData<TX, TY, nx, ny>::AutoSet(TY (*Func)(TX x), TX xmin, TX xmax, size_t nPoints)
+{
+    static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
+    static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
+
+    min[0] = xmin;
+    max[0] = xmax;
+
+    PickBestPoints(Func, nPoints, overSampling);
+
+    PreComputeValues();
+
+    regularGrid = false;
+
+    return yData.size();
+}
+
+
 /// Data retrieval
 
 // Range UNchecked, 0 degree interpolation accessors
