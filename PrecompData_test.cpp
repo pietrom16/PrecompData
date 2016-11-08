@@ -5,6 +5,7 @@
 
 #include "PrecompData.h"
 #include "PrecompData_test.h"
+#include <cassert>
 #include <cmath>
 #include <iostream>
 #include <string>
@@ -61,6 +62,33 @@ PrecompData_test::PrecompData_test()
     cout << std::fixed;
 
     const int nValues = 20;
+    float tol = 0.01f;    // tolerance
+
+    // Test - Conversions RtoI
+    {
+        cout << "\n\nTest: Conversion real --> index:" << endl;
+        const string funcName = "TestFunc";
+        PrecompData<> itp(funcName);
+        const float x0 = 0.0f, x1 = 6.28f;
+        itp.Set(&TestFunc, x0, x1, nValues);
+
+        assert(TestEq(itp.RtoI(x0), size_t(0), size_t(0)) && "Test: Conversion real --> index FAILED on first element.");
+        assert(TestEq(itp.RtoI((x1 - x0)/2.0), size_t((nValues - 1)/2), size_t(0)) && "Test: Conversion real --> index FAILED on the middle element.");
+        assert(TestEq(itp.RtoI(x1), size_t(nValues - 1), size_t(0)) && "Test: Conversion real --> index FAILED on last element.");
+    }
+
+    // Test - Conversions ItoR
+    {
+        cout << "\n\nTest: Conversion index --> real:" << endl;
+        const string funcName = "TestFunc";
+        PrecompData<> itp(funcName);
+        const float x0 = 0.0f, x1 = 6.28f;
+        itp.Set(&TestFunc, x0, x1, nValues);
+
+        assert(TestEq(itp.ItoR(0), x0, tol) && "Test: Conversion index --> real FAILED on first element.");
+        assert(TestEq(itp.ItoR(nValues/2), (x1 - x0)/2.0f, tol) && "Test: Conversion index --> real FAILED on the middle element.");
+        assert(TestEq(itp.ItoR(nValues - 1), x1, tol) && "Test: Conversion index --> real FAILED on last element.");
+    }
 
     // Test - Interpolation
 	{
