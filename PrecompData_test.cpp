@@ -11,6 +11,7 @@
 #include <vector>
 
 using namespace std;
+using std::cout;
 using Utilities::PrecompData;
 
 typedef PrecompData<float, float, 2, 1> pcd21;  // f: (X, Y) --> Z
@@ -41,6 +42,17 @@ pcd21::Y TestFunc21(pcd21::X x) {       //   y = sin(x0) + cos(x1)
 
 
 namespace Utilities {
+
+
+template <typename T = float>
+bool TestEq(T value, T expected, T tolerance = 0.01f)
+{
+    if(fabs((value - expected)/expected) <= tolerance)
+        return true;    // success
+
+    return false;    // failure
+}
+
 
 PrecompData_test::PrecompData_test()
 {
