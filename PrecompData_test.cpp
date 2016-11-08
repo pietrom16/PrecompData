@@ -261,7 +261,7 @@ PrecompData_test::PrecompData_test()
 
         cout << "Derivatives:  Number of tests = " << nTests << ";  Number of failures = " << nFailed << endl;
     }
-#if 0
+
     // Test - AutoSet:  y = sin(x)
     // Result: values too concentrated in the points with high absolute second derivative
     {
@@ -297,7 +297,7 @@ PrecompData_test::PrecompData_test()
              <<      "];  maximum error = [" << maxErrX << ", " << maxErrY
              <<      "];  average error = " << avgErr << endl;
     }
-
+#if 0
     // Test - Multidimensions
     {
         cout << "\n\nTest: Storage of data in an NxM space:" << endl;
