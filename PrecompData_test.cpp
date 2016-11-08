@@ -102,7 +102,7 @@ PrecompData_test::PrecompData_test()
         cout << " OK" << endl;
     }
 
-    // Test - Interpolation
+    // Test - Zero-degree interpolation (R --> R)
 	{
         cout << "\n\nTest: Zero-degree (nearest-neighbor/point sampling/Voronoi) interpolation:" << endl;
 		const string funcName = "TestFunc";
@@ -124,7 +124,7 @@ PrecompData_test::PrecompData_test()
         cout << "Total error = " << err << endl;
 	}
 
-    // Test - Interpolation
+    // Test - Linear interpolation (R --> R)
     {
         cout << "\n\nTest: Linear interpolation:" << endl;
         const string funcName = "TestFunc";
