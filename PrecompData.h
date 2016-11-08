@@ -127,6 +127,7 @@ public:
 
     // Get the whole value set
     int Get(std::vector<X> &_xData, std::vector<Y> &_yData) const;
+    int Get(std::vector<TX> &_xData, std::vector<TY> &_yData) const;
 
     /// GPGPU
 

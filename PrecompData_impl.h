@@ -264,6 +264,7 @@ typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::Interpolate
 	const TX x0 = ItoR(i);
 	const TX x1 = ItoR(i + 1);
 
+    //+TODO: Fix - multidimensional
 	const TY y = yData[i] + (yData[i + 1] - yData[i])*(x - x0)/(x1 - x0);
 
     return y;
@@ -332,6 +333,37 @@ int PrecompData<TX, TY, nx, ny>::Get(std::vector<X> &_xData , std::vector<Y> &_y
 {
     _xData = xData;
     _yData = yData;
+    return 0;
+}
+
+
+template<typename TX, typename TY, int nx, int ny>
+int PrecompData<TX, TY, nx, ny>::Get(std::vector<TX> &_xData , std::vector<TY> &_yData) const
+{
+    static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
+    static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
+    
+    //+TEST
+
+    _xData.clear();
+    
+    for(size_t i = 0; i < xData.size(); ++i)
+    {
+        TX p = xData[i][0];     //+? Swap indices?
+        _xData.push_back(p);
+    }
+
+    _yData.clear();
+
+    for(size_t i = 0; i < yData.size(); ++i)
+    {
+        TY p = yData[i][0];     //+? Swap indices?
+        _yData.push_back(p);
+    }
+
+//+B    _xData = xData[0];
+//+B    _yData = yData[0];
+
     return 0;
 }
 
