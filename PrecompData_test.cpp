@@ -123,7 +123,7 @@ PrecompData_test::PrecompData_test()
 		}
         cout << "Total error = " << err << endl;
 	}
-#if 0
+
     // Test - Interpolation
     {
         cout << "\n\nTest: Linear interpolation:" << endl;
@@ -144,7 +144,7 @@ PrecompData_test::PrecompData_test()
         }
         cout << "Total error = " << err << endl;
     }
-
+#if 0
     // Test - AutoSet:  y = 2x
     {
         cout << "\n\nTest: Automatic irregular grid:    y = 2x" << endl;
