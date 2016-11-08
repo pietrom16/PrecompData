@@ -46,7 +46,17 @@ namespace Utilities {
 
 
 template <typename T = float>
-bool TestEq(T value, T expected, T tolerance = 0.01f)
+bool TestEqAbs(T value, T expected, T tolerance = 0.01f)
+{
+    if(fabs(value - expected) <= tolerance)
+        return true;    // success
+
+    return false;    // failure
+}
+
+
+template <typename T = float>
+bool TestEqRel(T value, T expected, T tolerance = 0.01f)
 {
     if(fabs((value - expected)/expected) <= tolerance)
         return true;    // success
