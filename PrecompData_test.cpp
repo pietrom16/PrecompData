@@ -176,7 +176,7 @@ PrecompData_test::PrecompData_test()
             cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
         }
     }
-#if 0
+
     // Test - Derivatives
     {
         cout << "\n\nTest: Derivatives" << endl;
@@ -261,7 +261,7 @@ PrecompData_test::PrecompData_test()
 
         cout << "Derivatives:  Number of tests = " << nTests << ";  Number of failures = " << nFailed << endl;
     }
-
+#if 0
     // Test - AutoSet:  y = sin(x)
     // Result: values too concentrated in the points with high absolute second derivative
     {
