@@ -19,6 +19,7 @@ Purpose: improve performance avoiding the realtime computation of complex functi
 
 - Precompute regular grid, n dimensional functions.
 - Precompute irregular grid, n dimensional functions.
+- Test whether it is worth to precompute the data, in terms of performance and memory requirements.
 - Load data from file.
 - Second degree (quadratic) interpolation.
 
@@ -27,14 +28,14 @@ Purpose: improve performance avoiding the realtime computation of complex functi
 
 - C++11
 - To copy data on GPU/device memory:
-    - Boost:   http://www.boost.org (from 1.61.0)
+	- Boost:   http://www.boost.org (from 1.61.0)
 	- OpenCL:  https://www.khronos.org/opencl/
 
 
 ### Building
 
 - To enable coping data on GPU/device memory:
-    - `#define PRECOMPDATA_DEVICE` either in the `PrecompData.h` header or in the build system.
+	- `#define PRECOMPDATA_DEVICE` either in the `PrecompData.h` header or in the build system.
 	- Add the Boost compute include directory to the compilation flags.
 	- Link with the system's OpenCL library.
 	- GCC example:  `g++ -I/path/to/compute/include main.cpp -lOpenCL`
@@ -55,17 +56,17 @@ float MyFunction(float x) {
 
 int main()
 {
-  using namespace Utilities;
+    using namespace Utilities;
 
-  const float x0 = 0.0f, x1 = 6.28f;
-  const int nValues = 10;
+    const float x0 = 0.0f, x1 = 6.28f;
+    const int nValues = 10;
 
-  PrecompData<float> func;
+    PrecompData<float> func;
 
-  func.Set(&MyFunction, x0, x1, nValues);
+    func.Set(&MyFunction, x0, x1, nValues);
 
-  float x = 1.234;
-  float y = func.Interpolate(x);
+    float x = 1.234;
+    float y = func.Interpolate(x);
 }
 ```
 

@@ -2,7 +2,7 @@
 
 
 - Making transition to multidimensional data...
-- Precompute irregular grid, one dimensional functions.
+- Precompute irregular grid, one dimensional functions. [OPTIMIZE/TEST]
 - Precompute regular grid, n dimensional functions.
 - Precompute irregular grid, n dimensional functions.
 - Load data from file.
