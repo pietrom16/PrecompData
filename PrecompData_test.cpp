@@ -63,7 +63,7 @@ PrecompData_test::PrecompData_test()
         float err = 0.0f;
         itp.Interpolation(0);
         cout << "Interpolation: " << itp.Interpolation() << endl;
-		for(int i = 0; i < nValues; ++i) {
+        for(int i = 0; i < nValues; ++i) {
             const float y = itp(x);
             err += fabs(TestFunc(x) - y);
 			cout << i << ":\t" << funcName << "(" << x << ") = " << TestFunc(x) << " ~ " << y << endl;
@@ -71,17 +71,17 @@ PrecompData_test::PrecompData_test()
 		}
         cout << "Total error = " << err << endl;
 	}
-#if 0
+
     // Test 2 - Interpolation
     {
         cout << "\n\nTest 2: Linear interpolation:" << endl;
         const string funcName = "TestFunc";
         PrecompData<float> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
-        const float step = 0.5*(x1 - x0)/nValues;
+        const float step = 0.5f*(x1 - x0)/nValues;
         itp.Set(&TestFunc, x0, x1, nValues);
         float x = x0;
-        float err = 0.0;
+        float err = 0.0f;
         itp.Interpolation(1);
         cout << "Interpolation: " << itp.Interpolation() << endl;
         for(int i = 0; i < nValues; ++i) {
@@ -92,7 +92,7 @@ PrecompData_test::PrecompData_test()
         }
         cout << "Total error = " << err << endl;
     }
-
+#if 0
     // Test 3 - AutoSet:  y = 2x
     {
         cout << "\n\nTest 3: Automatic irregular grid:    y = 2x" << endl;
@@ -258,7 +258,7 @@ PrecompData_test::PrecompData_test()
 		                        0.5f*(x1[1] - x0[1])/nValues };
         itp.Set(&TestFunc21, x0, x1, nValues*nValues);
         pcd21::X x = x0;
-        float err = 0.0;
+        float err = 0.0f;
         for(int j = 0; j < nValues; ++j)
         {
             x[0] = x0[0];
