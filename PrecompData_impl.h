@@ -206,7 +206,7 @@ size_t  PrecompData<TX, TY, nx, ny>::AutoSet(Y (*Func)(X x), X xmin, X xmax, siz
 template<typename TX, typename TY, int nx, int ny>
 typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::operator()(X x) const
 {
-    return yData[RtoI(x)];
+    return yData[RtoI(x)];      //+B?
 }
 
 
@@ -254,6 +254,28 @@ typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::Interpolate
 
 
 template<typename TX, typename TY, int nx, int ny>
+TY PrecompData<TX, TY, nx, ny>::Interpolate(TX x)
+{
+    static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
+    static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
+
+    RangeCheck(x);
+
+    const size_t i = RtoI(x);
+
+    if(i >= yData.size() - 2)
+        return yData.back()[0];
+
+    const TX x0 = ItoR(i);
+    const TX x1 = ItoR(i + 1);
+
+    const TY yv = yData[i][0] + (yData[i + 1][0] - yData[i][0])*(x - x0)/(x1 - x0);
+
+    return yv;
+}
+
+
+template<typename TX, typename TY, int nx, int ny>
 void PrecompData<TX, TY, nx, ny>::Interpolation(int order)
 {
     interpolation = order;
@@ -267,9 +289,9 @@ int PrecompData<TX, TY, nx, ny>::RangeCheck(X x)
 {
     status = 0;
 
-	if(x < min)
+    if(x < min)
         status = wrn_x_less_than_min;
-	else if(x > max)
+    else if(x > max)
         status = wrn_x_more_than_max;
 
     return status;

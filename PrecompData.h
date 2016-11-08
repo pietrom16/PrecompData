@@ -113,7 +113,8 @@ public:
 	Y get(X x);
 
 	// Range checked accessors, interpolated; check Status()
-	Y Interpolate(X x);
+    Y  Interpolate(X x);
+    TY Interpolate(TX x);
 
 	int Status() const { return status; }
 
