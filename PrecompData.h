@@ -121,6 +121,7 @@ public:
 	void Interpolation(int order);
 
     int RangeCheck(X x);
+    int RangeCheck(TX x);
 
     // Get the whole value set
     int Get(std::vector<X> &_xData, std::vector<Y> &_yData) const;

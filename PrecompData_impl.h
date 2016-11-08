@@ -273,6 +273,16 @@ int PrecompData<TX, TY, nx, ny>::RangeCheck(X x)
 }
 
 
+template<typename TX, typename TY, int nx, int ny>
+int PrecompData<TX, TY, nx, ny>::RangeCheck(TX x)
+{
+    X xv;
+    xv[0] = x;
+
+    return RangeCheck(xv);
+}
+
+
 // Get the whole value set
 
 template<typename TX, typename TY, int nx, int ny>
