@@ -50,9 +50,9 @@ PrecompData_test::PrecompData_test()
 
     const int nValues = 20;
 
-    // Test 1 - Interpolation
+    // Test - Interpolation
 	{
-        cout << "\n\nTest 1: Zero-degree (nearest-neighbor/point sampling/Voronoi) interpolation:" << endl;
+        cout << "\n\nTest: Zero-degree (nearest-neighbor/point sampling/Voronoi) interpolation:" << endl;
 		const string funcName = "TestFunc";
 		PrecompData<> itp(funcName);    // default: float type
 		itp.SetComment("TestFunc approximation");
@@ -72,9 +72,9 @@ PrecompData_test::PrecompData_test()
         cout << "Total error = " << err << endl;
 	}
 
-    // Test 2 - Interpolation
+    // Test - Interpolation
     {
-        cout << "\n\nTest 2: Linear interpolation:" << endl;
+        cout << "\n\nTest: Linear interpolation:" << endl;
         const string funcName = "TestFunc";
         PrecompData<float> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
@@ -93,9 +93,9 @@ PrecompData_test::PrecompData_test()
         cout << "Total error = " << err << endl;
     }
 #if 0
-    // Test 3 - AutoSet:  y = 2x
+    // Test - AutoSet:  y = 2x
     {
-        cout << "\n\nTest 3: Automatic irregular grid:    y = 2x" << endl;
+        cout << "\n\nTest: Automatic irregular grid:    y = 2x" << endl;
         const string funcName = "y = 2x";
         PrecompData<float> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
@@ -109,9 +109,9 @@ PrecompData_test::PrecompData_test()
         }
     }
 
-    // Test 4 - AutoSet:  y = 1/(|x-2| + 0.1)
+    // Test - AutoSet:  y = 1/(|x-2| + 0.1)
     {
-        cout << "\n\nTest 4: Automatic irregular grid:    y = 1/(|x-2| + 0.1)" << endl;
+        cout << "\n\nTest: Automatic irregular grid:    y = 1/(|x-2| + 0.1)" << endl;
         const string funcName = "y = 1/(|x-2| + 0.1)";
         PrecompData<float> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
@@ -125,9 +125,9 @@ PrecompData_test::PrecompData_test()
         }
     }
 
-    // Test 5 - Derivatives
+    // Test - Derivatives
     {
-        cout << "\n\nTest 5: Derivatives" << endl;
+        cout << "\n\nTest: Derivatives" << endl;
         int nTests = 0, nFailed = 0;
         const string funcName = "Derivatives";
         float x1, y1, x2, y2, x3, y3, der1, der2, expRes;
@@ -210,10 +210,10 @@ PrecompData_test::PrecompData_test()
         cout << "Derivatives:  Number of tests = " << nTests << ";  Number of failures = " << nFailed << endl;
     }
 
-    // Test 6 - AutoSet:  y = sin(x)
+    // Test - AutoSet:  y = sin(x)
     // Result: values too concentrated in the points with high absolute second derivative
     {
-        cout << "\n\nTest 6: Automatic irregular grid:    y = sin(x)" << endl;
+        cout << "\n\nTest: Automatic irregular grid:    y = sin(x)" << endl;
         const string funcName = "y = sin(x)";
         PrecompData<float> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
@@ -246,9 +246,9 @@ PrecompData_test::PrecompData_test()
              <<      "];  average error = " << avgErr << endl;
     }
 
-    // Test 7 - Multidimensions
+    // Test - Multidimensions
     {
-        cout << "\n\nTest 7: Storage of data in an NxM space:" << endl;
+        cout << "\n\nTest: Storage of data in an NxM space:" << endl;
         const string funcName = "Multidimensions";
         pcd21 itp(funcName);
         itp.SetComment("Y = f(X)    X = x(i,j), Y = y(i)");
