@@ -61,6 +61,8 @@ PrecompData_test::PrecompData_test()
 		itp.Set(&TestFunc, x0, x1, nValues);
 		float x = x0;
         float err = 0.0f;
+        itp.Interpolation(0);
+        cout << "Interpolation: " << itp.Interpolation() << endl;
 		for(int i = 0; i < nValues; ++i) {
             const float y = itp(x);
             err += fabs(TestFunc(x) - y);
