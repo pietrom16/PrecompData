@@ -110,6 +110,8 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
                                          size_t  nPoints)
 {
     //+TODO
+    size_t  nSteps[nx];
+
     // Init
     {
         assert(Func != 0);
@@ -138,7 +140,10 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
         TX uniformStep = std::pow(elementVolume, 1/nx);
 
         for(int j = 0; j < nx; ++j)
+        {
             step[j] = uniformStep;
+            nSteps[j] = (max[j] - min[j])/step[j];
+        }
     }
 
     X x = min;
