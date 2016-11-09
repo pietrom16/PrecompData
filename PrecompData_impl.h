@@ -115,7 +115,8 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
     xData.resize(nPoints);
     yData.resize(nPoints);
 
-    step = (max - min)/nPoints;
+    for(int j = 0; j < nx; ++j)
+        step[j] = (max[j] - min[j])/nPoints;
 
     X x = min;
 
