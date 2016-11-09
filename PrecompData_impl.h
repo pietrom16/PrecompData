@@ -123,11 +123,20 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
 
     // Find step, with these constraints: nPoints, nx, min, max
     // In this context, step is the same across all dimensions.
+    {
+        TX domainVolume = 1.0f;
+        for(int j = 0; j < nx; ++j)
+            domainVolume *= (max[j] - min[j]);
 
-    TX uniformStep;  //+TODO (max[j] - min[j])/nPoints;
+        assert(domainVolume > 0.0f);
 
-    for(int j = 0; j < nx; ++j)
-        step[j] = uniformStep;
+        const TX elementVolume = domainVolume/nPoints;
+    
+        TX uniformStep = std::pow(elementVolume, 1/nx);
+
+        for(int j = 0; j < nx; ++j)
+            step[j] = uniformStep;
+    }
 
     X x = min;
 
