@@ -298,7 +298,7 @@ PrecompData_test::PrecompData_test()
              <<      "];  average error = " << avgErr << endl;
     }
 #if 0
-    // Test - Multidimensions
+    // Test - Multidimensions: Storage of data in an NxM space
     {
         cout << "\n\nTest: Storage of data in an NxM space:" << endl;
         const string funcName = "Multidimensions";
