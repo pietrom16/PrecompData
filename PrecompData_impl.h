@@ -5,6 +5,7 @@
 */
 
 #include <algorithm>
+#include <cassert>
 #include <cmath>
 #include <functional>
 
@@ -109,6 +110,11 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
                                          size_t  nPoints)
 {
     //+TODO
+    assert(Func != 0);
+    assert(nPoints > 0);
+    for(int i = 0; i < nx; ++i)
+        assert(xmin[i] < xmax[i]);
+
     min = xmin;
     max = xmax;
 

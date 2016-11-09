@@ -9,6 +9,7 @@
 - Second degree (quadratic) interpolation.
 - Test whether it is worth to precompute the data, in terms of performance and memory requirements.
 - Add a version member variable.
+- Check input parameters of most functions (assert).
 - Consider using a proper matrix library.
 
 ##### Copy data on device memory.
