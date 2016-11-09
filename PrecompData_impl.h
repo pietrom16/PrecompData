@@ -122,8 +122,8 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
         min = xmin;
         max = xmax;
 
-        xData.resize(nPoints);
-        yData.resize(nPoints);
+        xData.clear();
+        yData.clear();
     }
 
     // Find step, with these constraints: nPoints, nx, min, max
@@ -148,14 +148,17 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
 
     X x = min;
 
-    for(size_t i = 0; i < nPoints; ++i)
+    for(size_t j = 0; j < nx; ++j)
     {
-        const Y y = Func(x);
+        for(size_t i = 0; i < nSteps[j]; ++i)
+        {
+            const Y y = Func(x);
 
-        xData[i] = x;
-        yData[i] = y;
+            xData.push_back(x);
+            yData.push_back(y);
 
-        x += step;
+            x += step;
+        }
     }
 
     PreComputeValues();
