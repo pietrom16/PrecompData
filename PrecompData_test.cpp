@@ -297,7 +297,7 @@ PrecompData_test::PrecompData_test()
              <<      "];  maximum error = [" << maxErrX << ", " << maxErrY
              <<      "];  average error = " << avgErr << endl;
     }
-#if 0
+
     // Test - Multidimensions: Storage of data in an NxM space
     {
         cout << "\n\nTest: Storage of data in an NxM space:" << endl;
@@ -325,7 +325,7 @@ PrecompData_test::PrecompData_test()
         }
         cout << "Total error = " << err << endl;
     }
-#endif
+
 }
 
 
