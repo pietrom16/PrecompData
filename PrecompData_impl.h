@@ -110,16 +110,19 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
                                          size_t  nPoints)
 {
     //+TODO
-    assert(Func != 0);
-    assert(nPoints > 0);
-    for(int i = 0; i < nx; ++i)
-        assert(xmin[i] < xmax[i]);
+    // Init
+    {
+        assert(Func != 0);
+        assert(nPoints > 0);
+        for(int i = 0; i < nx; ++i)
+            assert(xmin[i] < xmax[i]);
 
-    min = xmin;
-    max = xmax;
+        min = xmin;
+        max = xmax;
 
-    xData.resize(nPoints);
-    yData.resize(nPoints);
+        xData.resize(nPoints);
+        yData.resize(nPoints);
+    }
 
     // Find step, with these constraints: nPoints, nx, min, max
     // In this context, step is the same across all dimensions.
