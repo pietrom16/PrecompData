@@ -154,6 +154,8 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
         {
             const Y y = Func(x);
 
+            assert(xData.size() == yData.size());
+
             xData.push_back(x);
             yData.push_back(y);
 
