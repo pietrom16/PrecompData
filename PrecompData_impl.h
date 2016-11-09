@@ -115,10 +115,13 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
     xData.resize(nPoints);
     yData.resize(nPoints);
 
-    // Find step across all dimensions, with these constraints: nPoints, nx, min, max
+    // Find step, with these constraints: nPoints, nx, min, max
+    // In this context, step is the same across all dimensions.
+
+    TX uniformStep;  //+TODO (max[j] - min[j])/nPoints;
 
     for(int j = 0; j < nx; ++j)
-        step[j] = (max[j] - min[j])/nPoints;
+        step[j] = uniformStep;
 
     X x = min;
 
