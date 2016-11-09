@@ -8,7 +8,7 @@
 - Load data from file.
 - Second degree (quadratic) interpolation.
 - Test whether it is worth to precompute the data, in terms of performance and memory requirements.
-
+- Add a version member variable.
 
 ##### Copy data on device memory.
 
