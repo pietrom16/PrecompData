@@ -75,5 +75,6 @@ int main()
 
 ### References
 
-["Sequential and Parallel Generation of Unstructured 3D Meshes"](http://mech.fsv.cvut.cz/~dr/papers/Thesis98/thesis.html)
-- Chapter: ["Curve Discretization"](http://mech.fsv.cvut.cz/~dr/papers/Thesis98/node40.html)
+- ["Sequential and Parallel Generation of Unstructured 3D Meshes"](http://mech.fsv.cvut.cz/~dr/papers/Thesis98/thesis.html)
+    - Chapter: ["Curve Discretization"](http://mech.fsv.cvut.cz/~dr/papers/Thesis98/node40.html)  
+- ["Space-filling curve"](https://en.wikipedia.org/wiki/Space-filling_curve)  
