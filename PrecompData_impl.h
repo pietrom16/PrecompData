@@ -147,7 +147,7 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
 
     // Scan the nx-dimensional hyperspace; store the computed values
 
-    X x = min;
+    X x;
 
     for(size_t j = 0; j < nx; ++j)
     {
@@ -156,15 +156,13 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
             // Check independent and dependent vectors are aligned
             assert(xData.size() == yData.size());
 
+            x[j] = min[j] + step[j]*i;      //+TODO
+
             const Y y = Func(x);
 
             xData.push_back(x);
             yData.push_back(y);
-
-            x += step;          //+TODO
         }
-
-        x += step;          //+TODO
     }
 
     PreComputeValues();
