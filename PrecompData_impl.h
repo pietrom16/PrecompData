@@ -147,6 +147,33 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
 
     // Scan the nx-dimensional hyperspace; store the computed values
 
+    /* //+TODO - Trace
+    
+        // Scan: transform  i --> [x1, x2, ..., xn]
+
+        //  x[k] = i / ( s1.s2...s(k-1) ) % s[k]
+
+        cout << "Transform:  i --> [x1, ..., xn]" << endl;
+
+        for(int i = 0; i < nPoints; ++i)
+        {
+            cout << i << " --> [  ";
+
+            int dimProd = 1;
+
+            for(int k = 0; k < nDim; ++k)
+            {
+                x[k] = i / dimProd % size[k];
+
+                dimProd *= size[k];
+
+                cout << x[k] << " ";
+            }
+
+            cout << " ]" << endl;
+        }
+    */
+
     X x = min;
 
     for(size_t j = 0; j < nx; ++j)
