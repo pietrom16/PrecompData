@@ -165,6 +165,7 @@ public:
     friend class PrecompData_test;
 
 protected:
+    TY Norm(const Y&) const;
     TY FirstDerivative(TX x1, TY y1, TX x2, TY y2) const;
     TY SecondDerivative(TX x1, TY y1, TX x2, TY y2, TX x3, TY y3) const;
     int PickBestPoints(Y (*Func)(X x), const size_t nPoints, const float overSampling = 2.0f);

@@ -413,6 +413,21 @@ int PrecompData<TX, TY, nx, ny>::Get(std::vector<TX> &_xData , std::vector<TY> &
 
 /// Math functions
 
+
+template<typename TX, typename TY, int nx, int ny>
+TY PrecompData<TX, TY, nx, ny>::Norm(const Y &y) const
+{
+    TY norm = 0.0;
+    
+    for(size_t i = 0; i < ny; ++i)
+        norm += y[i] * y[i];
+
+    norm = std::sqrt(norm);
+
+    return norm;
+}
+
+
 template<typename TX, typename TY, int nx, int ny>
 TY PrecompData<TX, TY, nx, ny>::FirstDerivative(TX x1, TY y1, TX x2, TY y2) const
 {
