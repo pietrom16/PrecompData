@@ -177,6 +177,9 @@ private:
 	int             interpolation;
 	int             status;
 
+    Y  (*FuncX)(X x);
+    TY (*FuncTX)(TX x);
+
     std::vector<X>  xData;
     std::vector<Y>  yData;
     X               min, max, step;
