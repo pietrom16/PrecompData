@@ -423,6 +423,55 @@ int PrecompData<TX, TY, nx, ny>::Get(std::vector<TX> &_xData , std::vector<TY> &
 }
 
 
+// Evaluate error
+
+
+// Error on each dimension on known data
+
+template<typename TX, typename TY, int nx, int ny>
+typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::EvaluateErrorKnownData() const
+{
+    //+TODO //+TEST //+CHECK!
+
+    const Y error;
+    
+    for(size_t j = 0; j < error.size(); ++j)
+        error[j] = 0.0;
+
+    for(size_t i = 0; i < xData.size(); ++i)
+    {
+        const X x      = xData[i];
+        const Y y      = yData[i];
+        const Y y_comp = FuncX(x);
+
+        for(size_t j = 0; j < error.size(); ++j) {
+            //error[j] += fabs(y_comp[j] - y[j]);                  // mean absolute error
+            error[j] += (y_comp[j] - y[j])*(y_comp[j] - y[j]);     // mean squared error
+        }
+    }
+
+    for(size_t j = 0; j < error.size(); ++j)
+        error[j] /= xData.size();
+
+    return error;
+}
+
+/*
+// Absolute error on known data
+template<typename TX, typename TY, int nx, int ny>
+typename PrecompData<TX, TY, nx, ny>::TY PrecompData<TX, TY, nx, ny>::EvaluateAbsErrorKnownData() const;
+
+
+// Error on each dimension on random points
+template<typename TX, typename TY, int nx, int ny>
+typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::EvaluateError(int nTestPoints) const;
+
+
+// Absolute error on random points
+template<typename TX, typename TY, int nx, int ny>
+typename PrecompData<TX, TY, nx, ny>::TY PrecompData<TX, TY, nx, ny>::EvaluateAbsError(int nTestPoints) const;
+*/
+
 /// Math functions
 
 
