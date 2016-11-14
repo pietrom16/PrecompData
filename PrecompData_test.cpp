@@ -316,7 +316,7 @@ PrecompData_test::PrecompData_test()
             x[0] = x0[0];
             for(int i = 0; i < nValues; ++i)
             {
-                const pcd21::Y y = itp(x);
+                const pcd21::Y y = itp(x);      //+B
                 err += fabs(TestFunc21(x)[0] - y[0]);
                 cout << i << ":\t" << funcName << "[" << x[0] << ", " << x[1] << "] = " << TestFunc21(x)[0] << " ~ " << y[0] << endl;
                 x[0] += step[0];
