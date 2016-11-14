@@ -84,9 +84,9 @@ public:
 	int PreComputeValues();
 
 	// Coordinate <--> index transformation
-	size_t RtoI(TX x)     const;     // real --> integer
-	TX     ItoR(size_t i) const;     // integer --> real
-	
+    size_t RtoI(TX x)     const;     // real --> integer
+    TX     ItoR(size_t i) const;     // integer --> real
+
 	/// Data loading
 	
 	// Regular grid, computed
@@ -128,6 +128,12 @@ public:
     // Get the whole value set
     int Get(std::vector<X> &_xData, std::vector<Y> &_yData) const;
     int Get(std::vector<TX> &_xData, std::vector<TY> &_yData) const;
+
+    // Evaluate error
+    Y  EvaluateErrorKnownData() const;              // error on each dimension on known data
+    TY EvaluateAbsErrorKnownData() const;           // absolute error on known data
+    Y  EvaluateError(int nTestPoints) const;        // error on each dimension on random points
+    TY EvaluateAbsError(int nTestPoints) const;     // absolute error on random points
 
     /// GPGPU
 
