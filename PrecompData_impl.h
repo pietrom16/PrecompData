@@ -431,9 +431,9 @@ int PrecompData<TX, TY, nx, ny>::Get(std::vector<TX> &_xData , std::vector<TY> &
 template<typename TX, typename TY, int nx, int ny>
 typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::EvaluateErrorKnownData() const
 {
-    //+TODO //+TEST //+CHECK!
+	//+TEST
 
-    const Y error;
+	Y error;
     
     for(size_t j = 0; j < error.size(); ++j)
         error[j] = 0.0;
