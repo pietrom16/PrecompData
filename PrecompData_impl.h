@@ -456,12 +456,18 @@ typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::EvaluateErr
     return error;
 }
 
-/*
+
 // Absolute error on known data
+
 template<typename TX, typename TY, int nx, int ny>
-typename PrecompData<TX, TY, nx, ny>::TY PrecompData<TX, TY, nx, ny>::EvaluateAbsErrorKnownData() const;
+TY PrecompData<TX, TY, nx, ny>::EvaluateAbsErrorKnownData() const
+{
+	const Y error = EvaluateErrorKnownData();
+	return Norm(error);
+}
 
 
+/*
 // Error on each dimension on random points
 template<typename TX, typename TY, int nx, int ny>
 typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::EvaluateError(int nTestPoints) const;
