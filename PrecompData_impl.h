@@ -8,6 +8,7 @@
 #include <cassert>
 #include <cmath>
 #include <functional>
+#include <random>
 
 namespace Utilities {
 
@@ -462,21 +463,65 @@ typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::EvaluateErr
 template<typename TX, typename TY, int nx, int ny>
 TY PrecompData<TX, TY, nx, ny>::EvaluateAbsErrorKnownData() const
 {
+	//+TEST
+
 	const Y error = EvaluateErrorKnownData();
 	return Norm(error);
 }
 
 
-/*
 // Error on each dimension on random points
+
 template<typename TX, typename TY, int nx, int ny>
-typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::EvaluateError(int nTestPoints) const;
+typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::EvaluateError(int nTestPoints) const
+{
+	//+TEST
+
+	X x;
+	Y error;
+
+	std::random_device  rd;
+	std::minstd_rand    gen(rd());
+
+	for(size_t j = 0; j < error.size(); ++j)
+		error[j] = 0.0;
+
+	for(size_t i = 0; i < nTestPoints; ++i)
+	{
+		// Set a random x
+		for(size_t j = 0; j < x.size(); ++j)
+		{
+			std::uniform_real_distribution<> dist(min[j], max[j]);
+			x[j] = dist(gen);
+		}
+
+		const Y y      = Interpolate(x);
+		const Y y_comp = FuncX(x);
+
+		for(size_t j = 0; j < error.size(); ++j) {
+			//error[j] += fabs(y_comp[j] - y[j]);                  // mean absolute error
+			error[j] += (y_comp[j] - y[j])*(y_comp[j] - y[j]);     // mean squared error
+		}
+	}
+
+	for(size_t j = 0; j < error.size(); ++j)
+		error[j] /= xData.size();
+
+	return error;
+}
 
 
 // Absolute error on random points
+
 template<typename TX, typename TY, int nx, int ny>
-typename PrecompData<TX, TY, nx, ny>::TY PrecompData<TX, TY, nx, ny>::EvaluateAbsError(int nTestPoints) const;
-*/
+TY PrecompData<TX, TY, nx, ny>::EvaluateAbsError(int nTestPoints) const
+{
+	//+TEST
+
+	const Y error = EvaluateError(nTestPoints);
+	return Norm(error);
+}
+
 
 /// Math functions
 

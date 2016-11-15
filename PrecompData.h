@@ -132,8 +132,8 @@ public:
     // Evaluate error
     Y  EvaluateErrorKnownData() const;              // error on each dimension on known data
     TY EvaluateAbsErrorKnownData() const;           // absolute error on known data
-    Y  EvaluateError(int nTestPoints) const;        // error on each dimension on random points
-    TY EvaluateAbsError(int nTestPoints) const;     // absolute error on random points
+	Y  EvaluateError(int nTestPoints) const;        // error on each dimension on random points
+	TY EvaluateAbsError(int nTestPoints) const;     // absolute error on random points
 
     /// GPGPU
 
