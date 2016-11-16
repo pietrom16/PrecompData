@@ -279,7 +279,7 @@ size_t  PrecompData<TX, TY, nx, ny>::AutoSet(TY (*Func)(TX x), TX xmin, TX xmax,
 template<typename TX, typename TY, int nx, int ny>
 typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::operator()(X x) const
 {
-    return yData[RtoI(x)];      //+B?
+	return yData[VectorToIndex(x)];
 }
 
 
@@ -312,13 +312,15 @@ typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::Interpolate
 {
     RangeCheck(x);
 
-    const size_t i = RtoI(x);
+	const size_t i = VectorToIndex(x);
 
-    if(i >= yData.size() - 2)
+	if(i >= xData.size() - 2) {
+		status = wrn_x_more_than_max;
         return yData.back();
+	}
 
-	const TX x0 = ItoR(i);
-	const TX x1 = ItoR(i + 1);
+	const X x0 = IndexToVector(i);
+	const X x1 = IndexToVector(i + 1);
 
     //+TODO: Fix - multidimensional
 	const TY y = yData[i] + (yData[i + 1] - yData[i])*(x - x0)/(x1 - x0);
