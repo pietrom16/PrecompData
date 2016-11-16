@@ -82,7 +82,7 @@ int PrecompData<TX, TY, nx, ny>::PreComputeValues()
 // Coordinate <--> index transformations
 
 template<typename TX, typename TY, int nx, int ny>
-size_t PrecompData<TX, TY, nx, ny>::RtoI(TX x) const     // real --> integer/index
+size_t PrecompData<TX, TY, nx, ny>::ScalarToIndex(TX x) const     // scalar --> integer/index
 {
     if(nx == 1)
     	return size_t(kRealInt[0]*(x - min[0]));
@@ -91,7 +91,7 @@ size_t PrecompData<TX, TY, nx, ny>::RtoI(TX x) const     // real --> integer/ind
 
 
 template<typename TX, typename TY, int nx, int ny>
-TX PrecompData<TX, TY, nx, ny>::ItoR(size_t i) const     // integer/index --> real
+TX PrecompData<TX, TY, nx, ny>::IndexToScalar(size_t i) const     // integer/index --> scalar
 {
     if(nx == 1)
         return min[0] + kIntReal[0]*TX(i);
@@ -292,7 +292,7 @@ TY PrecompData<TX, TY, nx, ny>::operator()(TX x) const
     //+ X xv; xv[0] = x;
     //+ const Y yv = yData[RtoI(xv)];
 
-    const size_t i = RtoI(x);
+	const size_t i = ScalarToIndex(x);
     const Y yv = yData[i];
 
     return yv[0];
@@ -335,13 +335,15 @@ TY PrecompData<TX, TY, nx, ny>::Interpolate(TX x)
 
     RangeCheck(x);
 
-    const size_t i = RtoI(x);
+	const size_t i = ScalarToIndex(x);
 
-    if(i >= yData.size() - 2)
-        return yData.back()[0];
+	if(i >= xData.size() - 2) {
+		status = wrn_x_more_than_max;
+		return yData.back()[0];
+	}
 
-    const TX x0 = ItoR(i);
-    const TX x1 = ItoR(i + 1);
+	const TX x0 = IndexToScalar(i);
+	const TX x1 = IndexToScalar(i + 1);
 
     const TY yv = yData[i][0] + (yData[i + 1][0] - yData[i][0])*(x - x0)/(x1 - x0);
 
@@ -363,6 +365,7 @@ int PrecompData<TX, TY, nx, ny>::RangeCheck(X x)
 {
     status = 0;
 
+	//+TODO - Operators < > do not exist for multidimensional data types
     if(x < min)
         status = wrn_x_less_than_min;
     else if(x > max)

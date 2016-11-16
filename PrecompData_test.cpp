@@ -83,9 +83,9 @@ PrecompData_test::PrecompData_test()
         PrecompData<> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
         itp.Set(&TestFunc, x0, x1, nValues);
-        assert(TestEqAbs(itp.RtoI(x0), size_t(0), size_t(0)) && "Test: Conversion real --> index FAILED on first element.");
-        assert(TestEqAbs(itp.RtoI((x1 - x0)/2.0), size_t(nValues/2), size_t(0)) && "Test: Conversion real --> index FAILED on the middle element.");
-        assert(TestEqAbs(itp.RtoI(x1), size_t(nValues), size_t(0)) && "Test: Conversion real --> index FAILED on last element.");
+		assert(TestEqAbs(itp.ScalarToIndex(x0), size_t(0), size_t(0)) && "Test: Conversion real --> index FAILED on first element.");
+		assert(TestEqAbs(itp.ScalarToIndex((x1 - x0)/2.0), size_t(nValues/2), size_t(0)) && "Test: Conversion real --> index FAILED on the middle element.");
+		assert(TestEqAbs(itp.ScalarToIndex(x1), size_t(nValues), size_t(0)) && "Test: Conversion real --> index FAILED on last element.");
         cout << " OK" << endl;
     }
 
@@ -96,9 +96,9 @@ PrecompData_test::PrecompData_test()
         PrecompData<> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
         itp.Set(&TestFunc, x0, x1, nValues);
-        assert(TestEqAbs(itp.ItoR(0), x0, tol) && "Test: Conversion index --> real FAILED on first element.");
-        assert(TestEqAbs(itp.ItoR(nValues/2), (x1 - x0)/2.0f, tol) && "Test: Conversion index --> real FAILED on the middle element.");
-        assert(TestEqAbs(itp.ItoR(nValues), x1, tol) && "Test: Conversion index --> real FAILED on last element.");
+		assert(TestEqAbs(itp.IndexToScalar(0), x0, tol) && "Test: Conversion index --> real FAILED on first element.");
+		assert(TestEqAbs(itp.IndexToScalar(nValues/2), (x1 - x0)/2.0f, tol) && "Test: Conversion index --> real FAILED on the middle element.");
+		assert(TestEqAbs(itp.IndexToScalar(nValues), x1, tol) && "Test: Conversion index --> real FAILED on last element.");
         cout << " OK" << endl;
     }
 
