@@ -76,7 +76,7 @@ PrecompData_test::PrecompData_test()
     const int nValues = 20;
     float tol = 0.01f;    // tolerance
 
-    // Test - Conversions RtoI
+    // Test - Conversions ScalarToIndex
     {
         cout << "\n\nTest: Conversion real --> index: " << flush;
         const string funcName = "TestFunc";
@@ -89,7 +89,7 @@ PrecompData_test::PrecompData_test()
         cout << " OK" << endl;
     }
 
-    // Test - Conversions ItoR
+    // Test - Conversions IndexToScalar
     {
         cout << "\n\nTest: Conversion index --> real: " << flush;
         const string funcName = "TestFunc";
