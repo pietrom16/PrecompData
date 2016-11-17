@@ -82,7 +82,7 @@ int PrecompData<TX, TY, nx, ny>::PreComputeValues()
 // Coordinate <--> index transformations
 
 template<typename TX, typename TY, int nx, int ny>
-size_t PrecompData<TX, TY, nx, ny>::ScalarToIndex(TX x) const     // scalar --> integer/index
+size_t PrecompData<TX, TY, nx, ny>::ScalarToIndex(TX x) const     // scalar --> index
 {
     if(nx == 1)
     	return size_t(kRealInt[0]*(x - min[0]));
