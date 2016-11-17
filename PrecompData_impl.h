@@ -81,21 +81,35 @@ int PrecompData<TX, TY, nx, ny>::PreComputeValues()
 
 // Coordinate <--> index transformations
 
+
 template<typename TX, typename TY, int nx, int ny>
-size_t PrecompData<TX, TY, nx, ny>::ScalarToIndex(TX x) const     // scalar --> index
+size_t PrecompData<TX, TY, nx, ny>::VectorToIndex(X x) const      // vector --> index
 {
-    static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
-    	return size_t(kRealInt[0]*(x - min[0]));
-    //+TODO - Multidimensional case
+    //+TODO
+    return 0;
 }
 
 
 template<typename TX, typename TY, int nx, int ny>
-TX PrecompData<TX, TY, nx, ny>::IndexToScalar(size_t i) const     // integer/index --> scalar
+size_t PrecompData<TX, TY, nx, ny>::ScalarToIndex(TX x) const     // scalar --> index
 {
     static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
-        return min[0] + kIntReal[0]*TX(i);
-    //+TODO - Multidimensional case
+    return size_t(kRealInt[0]*(x - min[0]));
+}
+
+
+template<typename TX, typename TY, int nx, int ny>
+typename PrecompData<TX, TY, nx, ny>::X PrecompData<TX, TY, nx, ny>::IndexToVector(size_t i) const      // index  --> vector
+{
+    //+TODO
+}
+
+
+template<typename TX, typename TY, int nx, int ny>
+TX PrecompData<TX, TY, nx, ny>::IndexToScalar(size_t i) const     // index --> scalar
+{
+    static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
+    return min[0] + kIntReal[0]*TX(i);
 }
 
 
