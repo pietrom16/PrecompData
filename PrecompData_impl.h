@@ -84,7 +84,7 @@ int PrecompData<TX, TY, nx, ny>::PreComputeValues()
 template<typename TX, typename TY, int nx, int ny>
 size_t PrecompData<TX, TY, nx, ny>::ScalarToIndex(TX x) const     // scalar --> index
 {
-    if(nx == 1)
+    static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
     	return size_t(kRealInt[0]*(x - min[0]));
     //+TODO - Multidimensional case
 }
@@ -93,7 +93,7 @@ size_t PrecompData<TX, TY, nx, ny>::ScalarToIndex(TX x) const     // scalar --> 
 template<typename TX, typename TY, int nx, int ny>
 TX PrecompData<TX, TY, nx, ny>::IndexToScalar(size_t i) const     // integer/index --> scalar
 {
-    if(nx == 1)
+    static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
         return min[0] + kIntReal[0]*TX(i);
     //+TODO - Multidimensional case
 }
