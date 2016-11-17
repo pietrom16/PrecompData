@@ -289,9 +289,6 @@ TY PrecompData<TX, TY, nx, ny>::operator()(TX x) const
     static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
     static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
 
-    //+ X xv; xv[0] = x;
-    //+ const Y yv = yData[RtoI(xv)];
-
 	const size_t i = ScalarToIndex(x);
     const Y yv = yData[i];
 
