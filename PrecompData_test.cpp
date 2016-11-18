@@ -12,7 +12,6 @@
 #include <vector>
 
 using namespace std;
-using std::cout;
 using Utilities::PrecompData;
 
 typedef PrecompData<float, float, 2, 1> pcd21;  // f: (X, Y) --> Z
@@ -38,7 +37,7 @@ float TestFuncNonLinSin(float x) {      //   y = sin(x)
 }
 
 pcd21::Y TestFunc21(pcd21::X x) {       //   y = sin(x0) + cos(x1)
-    return pcd21::Y { sin(x[0]) + cos(x[1]) };
+	return pcd21::Y { {sin(x[0]) + cos(x[1])} };
 }
 
 
@@ -71,34 +70,34 @@ PrecompData_test::PrecompData_test()
 {
 	using namespace Utilities;
 
-    cout << std::fixed;
+	cout << fixed;
 
-    const int nValues = 20;
-    float tol = 0.01f;    // tolerance
+	const int    nValues = 20;
+	const float  tol = 0.01f;    // tolerance
 
     // Test - Conversions ScalarToIndex
     {
-        cout << "\n\nTest: Conversion real --> index: " << flush;
+		cout << "\n\nTest: Conversion scalar --> index: " << flush;
         const string funcName = "TestFunc";
         PrecompData<> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
         itp.Set(&TestFunc, x0, x1, nValues);
-		assert(TestEqAbs(itp.ScalarToIndex(x0), size_t(0), size_t(0)) && "Test: Conversion real --> index FAILED on first element.");
-		assert(TestEqAbs(itp.ScalarToIndex((x1 - x0)/2.0), size_t(nValues/2), size_t(0)) && "Test: Conversion real --> index FAILED on the middle element.");
-		assert(TestEqAbs(itp.ScalarToIndex(x1), size_t(nValues), size_t(0)) && "Test: Conversion real --> index FAILED on last element.");
+		assert(TestEqAbs(itp.ScalarToIndex(x0), size_t(0), size_t(0)) && "Test: Conversion scalar --> index FAILED on first element.");
+		assert(TestEqAbs(itp.ScalarToIndex((x1 - x0)/2.0), size_t(nValues/2), size_t(0)) && "Test: Conversion scalar --> index FAILED on the middle element.");
+		assert(TestEqAbs(itp.ScalarToIndex(x1), size_t(nValues), size_t(0)) && "Test: Conversion scalar --> index FAILED on last element.");
         cout << " OK" << endl;
     }
 
     // Test - Conversions IndexToScalar
     {
-        cout << "\n\nTest: Conversion index --> real: " << flush;
+		cout << "\n\nTest: Conversion index --> scalar: " << flush;
         const string funcName = "TestFunc";
         PrecompData<> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
         itp.Set(&TestFunc, x0, x1, nValues);
-		assert(TestEqAbs(itp.IndexToScalar(0), x0, tol) && "Test: Conversion index --> real FAILED on first element.");
-		assert(TestEqAbs(itp.IndexToScalar(nValues/2), (x1 - x0)/2.0f, tol) && "Test: Conversion index --> real FAILED on the middle element.");
-		assert(TestEqAbs(itp.IndexToScalar(nValues), x1, tol) && "Test: Conversion index --> real FAILED on last element.");
+		assert(TestEqAbs(itp.IndexToScalar(0), x0, tol) && "Test: Conversion index --> scalar FAILED on first element.");
+		assert(TestEqAbs(itp.IndexToScalar(nValues/2), (x1 - x0)/2.0f, tol) && "Test: Conversion index --> scalar FAILED on the middle element.");
+		assert(TestEqAbs(itp.IndexToScalar(nValues), x1, tol) && "Test: Conversion index --> scalar FAILED on last element.");
         cout << " OK" << endl;
     }
 
