@@ -107,12 +107,12 @@ PrecompData_test::PrecompData_test()
 		const string funcName = "TestFunc";
 		pcd21 itp(funcName);
 		itp.SetComment("Y = f(X)    X = x(i,j), Y = y(i)");
-		const pcd21::X x0 = { 0.00f, 0.00f };
-		const pcd21::X x1 = { 6.28f, 6.28f };
+		const pcd21::X x0 = { {0.00f, 0.00f} };
+		const pcd21::X x1 = { {6.28f, 6.28f} };
 		itp.Set(&TestFunc21, x0, x1, nValues*nValues);
-		assert(TestEqAbs(itp.ScalarToIndex(x0), size_t(0), size_t(0)) && "Test: Conversion scalar --> index FAILED on first element.");
-		assert(TestEqAbs(itp.ScalarToIndex((x1 - x0)/2.0), size_t(nValues/2), size_t(0)) && "Test: Conversion scalar --> index FAILED on the middle element.");
-		assert(TestEqAbs(itp.ScalarToIndex(x1), size_t(nValues), size_t(0)) && "Test: Conversion scalar --> index FAILED on last element.");
+		assert(TestEqAbs(itp.VectorToIndex(x0), size_t(0), size_t(0)) && "Test: Conversion vector --> index FAILED on first element.");
+		assert(TestEqAbs(itp.VectorToIndex((x1 - x0)/2.0f), size_t(nValues/2), size_t(0)) && "Test: Conversion vector --> index FAILED on the middle element.");
+		assert(TestEqAbs(itp.VectorToIndex(x1), size_t(nValues), size_t(0)) && "Test: Conversion vector --> index FAILED on last element.");
 		cout << " OK" << endl;
 	}
 
