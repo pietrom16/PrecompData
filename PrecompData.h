@@ -46,27 +46,6 @@
 namespace Utilities {
 
 
-template<class T, std::size_t N>
-std::array<T,N> operator-(const std::array<T,N>& lhs,
-                          const std::array<T,N>& rhs)
-{
-	std::array<T,N> r;
-	for(size_t i = 0; i < lhs.size(); ++i)
-		r[i] = lhs[i] - rhs[i];
-	return r;
-}
-
-
-template<class T, std::size_t N>
-std::array<T,N> operator/(const std::array<T,N>& lhs,
-                          const T rhs)
-{
-	std::array<T,N> r;
-	for(size_t i = 0; i < lhs.size(); ++i)
-		r[i] = lhs[i]/rhs;
-	return r;
-}
-
 
 /** PrecompData
     Set of points approximating a multidimensional function/hypersurface

@@ -43,6 +43,7 @@ set(SRC
 	PrecompData_test.cpp
 	PrecompData.h
 	PrecompDataDevice_impl.h
+	StlExt.hpp
 	README.md
 	TODO.md
 )

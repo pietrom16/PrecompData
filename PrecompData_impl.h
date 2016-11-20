@@ -4,6 +4,7 @@
 	Apache License 2.0
 */
 
+#include "StlExt.hpp"
 #include <algorithm>
 #include <cassert>
 #include <cmath>
@@ -11,6 +12,8 @@
 #include <random>
 
 namespace Utilities {
+
+using namespace stdExt;
 
 template<typename TX, typename TY, int nx, int ny>
 PrecompData<TX, TY, nx, ny>::PrecompData()
