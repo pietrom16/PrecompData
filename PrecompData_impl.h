@@ -89,7 +89,35 @@ template<typename TX, typename TY, int nx, int ny>
 size_t PrecompData<TX, TY, nx, ny>::VectorToIndex(X x) const      // vector --> index
 {
     //+TODO
-    return 0;
+	/*
+		- Through search?
+		- Mapping index <--> coordinate?
+		- Direct computation?
+	*/
+
+	//+SLOW - Through search
+
+	TX      error     = 0.0f;		// for a specific point
+	TX      minError  = 1.0e50;		//+ proper constant
+	size_t  minErrPos = -1;
+
+	for(size_t p = 0; p < xData.size(); ++p)
+	{
+		error = 0.0f;
+
+		for(size_t i = 0; i < nx; ++i)
+		{
+			TX delta = xData[p][i] - x[i];		//+TEST
+			error += delta*delta;
+		}
+
+		if(error < minError) {
+			minError = error;
+			minErrPos = p;
+		}
+	}
+
+	return minErrPos;
 }
 
 
