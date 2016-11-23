@@ -9,6 +9,7 @@
 #include <cassert>
 #include <cmath>
 #include <functional>
+#include <iostream>  //+T+++
 #include <limits>
 #include <random>
 
@@ -115,6 +116,8 @@ size_t PrecompData<TX, TY, nx, ny>::VectorToIndex(X x) const      // vector --> 
 		if(error < minError) {
 			minError = error;
 			minErrPos = p;
+
+			std::cerr << "minError = " << minError << "  Pos = " << p << std::endl;  //+T+++
 		}
 	}
 
