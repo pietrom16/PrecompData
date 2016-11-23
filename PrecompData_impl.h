@@ -90,12 +90,12 @@ size_t PrecompData<TX, TY, nx, ny>::VectorToIndex(X x) const      // vector --> 
 {
     //+TODO
 	/*
-		- Through search?
+		- Thorough search?
 		- Mapping index <--> coordinate?
 		- Direct computation?
 	*/
 
-	//+SLOW - Through search
+	//+SLOW - Thorough search
 
 	TX      error     = 0.0f;		// for a specific point
 	TX      minError  = 1.0e50;		//+ proper constant
