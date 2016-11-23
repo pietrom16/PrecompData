@@ -9,6 +9,7 @@
 #include <cassert>
 #include <cmath>
 #include <functional>
+#include <limits>
 #include <random>
 
 namespace Utilities {
@@ -98,7 +99,7 @@ size_t PrecompData<TX, TY, nx, ny>::VectorToIndex(X x) const      // vector --> 
 	//+SLOW - Thorough search
 
 	TX      error     = 0.0f;		// for a specific point
-	TX      minError  = 1.0e50;		//+ proper constant
+	TX      minError  = std::numeric_limits<TX>::max();
 	size_t  minErrPos = -1;
 
 	for(size_t p = 0; p < xData.size(); ++p)
