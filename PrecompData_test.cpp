@@ -110,9 +110,25 @@ PrecompData_test::PrecompData_test()
 		const pcd21::X x0 = { {0.00f, 0.00f} };
 		const pcd21::X x1 = { {6.28f, 6.28f} };
 		itp.Set(&TestFunc21, x0, x1, nValues*nValues);
+
+		pcd21::Y y;
+		y = itp(x0);
+		cerr << "Expected result = " << (sin(x0[0]) + cos(x0[1])) << ";  Actual result = " << y[0] << endl;
+		assert(y[0] == 1.0f);
+		y = itp(x1);
+		cerr << "Expected result = " << (sin(x1[0]) + cos(x1[1])) << ";  Actual result = " << y[0] << endl;
+		assert(y[0] == 1.0f);
+
+		{//+TEMP
+			cerr << endl;
+			cerr << itp.VectorToIndex(x0) << " = " << size_t(0) << endl;
+			cerr << itp.VectorToIndex(x1) << " = " << size_t(nValues*nValues) << endl;
+			cerr << itp.VectorToIndex((x1 - x0)/2.0f) << " = " << size_t(nValues*nValues/2) << endl;
+		}
+
 		assert(TestEqAbs(itp.VectorToIndex(x0), size_t(0), size_t(0)) && "Test: Conversion vector --> index FAILED on first element.");
-		assert(TestEqAbs(itp.VectorToIndex((x1 - x0)/2.0f), size_t(nValues/2), size_t(0)) && "Test: Conversion vector --> index FAILED on the middle element.");
-		assert(TestEqAbs(itp.VectorToIndex(x1), size_t(nValues), size_t(0)) && "Test: Conversion vector --> index FAILED on last element.");
+		assert(TestEqAbs(itp.VectorToIndex(x1), size_t(nValues*nValues), size_t(0)) && "Test: Conversion vector --> index FAILED on last element.");
+		assert(TestEqAbs(itp.VectorToIndex((x1 - x0)/2.0f), size_t(nValues*nValues/2), size_t(0)) && "Test: Conversion vector --> index FAILED on the middle element.");
 		cout << " OK" << endl;
 	}
 
