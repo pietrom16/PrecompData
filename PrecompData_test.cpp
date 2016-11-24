@@ -111,6 +111,8 @@ PrecompData_test::PrecompData_test()
 		const pcd21::X x1 = { {6.28f, 6.28f} };
 		itp.Set(&TestFunc21, x0, x1, nValues*nValues);
 
+		itp.Dump();
+
 		pcd21::Y y;
 		y = itp(x0);
 		cerr << "Expected result = " << (sin(x0[0]) + cos(x0[1])) << ";  Actual result = " << y[0] << endl;

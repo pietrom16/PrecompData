@@ -475,6 +475,62 @@ int PrecompData<TX, TY, nx, ny>::Get(std::vector<TX> &_xData , std::vector<TY> &
 }
 
 
+template<typename TX, typename TY, int nx, int ny>
+int PrecompData<TX, TY, nx, ny>::Dump() const
+{
+	using std::cout;
+	using std::endl;
+
+	cout << "\n\n----------------------------------------------------------------\n";
+	cout << "Dump: " << funcName << "\n" << comment << "\nStatus: " << status << endl;
+	cout << "Regular grid: " << regularGrid << "\nOversampling: " << overSampling << endl;
+
+	cout << "\nDim   Min   Max   Step   kRealInt   kIntReal" << endl;
+	for(size_t i = 0; i < nx; ++i)
+	{
+		cout << i + 1 << "   " << min[i] << "   " << max[i] << "   " << step[i] << "   " << kRealInt[i] << "   " << kIntReal[i] << endl;
+	}
+
+	for(size_t j = 0; j < xData.size(); ++j)
+	{
+		for(size_t i = 0; i < nx; ++i)
+		{
+			cout << "  " << xData[j][i];
+		}
+
+		if(xData.size() == yData.size())
+		{
+			cout << " --> ";
+
+			for(size_t i = 0; i < ny; ++i)
+			{
+				cout << "  " << yData[j][i];
+			}
+		}
+
+		cout << endl;
+	}
+
+	if(xData.size() != yData.size())
+	{
+		cout << " --> " << endl;
+		for(size_t j = 0; j < yData.size(); ++j)
+		{
+			for(size_t i = 0; i < ny; ++i)
+			{
+				cout << "  " << yData[j][i];
+			}
+			cout << endl;
+		}
+	}
+
+	cout << "Dump complete.\n";
+	cout << "----------------------------------------------------------------\n";
+
+	return 0;
+}
+
+
 // Evaluate error
 
 
