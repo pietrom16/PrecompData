@@ -3,8 +3,8 @@
 
 - Making transition to multidimensional data...
     - Precompute regular grid, n dimensional functions.
-- Precompute irregular grid, one dimensional functions. [OPTIMIZE/TEST]
-- Precompute irregular grid, n dimensional functions.
+	- Precompute irregular grid, one dimensional functions. [OPTIMIZE/TEST]
+	- Precompute irregular grid, n dimensional functions.
 - Load data from file.
 - Second degree (quadratic) interpolation.
 - Test whether it is worth to precompute the data, in terms of performance and memory requirements.

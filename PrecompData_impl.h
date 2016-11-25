@@ -475,8 +475,13 @@ int PrecompData<TX, TY, nx, ny>::Get(std::vector<TX> &_xData , std::vector<TY> &
 }
 
 
+/** Dump()
+ *  Dump internal values on stdout.
+ *  n  : if 0, dump everything, otherwise dump n random points.
+ */
+
 template<typename TX, typename TY, int nx, int ny>
-int PrecompData<TX, TY, nx, ny>::Dump() const
+int PrecompData<TX, TY, nx, ny>::Dump(int n) const
 {
 	using std::cout;
 	using std::endl;
