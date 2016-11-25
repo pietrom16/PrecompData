@@ -212,5 +212,6 @@ private:
 // Implementation include files
 #include "PrecompData_impl.h"
 #include "PrecompDataDevice_impl.h"
+#include "PrecompData_dump.h"
 
 #endif // PRECOMP_DATA_H

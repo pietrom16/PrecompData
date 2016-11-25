@@ -38,11 +38,12 @@ endif()
 message("Building with: " ${CMAKE_CXX_COMPILER} " " ${CMAKE_CXX_FLAGS} " " ${CMAKE_BUILD_TYPE})
 
 set(SRC
+	PrecompData.h
 	PrecompData_impl.h
+	PrecompDataDevice_impl.h
+	PrecompData_dump.h
 	PrecompData_test.h
 	PrecompData_test.cpp
-	PrecompData.h
-	PrecompDataDevice_impl.h
 	StlExt.hpp
 	README.md
 	TODO.md
