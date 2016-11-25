@@ -640,7 +640,7 @@ typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::EvaluateErr
 	Y error;
 
 	std::random_device  rd;
-	std::minstd_rand    gen(rd());
+	std::mt19937        gen(rd());
 
 	for(size_t j = 0; j < error.size(); ++j)
 		error[j] = 0.0;
