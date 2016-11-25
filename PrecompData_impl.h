@@ -498,27 +498,12 @@ int PrecompData<TX, TY, nx, ny>::Dump(int n) const
 
 	for(size_t j = 0; j < xData.size(); ++j)
 	{
-		for(size_t i = 0; i < nx; ++i)
-		{
-			cout << "  " << xData[j][i];
-		}
-
-		if(xData.size() == yData.size())
-		{
-			cout << " --> ";
-
-			for(size_t i = 0; i < ny; ++i)
-			{
-				cout << "  " << yData[j][i];
-			}
-		}
-
-		cout << endl;
+		DumpElement(j);
 	}
 
 	if(xData.size() != yData.size())
 	{
-		cout << " --> " << endl;
+		cout << "Warning: size of independent and dependent data do not match." << endl;
 		for(size_t j = 0; j < yData.size(); ++j)
 		{
 			for(size_t i = 0; i < ny; ++i)
@@ -531,6 +516,40 @@ int PrecompData<TX, TY, nx, ny>::Dump(int n) const
 
 	cout << "Dump complete.\n";
 	cout << "----------------------------------------------------------------\n";
+
+	return 0;
+}
+
+
+/** DumpElement()
+ *  Dump a specific point on stdout.
+ *  i  : index of the point to dump.
+ */
+
+template<typename TX, typename TY, int nx, int ny>
+int PrecompData<TX, TY, nx, ny>::DumpElement(size_t j) const
+{
+	using std::cout;
+	using std::endl;
+
+	assert(j < xData.size());
+
+	for(size_t i = 0; i < nx; ++i)
+	{
+		cout << "  " << xData[j][i];
+	}
+
+	if(xData.size() == yData.size())
+	{
+		cout << " --> ";
+
+		for(size_t i = 0; i < ny; ++i)
+		{
+			cout << "  " << yData[j][i];
+		}
+	}
+
+	cout << endl;
 
 	return 0;
 }
