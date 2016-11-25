@@ -111,9 +111,9 @@ PrecompData_test::PrecompData_test()
 		const pcd21::X x1 = { {6.28f, 6.28f} };
 		itp.Set(&TestFunc21, x0, x1, nValues*nValues);
 
-		itp.Dump();
-		itp.Dump(5);
-		itp.Dump(-5);
+		//itp.Dump();
+		itp.Dump(10);
+		itp.Dump(-10);
 
 		pcd21::Y y;
 		y = itp(x0);
