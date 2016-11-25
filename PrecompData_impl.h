@@ -477,7 +477,9 @@ int PrecompData<TX, TY, nx, ny>::Get(std::vector<TX> &_xData , std::vector<TY> &
 
 /** Dump()
  *  Dump internal values on stdout.
- *  n  : if 0, dump everything, otherwise dump n random points.
+ *  n : if = 0, dump everything;
+ *      if > 0, dump the first n points;
+ *      if < 0, dump |n| random points.
  */
 
 template<typename TX, typename TY, int nx, int ny>
@@ -485,6 +487,9 @@ int PrecompData<TX, TY, nx, ny>::Dump(int n) const
 {
 	using std::cout;
 	using std::endl;
+
+	if(n > int(xData.size()) || n == 0)
+		n = xData.size();
 
 	cout << "\n\n----------------------------------------------------------------\n";
 	cout << "Dump: " << funcName << "\n" << comment << "\nStatus: " << status << endl;
@@ -496,9 +501,32 @@ int PrecompData<TX, TY, nx, ny>::Dump(int n) const
 		cout << i + 1 << "   " << min[i] << "   " << max[i] << "   " << step[i] << "   " << kRealInt[i] << "   " << kIntReal[i] << endl;
 	}
 
-	for(size_t j = 0; j < xData.size(); ++j)
+	if(n > 0)			// dump all or the first n points
 	{
-		DumpElement(j);
+		if(n == int(xData.size()))
+			cout << "Dump all points:" << endl;
+		else
+			cout << "Dump the first " << n << " points:" << endl;
+
+		for(size_t j = 0; j < n; ++j)
+			DumpElement(j);
+	}
+	else				// dump |n| random points
+	{
+		const size_t m = size_t(-n);
+		size_t i;
+
+		std::random_device                     rd;
+		std::mt19937                           gen(rd());
+		std::uniform_int_distribution<size_t>  dist(0, xData.size());
+
+		cout << "Dump " << m << " random points:" << endl;
+
+		for(size_t j = 0; j < m; ++j)
+		{
+			i = dist(gen);
+			DumpElement(i);
+		}
 	}
 
 	if(xData.size() != yData.size())
@@ -523,7 +551,7 @@ int PrecompData<TX, TY, nx, ny>::Dump(int n) const
 
 /** DumpElement()
  *  Dump a specific point on stdout.
- *  i  : index of the point to dump.
+ *  j : index of the point to dump.
  */
 
 template<typename TX, typename TY, int nx, int ny>

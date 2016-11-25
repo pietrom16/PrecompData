@@ -112,6 +112,8 @@ PrecompData_test::PrecompData_test()
 		itp.Set(&TestFunc21, x0, x1, nValues*nValues);
 
 		itp.Dump();
+		itp.Dump(5);
+		itp.Dump(-5);
 
 		pcd21::Y y;
 		y = itp(x0);
