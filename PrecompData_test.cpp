@@ -83,7 +83,7 @@ PrecompData_test::PrecompData_test()
         const float x0 = 0.0f, x1 = 6.28f;
         itp.Set(&TestFunc, x0, x1, nValues);
 		assert(TestEqAbs(itp.ScalarToIndex(x0), size_t(0), size_t(0)) && "Test: Conversion scalar --> index FAILED on first element.");
-		assert(TestEqAbs(itp.ScalarToIndex((x1 - x0)/2.0), size_t(nValues/2), size_t(0)) && "Test: Conversion scalar --> index FAILED on the middle element.");
+		assert(TestEqAbs(itp.ScalarToIndex((x1 - x0)/2.0f), size_t(nValues/2), size_t(0)) && "Test: Conversion scalar --> index FAILED on the middle element.");
 		assert(TestEqAbs(itp.ScalarToIndex(x1), size_t(nValues), size_t(0)) && "Test: Conversion scalar --> index FAILED on last element.");
         cout << " OK" << endl;
     }
@@ -109,19 +109,19 @@ PrecompData_test::PrecompData_test()
 		y_ok[0] = 1.0;
 		y = TestFunc21(x);
 		cerr << "Expected result = " << y_ok[0] << ";  Actual result = " << y[0] << endl;
-		assert(abs(y[0] - y_ok[0]) < 1.0e-2);
+		assert(abs(y[0] - y_ok[0]) < 1.0e-2f);
 
 		x = { {3.141f, 3.141f} };
 		y_ok[0] = -1.0;
 		y = TestFunc21(x);
 		cerr << "Expected result = " << y_ok[0] << ";  Actual result = " << y[0] << endl;
-		assert(abs(y[0] - y_ok[0]) < 1.0e-2);
+		assert(abs(y[0] - y_ok[0]) < 1.0e-2f);
 
 		x = { {6.282f, 6.282f} };
 		y_ok[0] = 1.0;
 		y = TestFunc21(x);
 		cerr << "Expected result = " << y_ok[0] << ";  Actual result = " << y[0] << endl;
-		assert(abs(y[0] - y_ok[0]) < 1.0e-2);
+		assert(abs(y[0] - y_ok[0]) < 1.0e-2f);
 
 
 		cout << " OK" << endl;
@@ -249,42 +249,42 @@ PrecompData_test::PrecompData_test()
         x1 = 0.0; y1 = 0.0; x2 = 1.0; y2 = 0.0; expRes = 0.0;
         der1 = test.FirstDerivative(x1, y1, x2, y2);
         ++nTests;
-        if(fabs(der1 - expRes) > 0.0001) {
+		if(fabs(der1 - expRes) > 0.0001f) {
             ++nFailed;
             cerr << "Error - First derivative 1" << endl;
         }
         x1 = 0.0; y1 = 0.0; x2 = 1.0; y2 = 1.0; expRes = 1.0;
         der1 = test.FirstDerivative(x1, y1, x2, y2);
         ++nTests;
-        if(fabs(der1 - expRes) > 0.0001) {
+		if(fabs(der1 - expRes) > 0.0001f) {
             ++nFailed;
             cerr << "Error - First derivative 2" << endl;
         }
         x1 = 1.0; y1 = 0.0; x2 = 0.0; y2 = 1.0; expRes = -1.0;
         der1 = test.FirstDerivative(x1, y1, x2, y2);
         ++nTests;
-        if(fabs(der1 - expRes) > 0.0001) {
+		if(fabs(der1 - expRes) > 0.0001f) {
             ++nFailed;
             cerr << "Error - First derivative 3" << endl;
         }
         x1 = 0.0; y1 = 0.0; x2 = 2.0; y2 = 1.0; expRes = 0.5;
         der1 = test.FirstDerivative(x1, y1, x2, y2);
         ++nTests;
-        if(fabs(der1 - expRes) > 0.0001) {
+		if(fabs(der1 - expRes) > 0.0001f) {
             ++nFailed;
             cerr << "Error - First derivative 4" << endl;
         }
         x1 = 0.0; y1 = -1.0; x2 = 1.0; y2 = 1.0; expRes = 2.0;
         der1 = test.FirstDerivative(x1, y1, x2, y2);
         ++nTests;
-        if(fabs(der1 - expRes) > 0.0001) {
+		if(fabs(der1 - expRes) > 0.0001f) {
             ++nFailed;
             cerr << "Error - First derivative 5" << endl;
         }
         x1 = 0.0; y1 = 1.0; x2 = 1.0; y2 = 1.0; expRes = 0.0;
         der1 = test.FirstDerivative(x1, y1, x2, y2);
         ++nTests;
-        if(fabs(der1 - expRes) > 0.0001) {
+		if(fabs(der1 - expRes) > 0.0001f) {
             ++nFailed;
             cerr << "Error - First derivative 6" << endl;
         }
@@ -293,28 +293,28 @@ PrecompData_test::PrecompData_test()
         x1 = 0.0; y1 = 0.0; x2 = 1.0; y2 = 0.0; x3 = 2.0; y3 = 0.0; expRes = 0.0;
         der2 = test.SecondDerivative(x1, y1, x2, y2, x3, y3);
         ++nTests;
-        if(fabs(der2 - expRes) > 0.0001) {
+		if(fabs(der2 - expRes) > 0.0001f) {
             ++nFailed;
             cerr << "Error - Second derivative 1" << endl;
         }
         x1 = 0.0; y1 = 1.0; x2 = 1.0; y2 = 1.0; x3 = 2.0; y3 = 1.0; expRes = 0.0;
         der2 = test.SecondDerivative(x1, y1, x2, y2, x3, y3);
         ++nTests;
-        if(fabs(der2 - expRes) > 0.0001) {
+		if(fabs(der2 - expRes) > 0.0001f) {
             ++nFailed;
             cerr << "Error - Second derivative 2" << endl;
         }
         x1 = 0.0; y1 = 0.0; x2 = 1.0; y2 = 1.0; x3 = 2.0; y3 = 2.0; expRes = 0.0;
         der2 = test.SecondDerivative(x1, y1, x2, y2, x3, y3);
         ++nTests;
-        if(fabs(der2 - expRes) > 0.0001) {
+		if(fabs(der2 - expRes) > 0.0001f) {
             ++nFailed;
             cerr << "Error - Second derivative 3" << endl;
         }
         x1 = 0.0; y1 = 0.0; x2 = 1.0; y2 = 1.0; x3 = 2.0; y3 = 4.0; expRes = 2.0;
         der2 = test.SecondDerivative(x1, y1, x2, y2, x3, y3);
         ++nTests;
-        if(fabs(der2 - expRes) > 0.0001) {
+		if(fabs(der2 - expRes) > 0.0001f) {
             ++nFailed;
             cerr << "Error - Second derivative 4: Result = " << der2 << "; Expected = " << expRes << endl;
         }
