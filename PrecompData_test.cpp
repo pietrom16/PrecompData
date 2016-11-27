@@ -364,10 +364,10 @@ PrecompData_test::PrecompData_test()
         const string funcName = "Multidimensions";
         pcd21 itp(funcName);
         itp.SetComment("Y = f(X)    X = x(i,j), Y = y(i)");
-        pcd21::X x0 = { 0.00f, 0.00f };     // coordinates of the starting point
-        pcd21::X x1 = { 6.28f, 6.28f };     // coordinates of the end point
-		const pcd21::X step = { 0.5f*(x1[0] - x0[0])/nValues,
-		                        0.5f*(x1[1] - x0[1])/nValues };
+		pcd21::X x0 = { { 0.00f, 0.00f } };     // coordinates of the starting point
+		pcd21::X x1 = { { 6.28f, 6.28f } };     // coordinates of the end point
+		const pcd21::X step = { { 0.5f*(x1[0] - x0[0])/nValues,
+		                          0.5f*(x1[1] - x0[1])/nValues } };
         itp.Set(&TestFunc21, x0, x1, nValues*nValues);
         pcd21::X x = x0;
         float err = 0.0f;
