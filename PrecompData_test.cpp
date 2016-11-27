@@ -101,6 +101,32 @@ PrecompData_test::PrecompData_test()
         cout << " OK" << endl;
     }
 
+	// Test - Test mathematical functions
+	{
+		cout << "\n\nTest: Test mathematical functions: " << endl;
+		pcd21::X x = { {0.00f, 0.00f} };
+		pcd21::Y y, y_ok;
+		y_ok[0] = 1.0;
+		y = TestFunc21(x);
+		cerr << "Expected result = " << y_ok[0] << ";  Actual result = " << y[0] << endl;
+		assert(abs(y[0] - y_ok[0]) < 1.0e-2);
+
+		x = { {3.141f, 3.141f} };
+		y_ok[0] = -1.0;
+		y = TestFunc21(x);
+		cerr << "Expected result = " << y_ok[0] << ";  Actual result = " << y[0] << endl;
+		assert(abs(y[0] - y_ok[0]) < 1.0e-2);
+
+		x = { {6.282f, 6.282f} };
+		y_ok[0] = 1.0;
+		y = TestFunc21(x);
+		cerr << "Expected result = " << y_ok[0] << ";  Actual result = " << y[0] << endl;
+		assert(abs(y[0] - y_ok[0]) < 1.0e-2);
+
+
+		cout << " OK" << endl;
+	}
+
 	// Test - Conversions VectorToIndex //+TODO
 	{
 		cout << "\n\nTest: Conversion vector --> index: " << flush;

@@ -11,6 +11,7 @@
 - Add a version member variable.
 - Check input parameters of most functions (assert).
 - Consider using a proper matrix library.
+- Option to add noise to data.
 
 ##### Copy data on device memory.
 
