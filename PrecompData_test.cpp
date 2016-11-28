@@ -141,13 +141,16 @@ PrecompData_test::PrecompData_test()
 		itp.Dump(10);
 		itp.Dump(-10);
 
-		pcd21::Y y;
+		pcd21::Y y, y_ok;
 		y = itp(x0);
-		cerr << "Expected result = " << (sin(x0[0]) + cos(x0[1])) << ";  Actual result = " << y[0] << endl;
-		assert(y[0] == 1.0f);
+		y_ok = TestFunc21(x0);
+		cerr << "Expected result = " << y_ok[0] << ";  Actual result = " << y[0] << endl;
+		assert(abs(y[0] - y_ok[0]) < 1.0e-2f);
+
 		y = itp(x1);
-		cerr << "Expected result = " << (sin(x1[0]) + cos(x1[1])) << ";  Actual result = " << y[0] << endl;
-		assert(y[0] == 1.0f);
+		y_ok = TestFunc21(x1);
+		cerr << "Expected result = " << y_ok[0] << ";  Actual result = " << y[0] << endl;
+		assert(abs(y[0] - y_ok[0]) < 1.0e-2f);
 
 		{//+TEMP
 			cerr << endl;
