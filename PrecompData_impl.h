@@ -121,6 +121,8 @@ size_t PrecompData<TX, TY, nx, ny>::VectorToIndex(X x) const      // vector --> 
 		}
 	}
 
+	std::cerr << "Result:  minError = " << minError << "  Pos = " << minErrPos << std::endl;  //+T+++
+
 	return minErrPos;
 }
 
