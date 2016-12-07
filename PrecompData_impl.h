@@ -109,7 +109,7 @@ size_t PrecompData<TX, TY, nx, ny>::VectorToIndex(X x) const      // vector --> 
 
 		for(size_t i = 0; i < nx; ++i)
 		{
-			const TX delta = xData[p][i] - x[i];		//+TEST
+			TX delta = xData[p][i] - x[i];		//+TEST
 			error += delta*delta;
 		}
 
