@@ -24,5 +24,8 @@
 
 ["SO/templates"](http://stackoverflow.com/questions/610245/where-and-why-do-i-have-to-put-the-template-and-typename-keywords)
 http://www.boost.org/doc/libs/1_62_0/libs/multi_array/doc/index.html
+https://arxiv.org/pdf/1608.00099.pdf
+https://bitbucket.org/orserang/triot/
+
 
 
