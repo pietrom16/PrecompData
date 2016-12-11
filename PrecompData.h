@@ -37,6 +37,7 @@
 #include <array>
 #include <string>
 #include <vector>
+#include <boost/multi_array.hpp>
 
 #ifdef PRECOMPDATA_DEVICE
 #include <boost/compute/algorithm/copy.hpp>
