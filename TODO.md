@@ -13,6 +13,12 @@
 - Consider using a proper matrix library.
 - Option to add noise to data.
 
+
+#### Optimizations
+
+- Check for eventual performance penalties using boost::multi_array vs std::vector for one-dimensional data.
+
+
 ##### Copy data on device memory.
 
 - Fix device related linker error: Error	LNK1104	cannot open file 'C:\libs\boost\boost_1_62_0\stage\lib\.obj'
