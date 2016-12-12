@@ -34,12 +34,11 @@
 
 //#define PRECOMPDATA_DEVICE
 
-#include <array>
 #include <string>
-#include <vector>
 #include <boost/multi_array.hpp>
 
 #ifdef PRECOMPDATA_DEVICE
+#include <vector>
 #include <boost/compute/algorithm/copy.hpp>
 #include <boost/compute/container/vector.hpp>
 #endif
