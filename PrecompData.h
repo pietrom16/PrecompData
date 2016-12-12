@@ -63,9 +63,11 @@ class PrecompData
 {
 public:
 
-    // Data types for the dependent and independent variables
-	typedef boost::multi_array<TX, nx> X;
-	typedef boost::multi_array<TY, ny> Y;
+	// Data types for the dependent and independent data and indices
+	typedef boost::multi_array<TX, nx> XData;
+	typedef boost::multi_array<TY, ny> YData;
+	typedef typename XData::index X;
+	typedef typename YData::index Y;
 
 public:
 
@@ -192,13 +194,13 @@ private:
     Y  (*FuncX)(X x);
     TY (*FuncTX)(TX x);
 
-    std::vector<X>  xData;
-    std::vector<Y>  yData;
-    X               min, max, step;
-    X               kRealInt, kIntReal;     // conversion factors
+	XData   xData;
+	YData   yData;
+	X       min, max, step;
+	X       kRealInt, kIntReal;     // conversion factors
 
-    bool            regularGrid;            // true if points are equally spaced on all axes
-    float           overSampling;
+	bool    regularGrid;            // true if points are equally spaced on all axes
+	float   overSampling;
 
 #ifdef PRECOMPDATA_DEVICE
     boost::compute::vector<T>  device_line;
