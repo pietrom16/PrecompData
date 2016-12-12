@@ -64,8 +64,8 @@ class PrecompData
 public:
 
     // Data types for the dependent and independent variables
-    typedef std::array<TX, nx> X;
-    typedef std::array<TY, ny> Y;
+	typedef boost::multi_array<TX, nx> X;
+	typedef boost::multi_array<TY, ny> Y;
 
 public:
 
