@@ -40,6 +40,8 @@ message("Building with: " ${CMAKE_CXX_COMPILER} " " ${CMAKE_CXX_FLAGS} " " ${CMA
 set(SRC
 	PrecompData.h
 	PrecompData_impl.h
+	PrecompData_multi.h
+	PrecompData_multi_impl.h
 	PrecompDataDevice_impl.h
 	PrecompData_dump.h
 	PrecompData_test.h
