@@ -17,47 +17,47 @@ namespace Utilities {
 
 using namespace stdExt;
 
-template<typename TX, typename TY, int nx, int ny>
-PrecompData<TX, TY, nx, ny>::PrecompData()
+template<typename TX, typename TY, int ny>
+PrecompData<TX, TY, ny>::PrecompData()
 	: interpolation(0), status(0), regularGrid(false), overSampling(2.0f)
 {
 }
 
-template<typename TX, typename TY, int nx, int ny>
-PrecompData<TX, TY, nx, ny>::PrecompData(const std::string _funcName)
+template<typename TX, typename TY, int ny>
+PrecompData<TX, TY, ny>::PrecompData(const std::string _funcName)
 	: interpolation(0), status(0), regularGrid(false), overSampling(2.0f), funcName(_funcName)
 {
 }
 
 
-template<typename TX, typename TY, int nx, int ny>
-int  PrecompData<TX, TY, nx, ny>::SetFunctionName(const std::string &_funcName)
+template<typename TX, typename TY, int ny>
+int  PrecompData<TX, TY, ny>::SetFunctionName(const std::string &_funcName)
 {
 	funcName = _funcName;
 	return 0;
 }
 
-template<typename TX, typename TY, int nx, int ny>
-int  PrecompData<TX, TY, nx, ny>::SetComment(const std::string &_comment)
+template<typename TX, typename TY, int ny>
+int  PrecompData<TX, TY, ny>::SetComment(const std::string &_comment)
 {
 	comment = _comment;
 	return 0;
 }
 
-template<typename TX, typename TY, int nx, int ny>
-std::string  PrecompData<TX, TY, nx, ny>::FunctionName() const
+template<typename TX, typename TY, int ny>
+std::string  PrecompData<TX, TY, ny>::FunctionName() const
 {
 	return funcName;
 }
 
-template<typename TX, typename TY, int nx, int ny>
-std::string  PrecompData<TX, TY, nx, ny>::Comment() const
+template<typename TX, typename TY, int ny>
+std::string  PrecompData<TX, TY, ny>::Comment() const
 {
 	return comment;
 }
 
-template<typename TX, typename TY, int nx, int ny>
-int  PrecompData<TX, TY, nx, ny>::SetOversampling(float ovs)
+template<typename TX, typename TY, int ny>
+int  PrecompData<TX, TY, ny>::SetOversampling(float ovs)
 {
     if(ovs < 1.0f)
         return wrn_invalid_oversampling;
@@ -69,8 +69,8 @@ int  PrecompData<TX, TY, nx, ny>::SetOversampling(float ovs)
 
 // Precompute constant values
 
-template<typename TX, typename TY, int nx, int ny>
-int PrecompData<TX, TY, nx, ny>::PreComputeValues()
+template<typename TX, typename TY, int ny>
+int PrecompData<TX, TY, ny>::PreComputeValues()
 {
     //+CHECK
     // Set up conversion constants
@@ -87,8 +87,8 @@ int PrecompData<TX, TY, nx, ny>::PreComputeValues()
 // Coordinate <--> index transformations
 
 
-template<typename TX, typename TY, int nx, int ny>
-size_t PrecompData<TX, TY, nx, ny>::VectorToIndex(X x) const      // vector --> index
+template<typename TX, typename TY, int ny>
+size_t PrecompData<TX, TY, ny>::VectorToIndex(X x) const      // vector --> index
 {
     //+TODO
 	/*
@@ -127,23 +127,23 @@ size_t PrecompData<TX, TY, nx, ny>::VectorToIndex(X x) const      // vector --> 
 }
 
 
-template<typename TX, typename TY, int nx, int ny>
-size_t PrecompData<TX, TY, nx, ny>::ScalarToIndex(TX x) const     // scalar --> index
+template<typename TX, typename TY, int ny>
+size_t PrecompData<TX, TY, ny>::ScalarToIndex(TX x) const     // scalar --> index
 {
     static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
     return size_t(kRealInt[0]*(x - min[0]));
 }
 
 
-template<typename TX, typename TY, int nx, int ny>
-typename PrecompData<TX, TY, nx, ny>::X PrecompData<TX, TY, nx, ny>::IndexToVector(size_t i) const      // index  --> vector
+template<typename TX, typename TY, int ny>
+typename PrecompData<TX, TY, ny>::X PrecompData<TX, TY, ny>::IndexToVector(size_t i) const      // index  --> vector
 {
     //+TODO
 }
 
 
-template<typename TX, typename TY, int nx, int ny>
-TX PrecompData<TX, TY, nx, ny>::IndexToScalar(size_t i) const     // index --> scalar
+template<typename TX, typename TY, int ny>
+TX PrecompData<TX, TY, ny>::IndexToScalar(size_t i) const     // index --> scalar
 {
     static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
     return min[0] + kIntReal[0]*TX(i);
@@ -155,8 +155,8 @@ TX PrecompData<TX, TY, nx, ny>::IndexToScalar(size_t i) const     // index --> s
 
 // Regular grid, computed
 
-template<typename TX, typename TY, int nx, int ny>
-size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x), 
+template<typename TX, typename TY, int ny>
+size_t  PrecompData<TX, TY, ny>::Set(Y       (*Func)(X x),
                                          X       xmin,
                                          X       xmax,
                                          size_t  nPoints)
@@ -235,8 +235,8 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(Y       (*Func)(X x),
 }
 
 
-template<typename TX, typename TY, int nx, int ny>
-size_t  PrecompData<TX, TY, nx, ny>::Set(TY      (*Func)(TX x), 
+template<typename TX, typename TY, int ny>
+size_t  PrecompData<TX, TY, ny>::Set(TY      (*Func)(TX x),
                                          TX      xmin,
                                          TX      xmax,
                                          size_t  nPoints)
@@ -282,8 +282,8 @@ size_t  PrecompData<TX, TY, nx, ny>::Set(TY      (*Func)(TX x),
  *    - Pick the remaining points from regions of the function with largest second derivative.
  */
 
-template<typename TX, typename TY, int nx, int ny>
-size_t  PrecompData<TX, TY, nx, ny>::AutoSet(Y (*Func)(X x), X xmin, X xmax, size_t nPoints)
+template<typename TX, typename TY, int ny>
+size_t  PrecompData<TX, TY, ny>::AutoSet(Y (*Func)(X x), X xmin, X xmax, size_t nPoints)
 {
     FuncX = Func;
     FuncTX = 0;
@@ -301,8 +301,8 @@ size_t  PrecompData<TX, TY, nx, ny>::AutoSet(Y (*Func)(X x), X xmin, X xmax, siz
 }
 
 
-template<typename TX, typename TY, int nx, int ny>
-size_t  PrecompData<TX, TY, nx, ny>::AutoSet(TY (*Func)(TX x), TX xmin, TX xmax, size_t nPoints)
+template<typename TX, typename TY, int ny>
+size_t  PrecompData<TX, TY, ny>::AutoSet(TY (*Func)(TX x), TX xmin, TX xmax, size_t nPoints)
 {
     static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
     static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
@@ -327,15 +327,15 @@ size_t  PrecompData<TX, TY, nx, ny>::AutoSet(TY (*Func)(TX x), TX xmin, TX xmax,
 
 // Range UNchecked, 0 degree interpolation accessors
 
-template<typename TX, typename TY, int nx, int ny>
-typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::operator()(X x) const
+template<typename TX, typename TY, int ny>
+typename PrecompData<TX, TY, ny>::Y PrecompData<TX, TY, ny>::operator()(X x) const
 {
 	return yData[VectorToIndex(x)];
 }
 
 
-template<typename TX, typename TY, int nx, int ny>
-TY PrecompData<TX, TY, nx, ny>::operator()(TX x) const
+template<typename TX, typename TY, int ny>
+TY PrecompData<TX, TY, ny>::operator()(TX x) const
 {
     static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
     static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
@@ -349,14 +349,14 @@ TY PrecompData<TX, TY, nx, ny>::operator()(TX x) const
 
 // Range checked accessors; check Status()
 
-template<typename TX, typename TY, int nx, int ny>
-typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::get(X x) {} //+TODO
+template<typename TX, typename TY, int ny>
+typename PrecompData<TX, TY, ny>::Y PrecompData<TX, TY, ny>::get(X x) {} //+TODO
 
 
 // Range checked accessors, interpolated; check Status()
 
-template<typename TX, typename TY, int nx, int ny>
-typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::Interpolate(X x)
+template<typename TX, typename TY, int ny>
+typename PrecompData<TX, TY, ny>::Y PrecompData<TX, TY, ny>::Interpolate(X x)
 {
     RangeCheck(x);
 
@@ -377,8 +377,8 @@ typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::Interpolate
 }
 
 
-template<typename TX, typename TY, int nx, int ny>
-TY PrecompData<TX, TY, nx, ny>::Interpolate(TX x)
+template<typename TX, typename TY, int ny>
+TY PrecompData<TX, TY, ny>::Interpolate(TX x)
 {
     static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
     static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
@@ -401,8 +401,8 @@ TY PrecompData<TX, TY, nx, ny>::Interpolate(TX x)
 }
 
 
-template<typename TX, typename TY, int nx, int ny>
-void PrecompData<TX, TY, nx, ny>::Interpolation(int order)
+template<typename TX, typename TY, int ny>
+void PrecompData<TX, TY, ny>::Interpolation(int order)
 {
     interpolation = order;
 }
@@ -410,8 +410,8 @@ void PrecompData<TX, TY, nx, ny>::Interpolation(int order)
 
 // Range check
 
-template<typename TX, typename TY, int nx, int ny>
-int PrecompData<TX, TY, nx, ny>::RangeCheck(X x)
+template<typename TX, typename TY, int ny>
+int PrecompData<TX, TY, ny>::RangeCheck(X x)
 {
     status = 0;
 
@@ -425,8 +425,8 @@ int PrecompData<TX, TY, nx, ny>::RangeCheck(X x)
 }
 
 
-template<typename TX, typename TY, int nx, int ny>
-int PrecompData<TX, TY, nx, ny>::RangeCheck(TX x)
+template<typename TX, typename TY, int ny>
+int PrecompData<TX, TY, ny>::RangeCheck(TX x)
 {
     X xv;
     xv[0] = x;
@@ -437,8 +437,8 @@ int PrecompData<TX, TY, nx, ny>::RangeCheck(TX x)
 
 // Get the whole value set
 
-template<typename TX, typename TY, int nx, int ny>
-int PrecompData<TX, TY, nx, ny>::Get(std::vector<X> &_xData , std::vector<Y> &_yData) const
+template<typename TX, typename TY, int ny>
+int PrecompData<TX, TY, ny>::Get(std::vector<X> &_xData , std::vector<Y> &_yData) const
 {
     _xData = xData;
     _yData = yData;
@@ -446,8 +446,8 @@ int PrecompData<TX, TY, nx, ny>::Get(std::vector<X> &_xData , std::vector<Y> &_y
 }
 
 
-template<typename TX, typename TY, int nx, int ny>
-int PrecompData<TX, TY, nx, ny>::Get(std::vector<TX> &_xData , std::vector<TY> &_yData) const
+template<typename TX, typename TY, int ny>
+int PrecompData<TX, TY, ny>::Get(std::vector<TX> &_xData , std::vector<TY> &_yData) const
 {
     static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
     static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
@@ -482,8 +482,8 @@ int PrecompData<TX, TY, nx, ny>::Get(std::vector<TX> &_xData , std::vector<TY> &
 
 // Error on each dimension on known data
 
-template<typename TX, typename TY, int nx, int ny>
-typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::EvaluateErrorKnownData() const
+template<typename TX, typename TY, int ny>
+typename PrecompData<TX, TY, ny>::Y PrecompData<TX, TY, ny>::EvaluateErrorKnownData() const
 {
 	//+TEST
 
@@ -513,8 +513,8 @@ typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::EvaluateErr
 
 // Absolute error on known data
 
-template<typename TX, typename TY, int nx, int ny>
-TY PrecompData<TX, TY, nx, ny>::EvaluateAbsErrorKnownData() const
+template<typename TX, typename TY, int ny>
+TY PrecompData<TX, TY, ny>::EvaluateAbsErrorKnownData() const
 {
 	//+TEST
 
@@ -525,8 +525,8 @@ TY PrecompData<TX, TY, nx, ny>::EvaluateAbsErrorKnownData() const
 
 // Error on each dimension on random points
 
-template<typename TX, typename TY, int nx, int ny>
-typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::EvaluateError(int nTestPoints) const
+template<typename TX, typename TY, int ny>
+typename PrecompData<TX, TY, ny>::Y PrecompData<TX, TY, ny>::EvaluateError(int nTestPoints) const
 {
 	//+TEST
 
@@ -566,8 +566,8 @@ typename PrecompData<TX, TY, nx, ny>::Y PrecompData<TX, TY, nx, ny>::EvaluateErr
 
 // Absolute error on random points
 
-template<typename TX, typename TY, int nx, int ny>
-TY PrecompData<TX, TY, nx, ny>::EvaluateAbsError(int nTestPoints) const
+template<typename TX, typename TY, int ny>
+TY PrecompData<TX, TY, ny>::EvaluateAbsError(int nTestPoints) const
 {
 	//+TEST
 
@@ -579,8 +579,8 @@ TY PrecompData<TX, TY, nx, ny>::EvaluateAbsError(int nTestPoints) const
 /// Math functions
 
 
-template<typename TX, typename TY, int nx, int ny>
-TY PrecompData<TX, TY, nx, ny>::Norm(const Y &y) const
+template<typename TX, typename TY, int ny>
+TY PrecompData<TX, TY, ny>::Norm(const Y &y) const
 {
     TY norm = 0.0;
     
@@ -593,24 +593,24 @@ TY PrecompData<TX, TY, nx, ny>::Norm(const Y &y) const
 }
 
 
-template<typename TX, typename TY, int nx, int ny>
-TY PrecompData<TX, TY, nx, ny>::FirstDerivative(TX x1, TY y1, TX x2, TY y2) const
+template<typename TX, typename TY, int ny>
+TY PrecompData<TX, TY, ny>::FirstDerivative(TX x1, TY y1, TX x2, TY y2) const
 {
     /// First derivative (central differences):  d1 = [f(x+1) - f(x)] / [(x+1) - x]
     return  (y2 - y1)/(x2 - x1);
 }
 
 
-template<typename TX, typename TY, int nx, int ny>
-TY PrecompData<TX, TY, nx, ny>::SecondDerivative(TX x1, TY y1, TX x2, TY y2, TX x3, TY y3) const
+template<typename TX, typename TY, int ny>
+TY PrecompData<TX, TY, ny>::SecondDerivative(TX x1, TY y1, TX x2, TY y2, TX x3, TY y3) const
 {
     /// Second derivative (central differences):  d2 = [f(x-1) - 2f(x) + f(x+1)] / {[(x+1) - (x-1)]/2}^2
     return  (y1 - 2*y2 + y3)/std::pow(0.5f*(x3 - x1), 2);
 }
 
 
-template<typename TX, typename TY, int nx, int ny>
-int PrecompData<TX, TY, nx, ny>::PickBestPoints(Y (*Func)(X x), const size_t nPoints, const float overSampling)
+template<typename TX, typename TY, int ny>
+int PrecompData<TX, TY, ny>::PickBestPoints(Y (*Func)(X x), const size_t nPoints, const float overSampling)
 {
     struct Point {
 		TX x; TY y;
@@ -694,8 +694,8 @@ int PrecompData<TX, TY, nx, ny>::PickBestPoints(Y (*Func)(X x), const size_t nPo
 }
 
 
-template<typename TX, typename TY, int nx, int ny>
-int PrecompData<TX, TY, nx, ny>::PickBestPoints(TY (*Func)(TX x), const size_t nPoints, const float overSampling)
+template<typename TX, typename TY, int ny>
+int PrecompData<TX, TY, ny>::PickBestPoints(TY (*Func)(TX x), const size_t nPoints, const float overSampling)
 {
     struct Point {
         TX x; TY y;

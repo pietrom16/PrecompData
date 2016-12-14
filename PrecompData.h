@@ -34,8 +34,8 @@
 
 //#define PRECOMPDATA_DEVICE
 
+#include <array>
 #include <string>
-#include <boost/multi_array.hpp>
 
 #ifdef PRECOMPDATA_DEVICE
 #include <vector>
@@ -48,24 +48,21 @@ namespace Utilities {
 
 
 /** PrecompData
-    Set of points approximating a multidimensional function/hypersurface
-    f: X --> Y
+	Set of points approximating a function of one variable
+	f: x --> Y
   */
 
 template<
     typename TX = float,   /* data type of independent vector */
     typename TY = float,   /* data type of dependent vector   */
-    int nx = 1,            /* number of dimensions of the independent vector */
     int ny = 1             /* number of dimensions of the dependent vector   */
 >
 class PrecompData
 {
 public:
 
-	// Data types for the dependent and independent data and indices
-	typedef boost::multi_array<TX, nx> XData;
-	typedef boost::multi_array<TY, ny> YData;
-	typedef typename XData::index X;
+	// Data types for the dependent data and index
+	typedef std::array<TY, ny> YData;
 	typedef typename YData::index Y;
 
 public:
@@ -80,22 +77,20 @@ public:
     int          SetOversampling(float ovs);
     float        Oversamping()  const { return overSampling; }
 
-    int          nxDimensions() const { return nx; }
+	int          nxDimensions() const { return 1;  }
     int          nyDimensions() const { return ny; }
 
     // Precompute constant values
 	int PreComputeValues();
 
 	// Coordinate <--> index transformation
-	size_t VectorToIndex(X x)      const;     // vector --> index
 	size_t ScalarToIndex(TX x)     const;     // scalar --> index
-	X      IndexToVector(size_t i) const;     // index  --> vector
 	TX     IndexToScalar(size_t i) const;     // index  --> scalar
 
 	/// Data loading
 	
 	// Regular grid, computed
-    size_t  Set(Y (*Func)(X x), X xmin, X xmax, size_t nPoints);
+	size_t  Set(Y (*Func)(X x), X xmin, X xmax, size_t nPoints);
     size_t  Set(TY (*Func)(TX x), TX xmin, TX xmax, size_t nPoints);
 
     // Automatic irregular grid, computed
