@@ -34,6 +34,8 @@
 
 //#define PRECOMPDATA_DEVICE
 
+#include "PrecompData_base.h"
+
 #include <array>
 #include <string>
 
@@ -57,7 +59,7 @@ template<
     typename TY = float,   /* data type of dependent vector   */
     int ny = 1             /* number of dimensions of the dependent vector   */
 >
-class PrecompData
+class PrecompData : public PrecompData_base
 {
 public:
 
@@ -70,15 +72,8 @@ public:
 	PrecompData();
 	PrecompData(const std::string _funcName);
 
-	int          SetFunctionName(const std::string &_funcName);
-	int          SetComment(const std::string &_comment);
-	std::string  FunctionName() const;
-	std::string  Comment()      const;
-    int          SetOversampling(float ovs);
-    float        Oversamping()  const { return overSampling; }
-
-	int          nxDimensions() const { return 1;  }
-    int          nyDimensions() const { return ny; }
+	int nxDimensions() const { return 1;  }
+	int nyDimensions() const { return ny; }
 
     // Precompute constant values
 	int PreComputeValues();
@@ -117,11 +112,6 @@ public:
     Y  Interpolate(X x);
     TY Interpolate(TX x);
 
-	int Status() const { return status; }
-
-	int  Interpolation() const { return interpolation; }
-	void Interpolation(int order);
-
     int RangeCheck(X x);
     int RangeCheck(TX x);
 
@@ -158,20 +148,6 @@ public:
 	int CopyOnDevice(T xbeg, T xend, T ybeg, T yend, T zbeg, T zend);
 #endif // PRECOMPDATA_DEVICE
 
-public:
-    // Error return values
-    static const int err_no_data              = -1,
-                     err_device_not_available = -2;
-    
-    // Warning return values
-    static const int wrn_x_less_than_min      = -101,
-                     wrn_x_more_than_max      = -102,
-                     wrn_invalid_oversampling = -103;
-
-public:
-    // Test
-    friend class PrecompData_test;
-
 protected:
     TY Norm(const Y&) const;
     TY FirstDerivative(TX x1, TY y1, TX x2, TY y2) const;
@@ -181,10 +157,6 @@ protected:
 
 private:
 	
-	std::string     funcName, comment;
-	int             interpolation;
-	int             status;
-
     Y  (*FuncX)(X x);
     TY (*FuncTX)(TX x);
 
@@ -192,9 +164,6 @@ private:
 	YData   yData;
 	X       min, max, step;
 	X       kRealInt, kIntReal;     // conversion factors
-
-	bool    regularGrid;            // true if points are equally spaced on all axes
-	float   overSampling;
 
 #ifdef PRECOMPDATA_DEVICE
     boost::compute::vector<T>  device_line;
