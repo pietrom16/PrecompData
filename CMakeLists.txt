@@ -38,6 +38,8 @@ endif()
 message("Building with: " ${CMAKE_CXX_COMPILER} " " ${CMAKE_CXX_FLAGS} " " ${CMAKE_BUILD_TYPE})
 
 set(SRC
+	PrecompData_base.h
+	PrecompData_base.cpp
 	PrecompData.h
 	PrecompData_impl.h
 	PrecompData_multi.h
