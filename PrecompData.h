@@ -160,10 +160,10 @@ private:
     Y  (*FuncX)(X x);
     TY (*FuncTX)(TX x);
 
-	XData   xData;
-	YData   yData;
 	X       min, max, step;
 	X       kRealInt, kIntReal;     // conversion factors
+	std::array<TX, nPoints>     xData;
+	std::array<YData, nPoints>  yData;
 
 #ifdef PRECOMPDATA_DEVICE
     boost::compute::vector<T>  device_line;
