@@ -112,7 +112,6 @@ public:
     Y  Interpolate(X x);
     TY Interpolate(TX x);
 
-    int RangeCheck(X x);
     int RangeCheck(TX x);
 
     // Get the whole value set

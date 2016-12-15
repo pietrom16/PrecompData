@@ -367,21 +367,6 @@ TY PrecompData<TX, TY, ny>::Interpolate(TX x)
 // Range check
 
 template<typename TX, typename TY, int ny>
-int PrecompData<TX, TY, ny>::RangeCheck(X x)
-{
-    status = 0;
-
-	//+TODO - Operators < > do not exist for multidimensional data types
-    if(x < min)
-        status = wrn_x_less_than_min;
-    else if(x > max)
-        status = wrn_x_more_than_max;
-
-    return status;
-}
-
-
-template<typename TX, typename TY, int ny>
 int PrecompData<TX, TY, ny>::RangeCheck(TX x)
 {
     X xv;
