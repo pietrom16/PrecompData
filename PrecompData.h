@@ -86,12 +86,12 @@ public:
 	/// Data loading
 	
 	// Regular grid, computed
-	size_t  Set(Y (*Func)(X x), X xmin, X xmax, size_t nPoints);
-    size_t  Set(TY (*Func)(TX x), TX xmin, TX xmax, size_t nPoints);
+	size_t  Set(YData (*Func)(TX x), TX xmin, TX xmax);
+	size_t  Set(TY (*Func)(TX x), TX xmin, TX xmax);
 
     // Automatic irregular grid, computed
-    size_t  AutoSet(Y (*Func)(X x), X xmin, X xmax, size_t nPoints = 100);
-    size_t  AutoSet(TY (*Func)(TX x), TX xmin, TX xmax, size_t nPoints = 100);
+	size_t  AutoSet(YData (*Func)(TX x), TX xmin, TX xmax);
+	size_t  AutoSet(TY (*Func)(TX x), TX xmin, TX xmax);
 
     // Regular grid, load from file
     size_t  Set(const std::string &dataFilename, X xmin, X xmax);
@@ -152,8 +152,8 @@ protected:
     TY Norm(const Y&) const;
     TY FirstDerivative(TX x1, TY y1, TX x2, TY y2) const;
     TY SecondDerivative(TX x1, TY y1, TX x2, TY y2, TX x3, TY y3) const;
-    int PickBestPoints(Y (*Func)(X x), const size_t nPoints, const float overSampling = 2.0f);
-    int PickBestPoints(TY (*Func)(TX x), const size_t nPoints, const float overSampling = 2.0f);
+	int PickBestPoints(Y (*Func)(TX x), const float overSampling = 2.0f);
+	int PickBestPoints(TY (*Func)(TX x), const float overSampling = 2.0f);
 
 private:
 	
