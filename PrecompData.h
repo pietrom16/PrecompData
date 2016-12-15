@@ -94,7 +94,7 @@ public:
 	size_t  AutoSet(TY (*Func)(TX x), TX xmin, TX xmax);
 
     // Regular grid, load from file
-    size_t  Set(const std::string &dataFilename, X xmin, X xmax);
+	size_t  Set(const std::string &dataFilename, TX xmin, TX xmax);
 
     // Irregular grid, load from file
     size_t  Set(const std::string &dataFilename);      // grid contained in the file
@@ -103,21 +103,25 @@ public:
 	/// Data retrieval
 
 	// Range UNchecked, 0 degree interpolation accessors
-    Y  operator()(X x)  const;
-    TY operator()(TX x) const;
+	int operator()(TX _x, TY &_y) const;
+	int operator()(TX _x, YData &_y) const;
+	TY  operator()(TX _x) const;
 
 	// Range checked accessors; check Status()
-	Y get(X x);
+	int get(TX _x, TY &_y) const;
+	int get(TX _x, YData &_y) const;
+	TY  get(TX _x);
 
 	// Range checked accessors, interpolated; check Status()
-    Y  Interpolate(X x);
-    TY Interpolate(TX x);
+	int Interpolate(TX _x, TY &_y) const;
+	int Interpolate(TX _x, YData &_y) const;
+	TY  Interpolate(TX _x);
 
-    int RangeCheck(TX x);
+	int RangeCheck(TX _x);
 
     // Get the whole value set
-    int Get(std::vector<X> &_xData, std::vector<Y> &_yData) const;
-    int Get(std::vector<TX> &_xData, std::vector<TY> &_yData) const;
+	int get(std::vector<TX> &_xData, std::vector<YData> &_yData) const;
+	int get(std::vector<TX> &_xData, std::vector<TY> &_yData) const;
 	int Dump(int n = 0) const;
 	int DumpElement(size_t j) const;
 
@@ -157,13 +161,14 @@ protected:
 
 private:
 	
-    Y  (*FuncX)(X x);
-    TY (*FuncTX)(TX x);
+	int (*FuncTXVY)(const TX &_x, YData &_y);
+	TY  (*FuncTXTY)(const TX &_x);
 
-	X       min, max, step;
-	X       kRealInt, kIntReal;     // conversion factors
 	std::array<TX, nPoints>     xData;
 	std::array<YData, nPoints>  yData;
+
+	TX  min, max, step;
+	TX  kRealInt, kIntReal;     // conversion factors
 
 #ifdef PRECOMPDATA_DEVICE
     boost::compute::vector<T>  device_line;
