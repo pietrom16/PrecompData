@@ -55,9 +55,10 @@ namespace Utilities {
   */
 
 template<
+    int nPoints = 100,     /* number of points to precompute */
     typename TX = float,   /* data type of independent vector */
     typename TY = float,   /* data type of dependent vector   */
-    int ny = 1             /* number of dimensions of the dependent vector   */
+    int ny = 1             /* number of dimensions of the dependent vector */
 >
 class PrecompData : public PrecompData_base
 {
