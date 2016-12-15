@@ -57,4 +57,11 @@ int  PrecompData_base::SetOversampling(float ovs)
 }
 
 
+void PrecompData_base::Interpolation(int order)
+{
+	interpolation = order;
+}
+
+
+
 } // Utilities

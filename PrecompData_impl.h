@@ -30,43 +30,6 @@ PrecompData<TX, TY, ny>::PrecompData(const std::string _funcName)
 }
 
 
-template<typename TX, typename TY, int ny>
-int  PrecompData<TX, TY, ny>::SetFunctionName(const std::string &_funcName)
-{
-	funcName = _funcName;
-	return 0;
-}
-
-template<typename TX, typename TY, int ny>
-int  PrecompData<TX, TY, ny>::SetComment(const std::string &_comment)
-{
-	comment = _comment;
-	return 0;
-}
-
-template<typename TX, typename TY, int ny>
-std::string  PrecompData<TX, TY, ny>::FunctionName() const
-{
-	return funcName;
-}
-
-template<typename TX, typename TY, int ny>
-std::string  PrecompData<TX, TY, ny>::Comment() const
-{
-	return comment;
-}
-
-template<typename TX, typename TY, int ny>
-int  PrecompData<TX, TY, ny>::SetOversampling(float ovs)
-{
-    if(ovs < 1.0f)
-        return wrn_invalid_oversampling;
-
-    overSampling = ovs;
-    return 0;
-}
-
-
 // Precompute constant values
 
 template<typename TX, typename TY, int ny>
@@ -398,13 +361,6 @@ TY PrecompData<TX, TY, ny>::Interpolate(TX x)
     const TY yv = yData[i][0] + (yData[i + 1][0] - yData[i][0])*(x - x0)/(x1 - x0);
 
     return yv;
-}
-
-
-template<typename TX, typename TY, int ny>
-void PrecompData<TX, TY, ny>::Interpolation(int order)
-{
-    interpolation = order;
 }
 
 
