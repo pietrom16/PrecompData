@@ -19,13 +19,13 @@ using namespace stdExt;
 
 template<int nPoints, typename TX, typename TY, int ny>
 PrecompData<nPoints, TX, TY, ny>::PrecompData()
-	: interpolation(0), status(0), regularGrid(false), overSampling(2.0f)
+    : PrecompData_base()
 {
 }
 
 template<int nPoints, typename TX, typename TY, int ny>
 PrecompData<nPoints, TX, TY, ny>::PrecompData(const std::string _funcName)
-	: interpolation(0), status(0), regularGrid(false), overSampling(2.0f), funcName(_funcName)
+    : PrecompData_base(_funcName)
 {
 }
 

@@ -44,7 +44,7 @@ public:
 	// Test
 	friend class PrecompData_test;
 
-private:
+protected:
 
 	std::string  funcName, comment;
 	int          interpolation;
