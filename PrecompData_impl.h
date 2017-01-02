@@ -71,8 +71,6 @@ size_t  PrecompData<nPoints, TX, TY, ny>::Set(YData  (*Func)(TX x),
                                               TX      xmin,
                                               TX      xmax)
 {
-	size_t  nSteps;
-
     // Init
     {
         assert(Func != 0);
@@ -89,33 +87,24 @@ size_t  PrecompData<nPoints, TX, TY, ny>::Set(YData  (*Func)(TX x),
 		FuncTXTY = 0;
     }
 
-    // Find step, with these constraints: nPoints, nx, min, max
-    // In this context, step is the same across all dimensions.
+	// Find step, with these constraints: nPoints, min, max
     {
 		const TX domainInterval = (max - min);
 
 		assert(domainInterval > 0.0f);
 
-		step   = domainInterval/nPoints;
-		nSteps = nPoints;
+		step = domainInterval/nPoints;
     }
 
     //+TEST
-    // Scan the nx-dimensional hyperspace; store the computed values
+	// Scan the interval on the x axis; store the computed values
     {
-		TX x;
+		const TX k = (xmax - xmin)/nPoints;
 
         for(size_t i = 0; i < nPoints; ++i)
         {
-            size_t dimProd = 1;
-
-            // Transform  i --> X
-            for(size_t j = 0; j < nx; ++j)
-            {
-                x[j] = i / dimProd % nSteps[j];
-
-                dimProd *= nSteps[j];
-            }
+			// Transform  i --> x
+			const TX x = k*i + xmin;
 
             const Y y = Func(x);
 
