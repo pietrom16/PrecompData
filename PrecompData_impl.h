@@ -37,11 +37,8 @@ int PrecompData<nPoints, TX, TY, ny>::PreComputeValues()
 {
     //+CHECK
     // Set up conversion constants
-    for(int i = 0; i < nx; ++i)
-    {
-        kRealInt[i] = yData.size()/(max[i] - min[i]);
-        kIntReal[i] = 1/kRealInt[i];
-    }
+	kRealInt = yData.size()/(max - min);
+	kIntReal = 1/kRealInt;
 
     return 0;
 }
@@ -51,65 +48,16 @@ int PrecompData<nPoints, TX, TY, ny>::PreComputeValues()
 
 
 template<int nPoints, typename TX, typename TY, int ny>
-size_t PrecompData<nPoints, TX, TY, ny>::VectorToIndex(X x) const      // vector --> index
-{
-    //+TODO
-	/*
-		- Thorough search?
-		- Mapping index <--> coordinate?
-		- Direct computation?
-	*/
-
-	//+SLOW - Thorough search
-
-	TX      error     = 0.0f;		// for a specific point
-	TX      minError  = std::numeric_limits<TX>::max();
-	size_t  minErrPos = -1;
-
-	for(size_t p = 0; p < xData.size(); ++p)
-	{
-		error = 0.0f;
-
-		for(size_t i = 0; i < nx; ++i)
-		{
-			const TX delta = xData[p][i] - x[i];		//+TEST
-			error += delta*delta;
-		}
-
-		if(error < minError) {
-			minError = error;
-			minErrPos = p;
-
-			std::cerr << "minError = " << minError << "  Pos = " << p << std::endl;  //+T+++
-		}
-	}
-
-	std::cerr << "Result:  minError = " << minError << "  Pos = " << minErrPos << std::endl;  //+T+++
-
-	return minErrPos;
-}
-
-
-template<int nPoints, typename TX, typename TY, int ny>
 size_t PrecompData<nPoints, TX, TY, ny>::ScalarToIndex(TX x) const     // scalar --> index
 {
-    static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
-    return size_t(kRealInt[0]*(x - min[0]));
-}
-
-
-template<int nPoints, typename TX, typename TY, int ny>
-typename PrecompData<nPoints, TX, TY, ny>::X PrecompData<nPoints, TX, TY, ny>::IndexToVector(size_t i) const      // index  --> vector
-{
-    //+TODO
+	return size_t(kRealInt*(x - min));
 }
 
 
 template<int nPoints, typename TX, typename TY, int ny>
 TX PrecompData<nPoints, TX, TY, ny>::IndexToScalar(size_t i) const     // index --> scalar
 {
-    static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
-    return min[0] + kIntReal[0]*TX(i);
+	return min + kIntReal*TX(i);
 }
 
 
@@ -119,18 +67,17 @@ TX PrecompData<nPoints, TX, TY, ny>::IndexToScalar(size_t i) const     // index 
 // Regular grid, computed
 
 template<int nPoints, typename TX, typename TY, int ny>
-size_t  PrecompData<nPoints, TX, TY, ny>::Set(Y       (*Func)(X x),
-                                         X       xmin,
-                                         X       xmax)
+size_t  PrecompData<nPoints, TX, TY, ny>::Set(YData  (*Func)(TX x),
+                                              TX      xmin,
+                                              TX      xmax)
 {
-    size_t  nSteps[nx];
+	size_t  nSteps;
 
     // Init
     {
         assert(Func != 0);
         assert(nPoints > 0);
-        for(int i = 0; i < nx; ++i)
-            assert(xmin[i] < xmax[i]);
+		assert(xmin < xmax);
 
         min = xmin;
         max = xmax;
@@ -138,34 +85,25 @@ size_t  PrecompData<nPoints, TX, TY, ny>::Set(Y       (*Func)(X x),
         xData.clear();
         yData.clear();
 
-        FuncX = Func;
-        FuncTX = 0;
+		FuncTXVY = Func;
+		FuncTXTY = 0;
     }
 
     // Find step, with these constraints: nPoints, nx, min, max
     // In this context, step is the same across all dimensions.
     {
-        TX domainVolume = 1.0f;
-        for(int j = 0; j < nx; ++j)
-            domainVolume *= (max[j] - min[j]);
+		const TX domainInterval = (max - min);
 
-        assert(domainVolume > 0.0f);
+		assert(domainInterval > 0.0f);
 
-        const TX elementVolume = domainVolume/nPoints;
-    
-        TX uniformStep = std::pow(elementVolume, 1/nx);
-
-        for(int j = 0; j < nx; ++j)
-        {
-            step[j] = uniformStep;
-            nSteps[j] = (max[j] - min[j])/step[j];
-        }
+		step   = domainInterval/nPoints;
+		nSteps = nPoints;
     }
 
     //+TEST
     // Scan the nx-dimensional hyperspace; store the computed values
     {
-        X x;
+		TX x;
 
         for(size_t i = 0; i < nPoints; ++i)
         {
@@ -198,11 +136,10 @@ size_t  PrecompData<nPoints, TX, TY, ny>::Set(Y       (*Func)(X x),
 
 
 template<int nPoints, typename TX, typename TY, int ny>
-size_t  PrecompData<nPoints, TX, TY, ny>::Set(TY      (*Func)(TX x),
-                                         TX      xmin,
-                                         TX      xmax)
+size_t  PrecompData<nPoints, TX, TY, ny>::Set(TY  (*Func)(TX x),
+                                              TX  xmin,
+                                              TX  xmax)
 {
-    static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
     static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
 
     FuncTX = Func;
