@@ -190,10 +190,10 @@ size_t  PrecompData<nPoints, TX, TY, ny>::Set(TY  (*Func)(TX x),
  */
 
 template<int nPoints, typename TX, typename TY, int ny>
-size_t  PrecompData<nPoints, TX, TY, ny>::AutoSet(Y (*Func)(X x), X xmin, X xmax)
+size_t  PrecompData<nPoints, TX, TY, ny>::AutoSet(YData (*Func)(TX x), TX xmin, TX xmax)
 {
-    FuncX = Func;
-    FuncTX = 0;
+	FuncTXVY = Func;
+	FuncTXTY = 0;
 
 	min = xmin;
 	max = xmax;
