@@ -131,34 +131,54 @@ size_t  PrecompData<nPoints, TX, TY, ny>::Set(TY  (*Func)(TX x),
 {
     static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
 
-    FuncTX = Func;
-    FuncX = 0;
+	// Init
+	{
+		assert(Func != 0);
+		assert(nPoints > 0);
+		assert(xmin < xmax);
 
-    min[0] = xmin;
-    max[0] = xmax;
-    
-    xData.resize(nPoints);
-    yData.resize(nPoints);
+		min = xmin;
+		max = xmax;
 
-    step[0] = (max[0] - min[0])/nPoints;
+		xData.resize(nPoints);
+		yData.resize(nPoints);
 
-    X x = min;
+		FuncTXVY = 0;
+		FuncTXTY = Func;
+	}
 
-    for(size_t i = 0; i < nPoints; ++i)
-    {
-        const TY y0 = Func(x[0]);
+	// Find step, with these constraints: nPoints, min, max
+	{
+		const TX domainInterval = (max - min);
 
-        xData[i] = x;
-        yData[i][0] = y0;
+		assert(domainInterval > 0.0f);
 
-        x[0] += step[0];
-    }
+		step = domainInterval/nPoints;
+	}
 
-    PreComputeValues();
+	//+TEST
+	// Scan the interval on the x axis; store the computed values
+	{
+		for(size_t i = 0; i < nPoints; ++i)
+		{
+			// Transform  i --> x
+			const TX x = step*i + xmin;
 
-    regularGrid = true;
+			const TY y = Func(x);
 
-    return yData.size();
+			xData.push_back(x);
+			yData.push_back(y);
+
+			// Check independent and dependent vectors are aligned
+			assert(xData.size() == yData.size());
+		}
+	}
+
+	PreComputeValues();
+
+	regularGrid = true;
+
+	return yData.size();
 }
 
 
