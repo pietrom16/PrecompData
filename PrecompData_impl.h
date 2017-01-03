@@ -82,6 +82,8 @@ size_t  PrecompData<nPoints, TX, TY, ny>::Set(YData  (*Func)(TX x),
 
         xData.clear();
         yData.clear();
+		xData.reserve(nPoints);
+		yData.reserve(nPoints);
 
 		FuncTXVY = Func;
 		FuncTXTY = 0;
@@ -99,12 +101,10 @@ size_t  PrecompData<nPoints, TX, TY, ny>::Set(YData  (*Func)(TX x),
     //+TEST
 	// Scan the interval on the x axis; store the computed values
     {
-		const TX k = (xmax - xmin)/nPoints;
-
         for(size_t i = 0; i < nPoints; ++i)
         {
 			// Transform  i --> x
-			const TX x = k*i + xmin;
+			const TX x = step*i + xmin;
 
             const Y y = Func(x);
 
