@@ -211,14 +211,13 @@ size_t  PrecompData<nPoints, TX, TY, ny>::AutoSet(YData (*Func)(TX x), TX xmin, 
 template<int nPoints, typename TX, typename TY, int ny>
 size_t  PrecompData<nPoints, TX, TY, ny>::AutoSet(TY (*Func)(TX x), TX xmin, TX xmax)
 {
-    static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
     static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
     
-    FuncTX = Func;
-    FuncX = 0;
+	FuncTXVY = 0;
+	FuncTXTY = Func;
 
-    min[0] = xmin;
-    max[0] = xmax;
+	min = xmin;
+	max = xmax;
 
     PickBestPoints(Func, nPoints, overSampling);
 
