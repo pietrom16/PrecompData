@@ -234,9 +234,14 @@ size_t  PrecompData<nPoints, TX, TY, ny>::AutoSet(TY (*Func)(TX x), TX xmin, TX 
 // Range UNchecked, 0 degree interpolation accessors
 
 template<int nPoints, typename TX, typename TY, int ny>
-typename PrecompData<nPoints, TX, TY, ny>::Y PrecompData<nPoints, TX, TY, ny>::operator()(X x) const
+int PrecompData<nPoints, TX, TY, ny>::operator()(TX _x, TY &_y) const
 {
-	return yData[VectorToIndex(x)];
+	static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
+
+	const size_t i = ScalarToIndex(_x);
+	_y = yData[i];
+
+	return i;
 }
 
 
@@ -246,10 +251,14 @@ TY PrecompData<nPoints, TX, TY, ny>::operator()(TX x) const
     static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
     static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
 
-	const size_t i = ScalarToIndex(x);
-    const Y yv = yData[i];
 
-    return yv[0];
+template<int nPoints, typename TX, typename TY, int ny>
+TY  PrecompData<nPoints, TX, TY, ny>::operator()(TX _x) const
+{
+	static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
+
+	const size_t i = ScalarToIndex(_x);
+	return yData[i];
 }
 
 
