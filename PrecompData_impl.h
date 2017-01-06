@@ -246,10 +246,13 @@ int PrecompData<nPoints, TX, TY, ny>::operator()(TX _x, TY &_y) const
 
 
 template<int nPoints, typename TX, typename TY, int ny>
-TY PrecompData<nPoints, TX, TY, ny>::operator()(TX x) const
+int PrecompData<nPoints, TX, TY, ny>::operator()(TX _x, YData &_y) const
 {
-    static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
-    static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
+	const size_t i = VectorToIndex(_x);
+	_y = yData[i];
+
+	return i;
+}
 
 
 template<int nPoints, typename TX, typename TY, int ny>
