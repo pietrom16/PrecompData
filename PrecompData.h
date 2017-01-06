@@ -103,9 +103,9 @@ public:
 	/// Data retrieval
 
 	// Range UNchecked, 0 degree interpolation accessors
-	int operator()(TX _x, TY &_y) const;
-	int operator()(TX _x, YData &_y) const;
-	TY  operator()(TX _x) const;
+	size_t operator()(TX _x, TY &_y) const;
+	size_t operator()(TX _x, YData &_y) const;
+	TY     operator()(TX _x) const;
 
 	// Range checked accessors; check Status()
 	int get(TX _x, TY &_y) const;
