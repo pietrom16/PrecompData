@@ -313,7 +313,6 @@ typename PrecompData<nPoints, TX, TY, ny>::Y PrecompData<nPoints, TX, TY, ny>::I
 template<int nPoints, typename TX, typename TY, int ny>
 TY PrecompData<nPoints, TX, TY, ny>::Interpolate(TX x)
 {
-    static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
     static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
 
     RangeCheck(x);
@@ -360,8 +359,7 @@ int PrecompData<nPoints, TX, TY, ny>::Get(std::vector<X> &_xData , std::vector<Y
 template<int nPoints, typename TX, typename TY, int ny>
 int PrecompData<nPoints, TX, TY, ny>::Get(std::vector<TX> &_xData , std::vector<TY> &_yData) const
 {
-    static_assert(nx == 1, "Member function valid for one dimesional independent variable, only.");
-    static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
+	static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
     
     //+TEST
 
