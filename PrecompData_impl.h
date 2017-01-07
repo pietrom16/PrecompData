@@ -270,6 +270,8 @@ TY  PrecompData<nPoints, TX, TY, ny>::operator()(TX _x) const
 template<int nPoints, typename TX, typename TY, int ny>
 size_t PrecompData<nPoints, TX, TY, ny>::get(TX _x, TY &_y) const
 {
+	static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
+
 	size_t i = 0;
 	if(_x < min) { _x = min; i = wrn_x_less_than_min; }
 	if(_x > max) { _x = max; i = wrn_x_more_than_max; }
@@ -303,6 +305,8 @@ size_t PrecompData<nPoints, TX, TY, ny>::get(TX _x, YData &_y) const
 template<int nPoints, typename TX, typename TY, int ny>
 size_t PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x, TY &_y) const
 {
+	static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
+
 	if(_x < min) {
 		_y = yData[0];
 		return wrn_x_less_than_min;
