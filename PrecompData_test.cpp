@@ -36,8 +36,11 @@ float TestFuncNonLinSin(float x) {      //   y = sin(x)
     return sin(x);
 }
 
-pcd21::Y TestFunc21(pcd21::X x) {       //   y = sin(x0) + cos(x1)
-	return pcd21::Y { {sin(x[0]) + cos(x[1])} };
+pcd12::YData TestFunc12(float x) {      //   y1 = sin(x); y2 = cos(x)
+	pcd12::YData y;
+	y[0] = sin(x);
+	y[1] = cos(x);
+	return y;
 }
 
 
