@@ -107,22 +107,22 @@ PrecompData_test::PrecompData_test()
 	// Test - Test mathematical functions
 	{
 		cout << "\n\nTest: Test mathematical functions: " << endl;
-		pcd21::X x = { {0.00f, 0.00f} };
-		pcd21::Y y, y_ok;
+		pcd12::X x = { {0.00f, 0.00f} };
+		pcd12::YData y, y_ok;
 		y_ok[0] = 1.0;
-		y = TestFunc21(x);
+		y = TestFunc12(x);
 		cerr << "Expected result = " << y_ok[0] << ";  Actual result = " << y[0] << endl;
 		assert(abs(y[0] - y_ok[0]) < 1.0e-2f);
 
 		x = { {3.141f, 3.141f} };
 		y_ok[0] = -1.0;
-		y = TestFunc21(x);
+		y = TestFunc12(x);
 		cerr << "Expected result = " << y_ok[0] << ";  Actual result = " << y[0] << endl;
 		assert(abs(y[0] - y_ok[0]) < 1.0e-2f);
 
 		x = { {6.282f, 6.282f} };
 		y_ok[0] = 1.0;
-		y = TestFunc21(x);
+		y = TestFunc12(x);
 		cerr << "Expected result = " << y_ok[0] << ";  Actual result = " << y[0] << endl;
 		assert(abs(y[0] - y_ok[0]) < 1.0e-2f);
 
@@ -134,24 +134,24 @@ PrecompData_test::PrecompData_test()
 	{
 		cout << "\n\nTest: Conversion vector --> index: " << flush;
 		const string funcName = "TestFunc";
-		pcd21 itp(funcName);
+		pcd12 itp(funcName);
 		itp.SetComment("Y = f(X)    X = x(i,j), Y = y(i)");
-		const pcd21::X x0 = { {0.00f, 0.00f} };
-		const pcd21::X x1 = { {6.28f, 6.28f} };
-		itp.Set(&TestFunc21, x0, x1, nValues*nValues);
+		const pcd12::X x0 = { {0.00f, 0.00f} };
+		const pcd12::X x1 = { {6.28f, 6.28f} };
+		itp.Set(&TestFunc12, x0, x1, nValues*nValues);
 
 		//itp.Dump();
 		itp.Dump(10);
 		itp.Dump(-10);
 
-		pcd21::Y y, y_ok;
+		pcd12::YData y, y_ok;
 		y = itp(x0);
-		y_ok = TestFunc21(x0);
+		y_ok = TestFunc12(x0);
 		cerr << "Expected result = " << y_ok[0] << ";  Actual result = " << y[0] << endl;
 		assert(abs(y[0] - y_ok[0]) < 1.0e-2f);
 
 		y = itp(x1);
-		y_ok = TestFunc21(x1);
+		y_ok = TestFunc12(x1);
 		cerr << "Expected result = " << y_ok[0] << ";  Actual result = " << y[0] << endl;
 		assert(abs(y[0] - y_ok[0]) < 1.0e-2f);
 
@@ -368,23 +368,23 @@ PrecompData_test::PrecompData_test()
     {
         cout << "\n\nTest: Storage of data in an NxM space:" << endl;
         const string funcName = "Multidimensions";
-        pcd21 itp(funcName);
+		pcd12 itp(funcName);
         itp.SetComment("Y = f(X)    X = x(i,j), Y = y(i)");
-		pcd21::X x0 = { { 0.00f, 0.00f } };     // coordinates of the starting point
-		pcd21::X x1 = { { 6.28f, 6.28f } };     // coordinates of the end point
-		const pcd21::X step = { { 0.5f*(x1[0] - x0[0])/nValues,
+		pcd12::X x0 = { { 0.00f, 0.00f } };     // coordinates of the starting point
+		pcd12::X x1 = { { 6.28f, 6.28f } };     // coordinates of the end point
+		const pcd12::X step = { { 0.5f*(x1[0] - x0[0])/nValues,
 		                          0.5f*(x1[1] - x0[1])/nValues } };
-        itp.Set(&TestFunc21, x0, x1, nValues*nValues);
-        pcd21::X x = x0;
+		itp.Set(&TestFunc12, x0, x1, nValues*nValues);
+		pcd12::X x = x0;
         float err = 0.0f;
         for(int j = 0; j < nValues; ++j)
         {
             x[0] = x0[0];
             for(int i = 0; i < nValues; ++i)
             {
-                const pcd21::Y y = itp(x);      //+B
-                err += fabs(TestFunc21(x)[0] - y[0]);
-                cout << i << ":\t" << funcName << "[" << x[0] << ", " << x[1] << "] = " << TestFunc21(x)[0] << " ~ " << y[0] << endl;
+				const pcd12::Y y = itp(x);      //+B
+				err += fabs(TestFunc12(x)[0] - y[0]);
+				cout << i << ":\t" << funcName << "[" << x[0] << ", " << x[1] << "] = " << TestFunc12(x)[0] << " ~ " << y[0] << endl;
                 x[0] += step[0];
             }
             x[1] += step[1];
