@@ -14,7 +14,7 @@
 using namespace std;
 using Utilities::PrecompData;
 
-typedef PrecompData<float, float, 2, 1> pcd21;  // f: (X, Y) --> Z
+typedef PrecompData<100, float, float, 2> pcd12;  // f: x --> (y, z)
 
 float TestFunc(float x) {
 	return sin(x);
