@@ -318,13 +318,13 @@ typename PrecompData<nPoints, TX, TY, ny>::YData PrecompData<nPoints, TX, TY, ny
 
 
 template<int nPoints, typename TX, typename TY, int ny>
-TY PrecompData<nPoints, TX, TY, ny>::Interpolate(TX x)
+TY PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x)
 {
     static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
 
-    RangeCheck(x);
+	RangeCheck(_x);
 
-	const size_t i = ScalarToIndex(x);
+	const size_t i = ScalarToIndex(_x);
 
 	if(i >= xData.size() - 2) {
 		status = wrn_x_more_than_max;
@@ -334,7 +334,7 @@ TY PrecompData<nPoints, TX, TY, ny>::Interpolate(TX x)
 	const TX x0 = IndexToScalar(i);
 	const TX x1 = IndexToScalar(i + 1);
 
-    const TY yv = yData[i][0] + (yData[i + 1][0] - yData[i][0])*(x - x0)/(x1 - x0);
+	const TY yv = yData[i][0] + (yData[i + 1][0] - yData[i][0])*(_x - x0)/(x1 - x0);
 
     return yv;
 }
