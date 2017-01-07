@@ -286,10 +286,17 @@ size_t PrecompData<nPoints, TX, TY, ny>::get(TX _x, YData &_y) const
 }
 
 
-// Range checked accessors, interpolated; check Status()
+// Range checked accessors, interpolated
 
 template<int nPoints, typename TX, typename TY, int ny>
-typename PrecompData<nPoints, TX, TY, ny>::Y PrecompData<nPoints, TX, TY, ny>::Interpolate(X x)
+size_t PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x, TY &_y) const{}
+
+template<int nPoints, typename TX, typename TY, int ny>
+size_t PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x, YData &_y) const{}
+
+
+template<int nPoints, typename TX, typename TY, int ny>
+typename PrecompData<nPoints, TX, TY, ny>::YData PrecompData<nPoints, TX, TY, ny>::Interpolate(TX x)
 {
     RangeCheck(x);
 
