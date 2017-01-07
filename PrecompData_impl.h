@@ -298,10 +298,34 @@ size_t PrecompData<nPoints, TX, TY, ny>::get(TX _x, YData &_y) const
 }
 
 
-// Range checked accessors, interpolated
+// Range checked accessors, linear interpolation
 
 template<int nPoints, typename TX, typename TY, int ny>
-size_t PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x, TY &_y) const{}
+size_t PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x, TY &_y) const
+{
+	if(_x < min) {
+		_y = yData[0];
+		return wrn_x_less_than_min;
+	}
+
+	if(_x > max) {
+		_y = yData.back();
+		return wrn_x_more_than_max;
+	}
+
+	const size_t i = ScalarToIndex(_x);
+
+	const TX x0 = IndexToScalar(i);
+	const TX x1 = IndexToScalar(i + 1);
+
+	assert(_x >= x0);
+	assert(_x <= x1);
+
+	//+TEST
+	_y = yData[i] + (yData[i + 1] - yData[i])*(_x - x0)/(x1 - x0);
+
+	return i;
+}
 
 template<int nPoints, typename TX, typename TY, int ny>
 size_t PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x, YData &_y) const{}
