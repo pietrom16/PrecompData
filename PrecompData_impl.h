@@ -273,7 +273,7 @@ size_t PrecompData<nPoints, TX, TY, ny>::get(TX _x, TY &_y) const
 	if(_x < min) return wrn_x_less_than_min;
 	if(_x > max) return wrn_x_more_than_max;
 
-	return operator(_x, _y);
+	return operator()(_x, _y);
 }
 
 template<int nPoints, typename TX, typename TY, int ny>
@@ -282,7 +282,7 @@ size_t PrecompData<nPoints, TX, TY, ny>::get(TX _x, YData &_y) const
 	if(_x < min) return wrn_x_less_than_min;
 	if(_x > max) return wrn_x_more_than_max;
 
-	return operator(_x, _y);
+	return operator()(_x, _y);
 }
 
 
