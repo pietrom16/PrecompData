@@ -324,10 +324,10 @@ TY PrecompData<nPoints, TX, TY, ny>::Interpolate(TX x)
 template<int nPoints, typename TX, typename TY, int ny>
 int PrecompData<nPoints, TX, TY, ny>::RangeCheck(TX x)
 {
-    X xv;
-    xv[0] = x;
+	if(x < min) return -1;
+	if(x > max) return 1;
 
-    return RangeCheck(xv);
+	return 0;	// OK, in range
 }
 
 
