@@ -107,10 +107,9 @@ public:
 	size_t operator()(TX _x, YData &_y) const;
 	TY     operator()(TX _x) const;
 
-	// Range checked accessors; check Status()
-	int get(TX _x, TY &_y) const;
-	int get(TX _x, YData &_y) const;
-	TY  get(TX _x);
+	// Range checked, 0 degree interpolation accessors
+	size_t get(TX _x, TY &_y) const;
+	size_t get(TX _x, YData &_y) const;
 
 	// Range checked accessors, interpolated; check Status()
 	int Interpolate(TX _x, TY &_y) const;
