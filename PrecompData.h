@@ -66,7 +66,6 @@ public:
 
 	// Data types for the dependent data and index
 	typedef std::array<TY, ny> YData;
-	typedef typename YData::index Y;
 
 public:
 
