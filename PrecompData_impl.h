@@ -106,7 +106,7 @@ size_t  PrecompData<nPoints, TX, TY, ny>::Set(YData  (*Func)(TX x),
 			// Transform  i --> x
 			const TX x = step*i + xmin;
 
-            const Y y = Func(x);
+			const YData y = Func(x);
 
             xData.push_back(x);
             yData.push_back(y);

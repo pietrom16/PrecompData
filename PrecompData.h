@@ -124,10 +124,10 @@ public:
 	int DumpElement(size_t j) const;
 
     // Evaluate error
-    Y  EvaluateErrorKnownData() const;              // error on each dimension on known data
-    TY EvaluateAbsErrorKnownData() const;           // absolute error on known data
-	Y  EvaluateError(int nTestPoints) const;        // error on each dimension on random points
-	TY EvaluateAbsError(int nTestPoints) const;     // absolute error on random points
+	YData  EvaluateErrorKnownData() const;              // error on each dimension on known data
+	TY     EvaluateAbsErrorKnownData() const;           // absolute error on known data
+	YData  EvaluateError(int nTestPoints) const;        // error on each dimension on random points
+	TY     EvaluateAbsError(int nTestPoints) const;     // absolute error on random points
 
     /// GPGPU
 
@@ -151,10 +151,10 @@ public:
 #endif // PRECOMPDATA_DEVICE
 
 protected:
-    TY Norm(const Y&) const;
+	TY Norm(const YData&) const;
     TY FirstDerivative(TX x1, TY y1, TX x2, TY y2) const;
     TY SecondDerivative(TX x1, TY y1, TX x2, TY y2, TX x3, TY y3) const;
-	int PickBestPoints(Y (*Func)(TX x), const float overSampling = 2.0f);
+	int PickBestPoints(YData (*Func)(TX x), const float overSampling = 2.0f);
 	int PickBestPoints(TY (*Func)(TX x), const float overSampling = 2.0f);
 
 private:
