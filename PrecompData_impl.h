@@ -515,7 +515,7 @@ TY PrecompData<nPoints, TX, TY, ny>::EvaluateAbsError(int nTestPoints) const
 
 
 template<int nPoints, typename TX, typename TY, int ny>
-TY PrecompData<nPoints, TX, TY, ny>::Norm(const Y &y) const
+TY PrecompData<nPoints, TX, TY, ny>::Norm(const YData &y) const
 {
     TY norm = 0.0;
     
