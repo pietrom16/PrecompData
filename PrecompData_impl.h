@@ -544,6 +544,26 @@ TY PrecompData<nPoints, TX, TY, ny>::SecondDerivative(TX x1, TY y1, TX x2, TY y2
 }
 
 
+// Average of second derivative on all ny dimensions
+
+template<int nPoints, typename TX, typename TY, int ny>
+TY PrecompData<nPoints, TX, TY, ny>::SecondDerivativeAvg(TX x1, YData y1, TX x2, YData y2, TX x3, YData y3) const
+{
+	//+TEST
+
+	TY d2avg = 0.0;
+
+	for(size_t i = 0; i < ny; ++i)
+	{
+		d2avg += SecondDerivative(x1, y1[i], x2, y2[i], x3, y3[i]);
+	}
+
+	d2avg /= ny;
+
+	return d2avg;
+}
+
+
 template<int nPoints, typename TX, typename TY, int ny>
 int PrecompData<nPoints, TX, TY, ny>::PickBestPoints(YData (*Func)(TX x), const float overSampling)
 {
