@@ -331,8 +331,36 @@ size_t PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x, TY &_y) const
 	return i;
 }
 
+
 template<int nPoints, typename TX, typename TY, int ny>
-size_t PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x, YData &_y) const{}
+size_t PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x, YData &_y) const
+{
+	if(_x < min) {	//+TEST
+		for(int j = 0; j < ny; ++j)
+			_y[j] = yData[0][j];
+		return wrn_x_less_than_min;
+	}
+
+	if(_x > max) {	//+TEST
+		for(int j = 0; j < ny; ++j)
+			_y[j] = yData.back()[j];
+		return wrn_x_more_than_max;
+	}
+
+	const size_t i = ScalarToIndex(_x);
+
+	const TX x0 = IndexToScalar(i);
+	const TX x1 = IndexToScalar(i + 1);
+
+	assert(_x >= x0);
+	assert(_x <= x1);
+
+	//+TEST
+	for(int j = 0; j < ny; ++j)
+		_y[j] = yData[i][j] + (yData[i + 1][j] - yData[i][j])*(_x - x0)/(x1 - x0);
+
+	return i;
+}
 
 
 template<int nPoints, typename TX, typename TY, int ny>
