@@ -308,12 +308,12 @@ size_t PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x, TY &_y) const
 	static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
 
 	if(_x < min) {
-		_y = yData[0];
+		_y = yData[0][0];		//+TEST
 		return wrn_x_less_than_min;
 	}
 
 	if(_x > max) {
-		_y = yData.back();
+		_y = yData.back()[0];		//+TEST
 		return wrn_x_more_than_max;
 	}
 
@@ -326,7 +326,7 @@ size_t PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x, TY &_y) const
 	assert(_x <= x1);
 
 	//+TEST
-	_y = yData[i] + (yData[i + 1] - yData[i])*(_x - x0)/(x1 - x0);
+	_y = yData[i][0] + (yData[i + 1][0] - yData[i][0])*(_x - x0)/(x1 - x0);
 
 	return i;
 }
