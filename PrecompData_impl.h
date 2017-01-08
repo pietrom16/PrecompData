@@ -364,28 +364,6 @@ size_t PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x, YData &_y) const
 
 
 template<int nPoints, typename TX, typename TY, int ny>
-typename PrecompData<nPoints, TX, TY, ny>::YData PrecompData<nPoints, TX, TY, ny>::Interpolate(TX x)
-{
-    RangeCheck(x);
-
-	const size_t i = VectorToIndex(x);
-
-	if(i >= xData.size() - 2) {
-		status = wrn_x_more_than_max;
-        return yData.back();
-	}
-
-	const X x0 = IndexToVector(i);
-	const X x1 = IndexToVector(i + 1);
-
-    //+TODO: Fix - multidimensional
-	const TY y = yData[i] + (yData[i + 1] - yData[i])*(x - x0)/(x1 - x0);
-
-    return y;
-}
-
-
-template<int nPoints, typename TX, typename TY, int ny>
 TY PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x)
 {
     static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
