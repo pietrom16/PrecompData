@@ -418,20 +418,20 @@ int PrecompData<nPoints, TX, TY, ny>::get(std::vector<TX> &_xData , std::vector<
 // Error on each dimension on known data
 
 template<int nPoints, typename TX, typename TY, int ny>
-typename PrecompData<nPoints, TX, TY, ny>::Y PrecompData<nPoints, TX, TY, ny>::EvaluateErrorKnownData() const
+typename PrecompData<nPoints, TX, TY, ny>::YData PrecompData<nPoints, TX, TY, ny>::EvaluateErrorKnownData() const
 {
 	//+TEST
 
-	Y error;
+	YData error;
     
     for(size_t j = 0; j < error.size(); ++j)
         error[j] = 0.0;
 
     for(size_t i = 0; i < xData.size(); ++i)
     {
-        const X x      = xData[i];
-        const Y y      = yData[i];
-        const Y y_comp = FuncX(x);
+		const TX    x      = xData[i];
+		const YData y      = yData[i];
+		const YData y_comp = FuncX(x);
 
         for(size_t j = 0; j < error.size(); ++j) {
             //error[j] += fabs(y_comp[j] - y[j]);                  // mean absolute error
@@ -461,12 +461,12 @@ TY PrecompData<nPoints, TX, TY, ny>::EvaluateAbsErrorKnownData() const
 // Error on each dimension on random points
 
 template<int nPoints, typename TX, typename TY, int ny>
-typename PrecompData<nPoints, TX, TY, ny>::Y PrecompData<nPoints, TX, TY, ny>::EvaluateError(int nTestPoints) const
+typename PrecompData<nPoints, TX, TY, ny>::YData PrecompData<nPoints, TX, TY, ny>::EvaluateError(int nTestPoints) const
 {
 	//+TEST
 
-	X x;
-	Y error;
+	TX    x;
+	YData error;
 
 	std::random_device  rd;
 	std::mt19937        gen(rd());
@@ -474,17 +474,15 @@ typename PrecompData<nPoints, TX, TY, ny>::Y PrecompData<nPoints, TX, TY, ny>::E
 	for(size_t j = 0; j < error.size(); ++j)
 		error[j] = 0.0;
 
+	std::uniform_real_distribution<> dist(min, max);
+
 	for(size_t i = 0; i < nTestPoints; ++i)
 	{
 		// Set a random x
-		for(size_t j = 0; j < x.size(); ++j)
-		{
-			std::uniform_real_distribution<> dist(min[j], max[j]);
-			x[j] = dist(gen);
-		}
+		x = dist(gen);
 
-		const Y y      = Interpolate(x);
-		const Y y_comp = FuncX(x);
+		const TY y      = Interpolate(x);
+		const TY y_comp = FuncX(x);
 
 		for(size_t j = 0; j < error.size(); ++j) {
 			//error[j] += fabs(y_comp[j] - y[j]);                  // mean absolute error
