@@ -118,6 +118,7 @@ public:
 	int RangeCheck(TX _x);
 
     // Get the whole value set
+	int NPoints() const { return nPoints; }
 	int get(std::vector<TX> &_xData, std::vector<TY> &_yData) const;
 	int get(std::vector<TX> &_xData, std::vector<YData> &_yData) const;
 	int Dump(int n = 0) const;
