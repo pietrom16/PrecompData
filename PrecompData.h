@@ -155,6 +155,7 @@ protected:
 	TY FirstDerivative(TX x1, TY y1, TX x2, TY y2) const;
 	TY SecondDerivative(TX x1, TY y1, TX x2, TY y2, TX x3, TY y3) const;
 	TY SecondDerivativeAvg(TX x1, YData y1, TX x2, YData y2, TX x3, YData y3) const;
+	TY SecondDerivativeAbsMax(TX x1, YData y1, TX x2, YData y2, TX x3, YData y3) const;
 	int PickBestPoints(YData (*Func)(TX x), const float overSampling = 2.0f);
 	int PickBestPoints(TY (*Func)(TX x), const float overSampling = 2.0f);
 
