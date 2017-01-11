@@ -82,9 +82,9 @@ PrecompData_test::PrecompData_test()
     {
 		cout << "\n\nTest: Conversion scalar --> index: " << flush;
         const string funcName = "TestFunc";
-        PrecompData<> itp(funcName);
+		PrecompData<nValues> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
-        itp.Set(&TestFunc, x0, x1, nValues);
+		itp.Set(&TestFunc, x0, x1);
 		assert(TestEqAbs(itp.ScalarToIndex(x0), size_t(0), size_t(0)) && "Test: Conversion scalar --> index FAILED on first element.");
 		assert(TestEqAbs(itp.ScalarToIndex((x1 - x0)/2.0f), size_t(nValues/2), size_t(0)) && "Test: Conversion scalar --> index FAILED on the middle element.");
 		assert(TestEqAbs(itp.ScalarToIndex(x1), size_t(nValues), size_t(0)) && "Test: Conversion scalar --> index FAILED on last element.");
@@ -95,9 +95,9 @@ PrecompData_test::PrecompData_test()
     {
 		cout << "\n\nTest: Conversion index --> scalar: " << flush;
         const string funcName = "TestFunc";
-        PrecompData<> itp(funcName);
+		PrecompData<nValues> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
-        itp.Set(&TestFunc, x0, x1, nValues);
+		itp.Set(&TestFunc, x0, x1);
 		assert(TestEqAbs(itp.IndexToScalar(0), x0, tol) && "Test: Conversion index --> scalar FAILED on first element.");
 		assert(TestEqAbs(itp.IndexToScalar(nValues/2), (x1 - x0)/2.0f, tol) && "Test: Conversion index --> scalar FAILED on the middle element.");
 		assert(TestEqAbs(itp.IndexToScalar(nValues), x1, tol) && "Test: Conversion index --> scalar FAILED on last element.");
@@ -172,11 +172,11 @@ PrecompData_test::PrecompData_test()
 	{
         cout << "\n\nTest: Zero-degree (nearest-neighbor/point sampling/Voronoi) interpolation:" << endl;
 		const string funcName = "TestFunc";
-		PrecompData<> itp(funcName);    // default: float type
+		PrecompData<nValues> itp(funcName);    // default: float type
 		itp.SetComment("TestFunc approximation");
 		const float x0 = 0.0f, x1 = 6.28f;
 		const float step = 0.5f*(x1 - x0)/nValues;
-		itp.Set(&TestFunc, x0, x1, nValues);
+		itp.Set(&TestFunc, x0, x1);
 		float x = x0;
         float err = 0.0f;
         itp.Interpolation(0);
@@ -194,10 +194,10 @@ PrecompData_test::PrecompData_test()
     {
         cout << "\n\nTest: Linear interpolation:" << endl;
         const string funcName = "TestFunc";
-        PrecompData<float> itp(funcName);
+		PrecompData<nValues, float> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
         const float step = 0.5f*(x1 - x0)/nValues;
-        itp.Set(&TestFunc, x0, x1, nValues);
+		itp.Set(&TestFunc, x0, x1);
         float x = x0;
         float err = 0.0f;
         itp.Interpolation(1);
@@ -215,9 +215,9 @@ PrecompData_test::PrecompData_test()
     {
         cout << "\n\nTest: Automatic irregular grid:    y = 2x" << endl;
         const string funcName = "y = 2x";
-        PrecompData<float> itp(funcName);
+		PrecompData<nValues, float> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
-        itp.AutoSet(&TestFuncLin, x0, x1, nValues);
+		itp.AutoSet(&TestFuncLin, x0, x1);
         cerr << "x0 = " << x0 << "  x1 = " << x1 << "  nValues = " << nValues << endl;  //+T+
         std::vector<float> vx, vy;
         itp.Get(vx, vy);
@@ -231,9 +231,9 @@ PrecompData_test::PrecompData_test()
     {
         cout << "\n\nTest: Automatic irregular grid:    y = 1/(|x-2| + 0.1)" << endl;
         const string funcName = "y = 1/(|x-2| + 0.1)";
-        PrecompData<float> itp(funcName);
+		PrecompData<nValues, float> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
-        itp.AutoSet(&TestFuncNonLin2, x0, x1, nValues);
+		itp.AutoSet(&TestFuncNonLin2, x0, x1);
         cerr << "x0 = " << x0 << "  x1 = " << x1 << "  nValues = " << nValues << endl;  //+T+
         std::vector<float> vx, vy;
         itp.Get(vx, vy);
@@ -249,7 +249,7 @@ PrecompData_test::PrecompData_test()
         int nTests = 0, nFailed = 0;
         const string funcName = "Derivatives";
         float x1, y1, x2, y2, x3, y3, der1, der2, expRes;
-        PrecompData<float> test;
+		PrecompData<nValues, float> test;
 
         // First derivative
         x1 = 0.0; y1 = 0.0; x2 = 1.0; y2 = 0.0; expRes = 0.0;
@@ -333,10 +333,10 @@ PrecompData_test::PrecompData_test()
     {
         cout << "\n\nTest: Automatic irregular grid:    y = sin(x)" << endl;
         const string funcName = "y = sin(x)";
-        PrecompData<float> itp(funcName);
+		PrecompData<nValues, float> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
         itp.SetOversampling(1.5f);
-        itp.AutoSet(&TestFuncNonLinSin, x0, x1, nValues);
+		itp.AutoSet(&TestFuncNonLinSin, x0, x1);
         cerr << "x0 = " << x0 << "  x1 = " << x1 << "  nValues = " << nValues << endl;  //+T+
         std::vector<float> vx, vy;
         itp.Get(vx, vy);
