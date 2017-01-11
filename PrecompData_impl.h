@@ -453,7 +453,7 @@ TY PrecompData<nPoints, TX, TY, ny>::EvaluateAbsErrorKnownData() const
 {
 	//+TEST
 
-	const Y error = EvaluateErrorKnownData();
+	const TY error = EvaluateErrorKnownData();
 	return Norm(error);
 }
 
@@ -504,7 +504,7 @@ TY PrecompData<nPoints, TX, TY, ny>::EvaluateAbsError(int nTestPoints) const
 {
 	//+TEST
 
-	const Y error = EvaluateError(nTestPoints);
+	const TY error = EvaluateError(nTestPoints);
 	return Norm(error);
 }
 
