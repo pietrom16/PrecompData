@@ -25,8 +25,8 @@ using namespace stdExt;
  *      if < 0, dump |n| random points.
  */
 
-template<typename TX, typename TY, int nx, int ny>
-int PrecompData<TX, TY, nx, ny>::Dump(int n) const
+template<int nPoints, typename TX, typename TY, int ny>
+int PrecompData<nPoints, TX, TY, ny>::Dump(int n) const
 {
 	using std::cout;
 	using std::endl;
@@ -35,14 +35,16 @@ int PrecompData<TX, TY, nx, ny>::Dump(int n) const
 		n = xData.size();
 
 	cout << "\n\n----------------------------------------------------------------\n";
-	cout << "Dump: " << funcName << "\n" << comment << "\nStatus: " << status << endl;
-	cout << "Regular grid: " << regularGrid << "\nOversampling: " << overSampling << endl;
-
-	cout << "\nDim   Min   Max   Step   kRealInt   kIntReal" << endl;
-	for(size_t i = 0; i < nx; ++i)
-	{
-		cout << i + 1 << "   " << min[i] << "   " << max[i] << "   " << step[i] << "   " << kRealInt[i] << "   " << kIntReal[i] << endl;
-	}
+	cout << "Dump: " << funcName << "\n" << comment << "\nStatus: " << status << "\n";
+	cout << "Regular grid: " << regularGrid << "\nOversampling: " << overSampling << "\n";
+	cout << "N points = " << nPoints << "\n";
+	cout << "Number of components of independent variable = " << 1 << "\n";
+	cout << "Number of components of dependent variable   = " << ny << "\n";
+	cout << "Min  = " << min << "\n";
+	cout << "Max  = " << max << "\n";
+	cout << "Step = " << step << "\n";
+	cout << "kRealInt = " << kRealInt << "\n";
+	cout << "kIntReal = " << kIntReal << "\n";
 
 	if(n > 0)			// dump all or the first n points
 	{
@@ -97,18 +99,15 @@ int PrecompData<TX, TY, nx, ny>::Dump(int n) const
  *  j : index of the point to dump.
  */
 
-template<typename TX, typename TY, int nx, int ny>
-int PrecompData<TX, TY, nx, ny>::DumpElement(size_t j) const
+template<int nPoints, typename TX, typename TY, int ny>
+int PrecompData<nPoints, TX, TY, ny>::DumpElement(size_t j) const
 {
 	using std::cout;
 	using std::endl;
 
 	assert(j < xData.size());
 
-	for(size_t i = 0; i < nx; ++i)
-	{
-		cout << "  " << xData[j][i];
-	}
+	cout << "  " << xData[j];
 
 	if(xData.size() == yData.size())
 	{
