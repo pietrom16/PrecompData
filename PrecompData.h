@@ -175,6 +175,7 @@ private:
     boost::compute::vector<T>  device_line;
 #endif
 
+	friend class PrecompData_test;
 };
 
 
