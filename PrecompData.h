@@ -50,12 +50,13 @@ namespace Utilities {
 
 
 /** PrecompData
-	Set of points approximating a function of one variable
+	Set of points approximating a function with one independent variable
+	an n dependent variables.
 	f: x --> Y
   */
 
 template<
-    int nPoints = 100,     /* number of points to precompute */
+    int nPoints = 100,     /* number of points to precompute  */
     typename TX = float,   /* data type of independent vector */
     typename TY = float,   /* data type of dependent vector   */
     int ny = 1             /* number of dimensions of the dependent vector */

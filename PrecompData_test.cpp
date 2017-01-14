@@ -219,7 +219,7 @@ PrecompData_test::PrecompData_test()
 		itp.AutoSet(&TestFuncLin, x0, x1);
         cerr << "x0 = " << x0 << "  x1 = " << x1 << "  nValues = " << nValues << endl;  //+T+
         std::vector<float> vx, vy;
-        itp.Get(vx, vy);
+		itp.get(vx, vy);
         cout << "Sizes:  x = " << vx.size() << ";  y = " << vy.size() << endl;
         for(size_t i = 0; i < nValues; ++i) {
             cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
@@ -235,7 +235,7 @@ PrecompData_test::PrecompData_test()
 		itp.AutoSet(&TestFuncNonLin2, x0, x1);
         cerr << "x0 = " << x0 << "  x1 = " << x1 << "  nValues = " << nValues << endl;  //+T+
         std::vector<float> vx, vy;
-        itp.Get(vx, vy);
+		itp.get(vx, vy);
         cout << "Sizes:  x = " << vx.size() << ";  y = " << vy.size() << endl;
         for(size_t i = 0; i < nValues; ++i) {
             cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
@@ -338,7 +338,7 @@ PrecompData_test::PrecompData_test()
 		itp.AutoSet(&TestFuncNonLinSin, x0, x1);
         cerr << "x0 = " << x0 << "  x1 = " << x1 << "  nValues = " << nValues << endl;  //+T+
         std::vector<float> vx, vy;
-        itp.Get(vx, vy);
+		itp.get(vx, vy);
         cout << "Sizes:  x = " << vx.size() << ";  y = " << vy.size() << endl;
         for(size_t i = 0; i < nValues; ++i) {
             cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
@@ -368,27 +368,29 @@ PrecompData_test::PrecompData_test()
         cout << "\n\nTest: Storage of data in an NxM space:" << endl;
         const string funcName = "Multidimensions";
 		pcd12 itp(funcName);
-        itp.SetComment("Y = f(X)    X = x(i,j), Y = y(i)");
-		pcd12::X x0 = { { 0.00f, 0.00f } };     // coordinates of the starting point
-		pcd12::X x1 = { { 6.28f, 6.28f } };     // coordinates of the end point
-		const pcd12::X step = { { 0.5f*(x1[0] - x0[0])/nValues,
-		                          0.5f*(x1[1] - x0[1])/nValues } };
-		itp.Set(&TestFunc12, x0, x1, nValues*nValues);
-		pcd12::X x = x0;
-        float err = 0.0f;
-        for(int j = 0; j < nValues; ++j)
-        {
-            x[0] = x0[0];
-            for(int i = 0; i < nValues; ++i)
-            {
-				const pcd12::Y y = itp(x);      //+B
-				err += fabs(TestFunc12(x)[0] - y[0]);
-				cout << i << ":\t" << funcName << "[" << x[0] << ", " << x[1] << "] = " << TestFunc12(x)[0] << " ~ " << y[0] << endl;
-                x[0] += step[0];
-            }
-            x[1] += step[1];
-        }
-        cout << "Total error = " << err << endl;
+		itp.SetComment("Y = f(x)    Y = [y1, y2]");
+		const float x0 = 0.00f;
+		const float x1 = 6.28f;
+		const float step = 0.5f*(x1 - x0)/nValues;
+		itp.Set(&TestFunc12, x0, x1);
+		float x = x0;
+		float error, totalError = 0.0f;
+		pcd12::YData y;
+
+		for(int i = 0; i < nValues; ++i)
+		{
+			itp(x, y);
+			error = fabs(TestFunc12(x)[0] - y[0]) + fabs(TestFunc12(x)[1] - y[1]);
+			cout << i << ":\t" << funcName << "[" << x << "] = "
+			     << "[" << TestFunc12(x)[0] << ", " << TestFunc12(x)[1] << "] "
+			     << "~ [" << y[0] << ", " << y[1] << "]"
+			     << " - Error = " << error
+			     << endl;
+			totalError += error;
+			x += step;
+		}
+
+		cout << "Total error = " << totalError << endl;
     }
 
 }
