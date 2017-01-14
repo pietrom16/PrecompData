@@ -129,15 +129,15 @@ PrecompData_test::PrecompData_test()
 		cout << " OK" << endl;
 	}
 
-	// Test - Conversions VectorToIndex //+TODO
-	{
+	//+D? Test - Conversions VectorToIndex //+TODO
+	/*{
 		cout << "\n\nTest: Conversion vector --> index: " << flush;
 		const string funcName = "TestFunc";
 		pcd12 itp(funcName);
 		itp.SetComment("Y = f(X)    X = x(i,j), Y = y(i)");
 		const float x0 = 0.00f;
 		const float x1 = 6.28f;
-		itp.Set(&TestFunc12, x0, x1, nValues*nValues);
+		itp.Set(&TestFunc12, x0, x1);
 
 		//itp.Dump();
 		itp.Dump(10);
@@ -165,7 +165,7 @@ PrecompData_test::PrecompData_test()
 		assert(TestEqAbs(itp.VectorToIndex(x1), size_t(nValues*nValues), size_t(0)) && "Test: Conversion vector --> index FAILED on last element.");
 		assert(TestEqAbs(itp.VectorToIndex((x1 - x0)/2.0f), size_t(nValues*nValues/2), size_t(0)) && "Test: Conversion vector --> index FAILED on the middle element.");
 		cout << " OK" << endl;
-	}
+	}*/
 
 	// Test - Zero-degree interpolation (R --> R)
 	{
