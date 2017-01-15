@@ -387,8 +387,14 @@ int PrecompData<nPoints, TX, TY, ny>::get(std::vector<TX> &_xData , std::vector<
 {
 	static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
 
-	_xData = xData;
-    _yData = yData;
+	if(_xData.capacity() < xData.size())
+		_xData.reserve(xData.size());
+
+	if(_yData.capacity() < yData.size())
+		_yData.reserve(yData.size());
+
+	std::copy_n(xData.cbegin(), xData.size(), _xData.begin());
+	std::copy_n(yData.cbegin(), yData.size(), _yData.begin());	//+B+++ yData is an array of YData!
 
 	return 0;
 }
@@ -399,10 +405,16 @@ int PrecompData<nPoints, TX, TY, ny>::get(std::vector<TX> &_xData , std::vector<
 {
     //+TEST
 
-	_xData = xData;
-	_yData = yData;
+	if(_xData.capacity() < xData.size())
+		_xData.reserve(xData.size());
 
-    return 0;
+	if(_yData.capacity() < yData.size())
+		_yData.reserve(yData.size());
+
+	std::copy_n(xData.cbegin(), xData.size(), _xData.begin());
+	std::copy_n(yData.cbegin(), yData.size(), _yData.begin());
+
+	return 0;
 }
 
 
