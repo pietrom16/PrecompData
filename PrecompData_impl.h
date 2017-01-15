@@ -693,12 +693,12 @@ int PrecompData<nPoints, TX, TY, ny>::PickBestPoints(TY (*Func)(TX x), const flo
     /// Oversample
 
     const size_t nSamples = size_t(overSampling*nPoints);
-    const TX step = (max[0] - min[0])/nSamples;
+	const TX step = (max - min)/nSamples;
 
     std::vector<PointCurv> samples;
     samples.reserve(nSamples);
 
-    TX x1 = min[0];
+	TX x1 = min;
     TX x2 = x1 + step;
     TX x3 = x2 + step;
     TY y1 = Func(x1);
@@ -729,12 +729,12 @@ int PrecompData<nPoints, TX, TY, ny>::PickBestPoints(TY (*Func)(TX x), const flo
     std::vector<Point> points;
     points.resize(nPoints);
 
-    points[0].x = min[0];               // always get the first point
+	points[0].x = min;               // always get the first point
 
     for(size_t i = 1, j = 0; i < nPoints - 1; ++i, ++j)
         points[i].x = samples[j].x;
 
-    points[nPoints - 1].x = max[0];     // always get the last point
+	points[nPoints - 1].x = max;     // always get the last point
 
     for(size_t i = 0; i < nPoints; ++i)
         points[i].y = Func(points[i].x);
