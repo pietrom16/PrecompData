@@ -12,11 +12,12 @@
 - Check input parameters of most functions (assert).
 - Consider using a proper matrix library.
 - Option to add noise to data.
+- Dynamic resolution, i.e. add new points to the pre-calculated ones when they are in regions not currently covered.
 
 
 #### Optimizations
 
-- Check for eventual performance penalties using boost::multi_array vs std::vector for one-dimensional data.
+- Check for eventual performance penalties using boost::multi_array vs std::vector vs std::array for one-dimensional data.
 
 
 ##### Copy data on device memory.
@@ -32,6 +33,3 @@
 http://www.boost.org/doc/libs/1_62_0/libs/multi_array/doc/index.html
 https://arxiv.org/pdf/1608.00099.pdf
 https://bitbucket.org/orserang/triot/
-
-
-
