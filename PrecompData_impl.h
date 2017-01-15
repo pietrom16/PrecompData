@@ -241,7 +241,7 @@ size_t PrecompData<nPoints, TX, TY, ny>::operator()(TX _x, TY &_y) const
 template<int nPoints, typename TX, typename TY, int ny>
 size_t PrecompData<nPoints, TX, TY, ny>::operator()(TX _x, YData &_y) const
 {
-	const size_t i = VectorToIndex(_x);
+	const size_t i = ScalarToIndex(_x);
 	_y = yData[i];
 
 	return i;
