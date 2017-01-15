@@ -80,11 +80,6 @@ size_t  PrecompData<nPoints, TX, TY, ny>::Set(YData  (*Func)(TX x),
         min = xmin;
         max = xmax;
 
-        xData.clear();
-        yData.clear();
-		xData.reserve(nPoints);
-		yData.reserve(nPoints);
-
 		FuncTXVY = Func;
 		FuncTXTY = 0;
     }
@@ -108,8 +103,8 @@ size_t  PrecompData<nPoints, TX, TY, ny>::Set(YData  (*Func)(TX x),
 
 			const YData y = Func(x);
 
-            xData.push_back(x);
-            yData.push_back(y);
+			xData[i] = x;
+			yData[i] = y;
 
             // Check independent and dependent vectors are aligned
             assert(xData.size() == yData.size());
@@ -140,9 +135,6 @@ size_t  PrecompData<nPoints, TX, TY, ny>::Set(TY  (*Func)(TX x),
 		min = xmin;
 		max = xmax;
 
-		xData.resize(nPoints);
-		yData.resize(nPoints);
-
 		FuncTXVY = 0;
 		FuncTXTY = Func;
 	}
@@ -164,10 +156,11 @@ size_t  PrecompData<nPoints, TX, TY, ny>::Set(TY  (*Func)(TX x),
 			// Transform  i --> x
 			const TX x = step*i + xmin;
 
-			const TY y = Func(x);
+			const TY y_scalar = Func(x);
+			const YData y { y_scalar };
 
-			xData.push_back(x);
-			yData.push_back(y);
+			xData[i] = x;
+			yData[i] = y;
 
 			// Check independent and dependent vectors are aligned
 			assert(xData.size() == yData.size());
@@ -219,7 +212,7 @@ size_t  PrecompData<nPoints, TX, TY, ny>::AutoSet(TY (*Func)(TX x), TX xmin, TX 
 	min = xmin;
 	max = xmax;
 
-    PickBestPoints(Func, nPoints, overSampling);
+	PickBestPoints(Func, overSampling);
 
     PreComputeValues();
 
@@ -261,7 +254,8 @@ TY  PrecompData<nPoints, TX, TY, ny>::operator()(TX _x) const
 	static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
 
 	const size_t i = ScalarToIndex(_x);
-	return yData[i];
+	const YData yd = yData[i];
+	return yd.front();
 }
 
 
