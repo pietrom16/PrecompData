@@ -751,8 +751,8 @@ int PrecompData<nPoints, TX, TY, ny>::PickBestPoints(TY (*Func)(TX x), const flo
 
     for(size_t i = 0; i < points.size(); ++i)
     {
-        xData[i][0] = points[i].x;
-        yData[i][0] = points[i].y;
+		xData[i] = points[i].x;
+		yData[i][0] = points[i].y;
     }
 
     return 0;
