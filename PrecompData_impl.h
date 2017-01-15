@@ -744,11 +744,6 @@ int PrecompData<nPoints, TX, TY, ny>::PickBestPoints(TY (*Func)(TX x), const flo
 
     // Copy data in member variables
 
-    xData.clear();
-    yData.clear();
-    xData.resize(points.size());
-    yData.resize(points.size());
-
     for(size_t i = 0; i < points.size(); ++i)
     {
 		xData[i] = points[i].x;
