@@ -84,7 +84,7 @@ PrecompData_test::PrecompData_test()
         const string funcName = "TestFunc";
 		PrecompData<nValues> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
-		itp.Set(&TestFunc, x0, x1);
+		itp.set(&TestFunc, x0, x1);
 		assert(TestEqAbs(itp.ScalarToIndex(x0), size_t(0), size_t(0)) && "Test: Conversion scalar --> index FAILED on first element.");
 		assert(TestEqAbs(itp.ScalarToIndex((x1 - x0)/2.0f), size_t(nValues/2), size_t(0)) && "Test: Conversion scalar --> index FAILED on the middle element.");
 		assert(TestEqAbs(itp.ScalarToIndex(x1), size_t(nValues), size_t(0)) && "Test: Conversion scalar --> index FAILED on last element.");
@@ -97,7 +97,7 @@ PrecompData_test::PrecompData_test()
         const string funcName = "TestFunc";
 		PrecompData<nValues> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
-		itp.Set(&TestFunc, x0, x1);
+		itp.set(&TestFunc, x0, x1);
 		assert(TestEqAbs(itp.IndexToScalar(0), x0, tol) && "Test: Conversion index --> scalar FAILED on first element.");
 		assert(TestEqAbs(itp.IndexToScalar(nValues/2), (x1 - x0)/2.0f, tol) && "Test: Conversion index --> scalar FAILED on the middle element.");
 		assert(TestEqAbs(itp.IndexToScalar(nValues), x1, tol) && "Test: Conversion index --> scalar FAILED on last element.");
@@ -175,7 +175,7 @@ PrecompData_test::PrecompData_test()
 		itp.SetComment("TestFunc approximation");
 		const float x0 = 0.0f, x1 = 6.28f;
 		const float step = 0.5f*(x1 - x0)/nValues;
-		itp.Set(&TestFunc, x0, x1);
+		itp.set(&TestFunc, x0, x1);
 		float x = x0;
         float err = 0.0f;
         itp.Interpolation(0);
@@ -196,7 +196,7 @@ PrecompData_test::PrecompData_test()
 		PrecompData<nValues, float> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
         const float step = 0.5f*(x1 - x0)/nValues;
-		itp.Set(&TestFunc, x0, x1);
+		itp.set(&TestFunc, x0, x1);
         float x = x0;
         float err = 0.0f;
         itp.Interpolation(1);
@@ -372,7 +372,7 @@ PrecompData_test::PrecompData_test()
 		const float x0 = 0.00f;
 		const float x1 = 6.28f;
 		const float step = 0.5f*(x1 - x0)/nValues;
-		itp.Set(&TestFunc12, x0, x1);
+		itp.set(&TestFunc12, x0, x1);
 		float x = x0;
 		float error, totalError = 0.0f;
 		pcd12::YData y;

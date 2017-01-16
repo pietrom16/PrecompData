@@ -67,7 +67,7 @@ TX PrecompData<nPoints, TX, TY, ny>::IndexToScalar(size_t i) const     // index 
 // Regular grid, computed
 
 template<int nPoints, typename TX, typename TY, int ny>
-size_t  PrecompData<nPoints, TX, TY, ny>::Set(YData  (*Func)(TX x),
+size_t  PrecompData<nPoints, TX, TY, ny>::set(YData  (*Func)(TX x),
                                               TX      xmin,
                                               TX      xmax)
 {
@@ -120,7 +120,7 @@ size_t  PrecompData<nPoints, TX, TY, ny>::Set(YData  (*Func)(TX x),
 
 
 template<int nPoints, typename TX, typename TY, int ny>
-size_t  PrecompData<nPoints, TX, TY, ny>::Set(TY  (*Func)(TX x),
+size_t  PrecompData<nPoints, TX, TY, ny>::set(TY  (*Func)(TX x),
                                               TX  xmin,
                                               TX  xmax)
 {

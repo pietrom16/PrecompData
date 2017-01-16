@@ -86,18 +86,18 @@ public:
 	/// Data loading
 	
 	// Regular grid, computed
-	size_t  Set(YData (*Func)(TX x), TX xmin, TX xmax);
-	size_t  Set(TY (*Func)(TX x), TX xmin, TX xmax);
+	size_t  set(YData (*Func)(TX x), TX xmin, TX xmax);
+	size_t  set(TY (*Func)(TX x), TX xmin, TX xmax);
 
     // Automatic irregular grid, computed
 	size_t  AutoSet(YData (*Func)(TX x), TX xmin, TX xmax);
 	size_t  AutoSet(TY (*Func)(TX x), TX xmin, TX xmax);
 
     // Regular grid, load from file
-	size_t  Set(const std::string &dataFilename, TX xmin, TX xmax);
+	size_t  set(const std::string &dataFilename, TX xmin, TX xmax);
 
     // Irregular grid, load from file
-    size_t  Set(const std::string &dataFilename);      // grid contained in the file
+	size_t  set(const std::string &dataFilename);      // grid contained in the file
 
 
 	/// Data retrieval
