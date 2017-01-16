@@ -80,8 +80,8 @@ size_t  PrecompData<nPoints, TX, TY, ny>::Set(YData  (*Func)(TX x),
         min = xmin;
         max = xmax;
 
-		FuncTXVY = Func;
-		FuncTXTY = 0;
+		FuncX1Yn = Func;
+		FuncX1Y1 = 0;
     }
 
 	// Find step, with these constraints: nPoints, min, max
@@ -135,8 +135,8 @@ size_t  PrecompData<nPoints, TX, TY, ny>::Set(TY  (*Func)(TX x),
 		min = xmin;
 		max = xmax;
 
-		FuncTXVY = 0;
-		FuncTXTY = Func;
+		FuncX1Yn = 0;
+		FuncX1Y1 = Func;
 	}
 
 	// Find step, with these constraints: nPoints, min, max
@@ -185,8 +185,8 @@ size_t  PrecompData<nPoints, TX, TY, ny>::Set(TY  (*Func)(TX x),
 template<int nPoints, typename TX, typename TY, int ny>
 size_t  PrecompData<nPoints, TX, TY, ny>::AutoSet(YData (*Func)(TX x), TX xmin, TX xmax)
 {
-	FuncTXVY = Func;
-	FuncTXTY = 0;
+	FuncX1Yn = Func;
+	FuncX1Y1 = 0;
 
 	min = xmin;
 	max = xmax;
@@ -206,8 +206,8 @@ size_t  PrecompData<nPoints, TX, TY, ny>::AutoSet(TY (*Func)(TX x), TX xmin, TX 
 {
     static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
     
-	FuncTXVY = 0;
-	FuncTXTY = Func;
+	FuncX1Yn = 0;
+	FuncX1Y1 = Func;
 
 	min = xmin;
 	max = xmax;
