@@ -163,8 +163,8 @@ protected:
 
 private:
 	
-	int (*FuncTXVY)(TX _x, YData &_y);
-	TY  (*FuncTXTY)(TX _x);
+	YData (*FuncTXVY)(TX _x);
+	TY    (*FuncTXTY)(TX _x);
 
 	std::array<TX, nPoints>     xData;
 	std::array<YData, nPoints>  yData;
