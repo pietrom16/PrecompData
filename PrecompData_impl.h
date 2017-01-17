@@ -390,11 +390,13 @@ int PrecompData<nPoints, TX, TY, ny>::get(std::vector<TX> &_xData , std::vector<
 	if(_xData.capacity() < xData.size())
 		_xData.reserve(xData.size());
 
-	if(_yData.capacity() < yData.size())
-		_yData.reserve(yData.size());
-
 	std::copy_n(xData.cbegin(), xData.size(), _xData.begin());
-	std::copy_n(yData.cbegin(), yData.size(), _yData.begin());	//+B+++ yData is an array of YData!
+
+	_yData.clear();
+	for(size_t i = 0; i < yData.size(); ++i)
+	{
+		_yData.push_back(yData[i][0]);
+	}
 
 	return 0;
 }
