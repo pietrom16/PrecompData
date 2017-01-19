@@ -107,24 +107,32 @@ PrecompData_test::PrecompData_test()
 	// Test - Test mathematical functions
 	{
 		cout << "\n\nTest: Test mathematical functions: " << endl;
-		float x = 0.0f;
+		float x;
 		pcd12::YData y, y_ok;
-		y_ok[0] = 1.0;
+
+		x = 0.0f;
+		y_ok[0] = 0.0;
+		y_ok[1] = 1.0;
 		y = TestFunc12(x);
-		cerr << "Expected result = " << y_ok[0] << ";  Actual result = " << y[0] << endl;
+		cerr << "Expected result = [" << y_ok[0] << ", " << y_ok[1] << "];  Actual result = [" << y[0] << ", " << y[1] << "]" << endl;
 		assert(abs(y[0] - y_ok[0]) < 1.0e-2f);
+		assert(abs(y[1] - y_ok[1]) < 1.0e-2f);
 
 		x = 3.141f;
-		y_ok[0] = -1.0;
+		y_ok[0] = 0.0;
+		y_ok[1] = -1.0;
 		y = TestFunc12(x);
-		cerr << "Expected result = " << y_ok[0] << ";  Actual result = " << y[0] << endl;
+		cerr << "Expected result = [" << y_ok[0] << ", " << y_ok[1] << "];  Actual result = [" << y[0] << ", " << y[1] << "]" << endl;
 		assert(abs(y[0] - y_ok[0]) < 1.0e-2f);
+		assert(abs(y[1] - y_ok[1]) < 1.0e-2f);
 
 		x = 6.282f;
-		y_ok[0] = 1.0;
+		y_ok[0] = 0.0;
+		y_ok[1] = 1.0;
 		y = TestFunc12(x);
-		cerr << "Expected result = " << y_ok[0] << ";  Actual result = " << y[0] << endl;
+		cerr << "Expected result = [" << y_ok[0] << ", " << y_ok[1] << "];  Actual result = [" << y[0] << ", " << y[1] << "]" << endl;
 		assert(abs(y[0] - y_ok[0]) < 1.0e-2f);
+		assert(abs(y[1] - y_ok[1]) < 1.0e-2f);
 
 		cout << " OK" << endl;
 	}
