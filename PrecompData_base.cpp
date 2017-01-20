@@ -47,7 +47,7 @@ std::string  PrecompData_base::Comment() const
 }
 
 
-int  PrecompData_base::SetOversampling(float ovs)
+size_t  PrecompData_base::SetOversampling(float ovs)
 {
 	if(ovs < 1.0f)
 		return wrn_invalid_oversampling;

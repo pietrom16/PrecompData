@@ -22,7 +22,7 @@ public:
 	int          SetComment(const std::string &_comment);
 	std::string  FunctionName() const;
 	std::string  Comment()      const;
-	int          SetOversampling(float ovs);
+	size_t       SetOversampling(float ovs);
 	float        Oversamping()  const { return overSampling; }
 
 	int  Status() const { return status; }
