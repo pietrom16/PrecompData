@@ -371,9 +371,9 @@ PrecompData_test::PrecompData_test()
              <<      "];  average error = " << avgErr << endl;
     }
 
-    // Test - Multidimensions: Storage of data in an NxM space
+	// Test - Multidimensions: Storage of data in an 1xM space
     {
-        cout << "\n\nTest: Storage of data in an NxM space:" << endl;
+		cout << "\n\nTest: Storage of data in an 1xM space:" << endl;
         const string funcName = "Multidimensions";
 		pcd12 itp(funcName);
 		itp.SetComment("Y = f(x)    Y = [y1, y2]");
