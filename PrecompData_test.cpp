@@ -28,7 +28,7 @@ float TestFuncNonLin1(float x) {        //   y = |x|
     return fabs(x);
 }
 
-float TestFuncNonLin2(float x) {        //   y = 1/(|x-2| + 0.1)
+float TestFuncNonLin2(float x) {        //   y = 1/(|x-2| + 0.1)   # Spike for x = 2
     return 1/(fabs(x - 2.0f) + 0.1f);
 }
 
