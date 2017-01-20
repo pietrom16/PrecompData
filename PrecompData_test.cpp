@@ -77,6 +77,7 @@ PrecompData_test::PrecompData_test()
 
 	const int    nValues = 20;
 	const float  tol = 0.01f;    // tolerance
+	int          verbose = 1;
 
     // Test - Conversions ScalarToIndex
     {
@@ -191,7 +192,8 @@ PrecompData_test::PrecompData_test()
         for(int i = 0; i < nValues; ++i) {
             const float y = itp(x);
             err += fabs(TestFunc(x) - y);
-			cout << i << ":\t" << funcName << "(" << x << ") = " << TestFunc(x) << " ~ " << y << endl;
+			if(verbose > 1)
+				cout << i << ":\t" << funcName << "(" << x << ") = " << TestFunc(x) << " ~ " << y << endl;
 			x += step;
 		}
         cout << "Total error = " << err << endl;
@@ -212,10 +214,11 @@ PrecompData_test::PrecompData_test()
         for(int i = 0; i < nValues; ++i) {
             const float y = itp.Interpolate(x);
             err += fabs(TestFunc(x) - y);
-            cout << i << ":\t" << funcName << "(" << x << ") = " << TestFunc(x) << " ~ " << y << endl;
+			if(verbose > 1)
+				cout << i << ":\t" << funcName << "(" << x << ") = " << TestFunc(x) << " ~ " << y << endl;
             x += step;
         }
-        cout << "Total error = " << err << endl;
+		cout << "Total error = " << err << endl;
     }
 
     // Test - AutoSet (R --> R):  y = 2x
@@ -229,9 +232,10 @@ PrecompData_test::PrecompData_test()
         std::vector<float> vx, vy;
 		itp.get(vx, vy);
         cout << "Sizes:  x = " << vx.size() << ";  y = " << vy.size() << endl;
-        for(size_t i = 0; i < nValues; ++i) {
-            cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
-        }
+		if(verbose > 1)
+			for(size_t i = 0; i < nValues; ++i) {
+				cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
+			}
     }
 
 	// Test - Regular grid (R --> R):  y = 1/(|x-2| + 0.1)   # Spike for x = 2
@@ -245,9 +249,10 @@ PrecompData_test::PrecompData_test()
 		std::vector<float> vx, vy;
 		itp.get(vx, vy);
 		cout << "Sizes:  x = " << vx.size() << ";  y = " << vy.size() << endl;
-		for(size_t i = 0; i < nValues; ++i) {
-			cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
-		}
+		if(verbose > 1)
+			for(size_t i = 0; i < nValues; ++i) {
+				cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
+			}
 		//+TODO - Compute error
 	}
 
@@ -262,9 +267,10 @@ PrecompData_test::PrecompData_test()
 		std::vector<float> vx, vy;
 		itp.get(vx, vy);
 		cout << "Sizes:  x = " << vx.size() << ";  y = " << vy.size() << endl;
-		for(size_t i = 0; i < nValues; ++i) {
-			cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
-		}
+		if(verbose > 1)
+			for(size_t i = 0; i < nValues; ++i) {
+				cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
+			}
 		//+TODO - Compute error
 	}
 
@@ -366,9 +372,10 @@ PrecompData_test::PrecompData_test()
         std::vector<float> vx, vy;
 		itp.get(vx, vy);
         cout << "Sizes:  x = " << vx.size() << ";  y = " << vy.size() << endl;
-        for(size_t i = 0; i < nValues; ++i) {
-            cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
-        }
+		if(verbose > 1)
+			for(size_t i = 0; i < nValues; ++i) {
+				cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
+			}
         int n = 100;
         cout << "Compare approximation with real sin(x) function (done on " << n << " points):" << endl;
         float error = 0.0f, avgErr = 0.0f;
@@ -377,7 +384,8 @@ PrecompData_test::PrecompData_test()
         float x = x0, step = (x1 - x0)/n;
         for(int i = 0; i < n; ++i) {
             error = fabs(sin(x) - itp.Interpolate(x));
-            cout << i << ": \t" << x << ", \t " << sin(x) << ", \t " << itp.Interpolate(x) << ", \t " << error << endl;
+			if(verbose > 1)
+				cout << i << ": \t" << x << ", \t " << sin(x) << ", \t " << itp.Interpolate(x) << ", \t " << error << endl;
             if(error < minErrY) { minErrX = x; minErrY = error; }
             if(error > maxErrY) { maxErrX = x; maxErrY = error; }
             avgErr += error;
@@ -407,11 +415,12 @@ PrecompData_test::PrecompData_test()
 		{
 			itp(x, y);
 			error = fabs(TestFunc12(x)[0] - y[0]) + fabs(TestFunc12(x)[1] - y[1]);
-			cout << i << ":\t" << funcName << "[" << x << "] = "
-			     << "[" << TestFunc12(x)[0] << ", " << TestFunc12(x)[1] << "] "
-			     << "~ [" << y[0] << ", " << y[1] << "]"
-			     << " - Error = " << error
-			     << endl;
+			if(verbose > 1)
+				cout << i << ":\t" << funcName << "[" << x << "] = "
+				     << "[" << TestFunc12(x)[0] << ", " << TestFunc12(x)[1] << "] "
+				     << "~ [" << y[0] << ", " << y[1] << "]"
+				     << " - Error = " << error
+				     << endl;
 			totalError += error;
 			x += step;
 		}
