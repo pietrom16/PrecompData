@@ -234,23 +234,41 @@ PrecompData_test::PrecompData_test()
         }
     }
 
-    // Test - AutoSet (R --> R):  y = 1/(|x-2| + 0.1)
-    {
-        cout << "\n\nTest: Automatic irregular grid:    y = 1/(|x-2| + 0.1)" << endl;
-        const string funcName = "y = 1/(|x-2| + 0.1)";
+	// Test - Regular grid (R --> R):  y = 1/(|x-2| + 0.1)   # Spike for x = 2
+	{
+		cout << "\n\nTest: Regular grid:    y = 1/(|x-2| + 0.1)" << endl;
+		const string funcName = "y = 1/(|x-2| + 0.1)";
 		PrecompData<nValues, float> itp(funcName);
-        const float x0 = 0.0f, x1 = 6.28f;
-		itp.AutoSet(&TestFuncNonLin2, x0, x1);
-        cerr << "x0 = " << x0 << "  x1 = " << x1 << "  nValues = " << nValues << endl;  //+T+
-        std::vector<float> vx, vy;
+		const float x0 = 0.0f, x1 = 6.28f;
+		itp.set(&TestFuncNonLin2, x0, x1);
+		cerr << "x0 = " << x0 << "  x1 = " << x1 << "  nValues = " << nValues << endl;  //+T+
+		std::vector<float> vx, vy;
 		itp.get(vx, vy);
-        cout << "Sizes:  x = " << vx.size() << ";  y = " << vy.size() << endl;
-        for(size_t i = 0; i < nValues; ++i) {
-            cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
-        }
-    }
+		cout << "Sizes:  x = " << vx.size() << ";  y = " << vy.size() << endl;
+		for(size_t i = 0; i < nValues; ++i) {
+			cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
+		}
+		//+TODO - Compute error
+	}
 
-    // Test - Derivatives
+	// Test - AutoSet (R --> R):  y = 1/(|x-2| + 0.1)   # Spike for x = 2
+	{
+		cout << "\n\nTest: Automatic irregular grid:    y = 1/(|x-2| + 0.1)" << endl;
+		const string funcName = "y = 1/(|x-2| + 0.1)";
+		PrecompData<nValues, float> itp(funcName);
+		const float x0 = 0.0f, x1 = 6.28f;
+		itp.AutoSet(&TestFuncNonLin2, x0, x1);
+		cerr << "x0 = " << x0 << "  x1 = " << x1 << "  nValues = " << nValues << endl;  //+T+
+		std::vector<float> vx, vy;
+		itp.get(vx, vy);
+		cout << "Sizes:  x = " << vx.size() << ";  y = " << vy.size() << endl;
+		for(size_t i = 0; i < nValues; ++i) {
+			cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
+		}
+		//+TODO - Compute error
+	}
+
+	// Test - Derivatives
     {
         cout << "\n\nTest: Derivatives" << endl;
         int nTests = 0, nFailed = 0;
