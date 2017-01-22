@@ -223,8 +223,8 @@ PrecompData_test::PrecompData_test()
 
     // Test - AutoSet (R --> R):  y = 2x
     {
-        cout << "\n\nTest: Automatic irregular grid:    y = 2x" << endl;
         const string funcName = "y = 2x";
+		cout << "\n\nTest: Automatic irregular grid:    " << funcName << endl;
 		PrecompData<nValues, float> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
 		itp.AutoSet(&TestFuncLin, x0, x1);
@@ -240,8 +240,8 @@ PrecompData_test::PrecompData_test()
 
 	// Test - Regular grid (R --> R):  y = 1/(|x-2| + 0.1)   # Spike for x = 2
 	{
-		cout << "\n\nTest: Regular grid:    y = 1/(|x-2| + 0.1)" << endl;
 		const string funcName = "y = 1/(|x-2| + 0.1)";
+		cout << "\n\nTest: Regular grid:    " << funcName << endl;
 		PrecompData<nValues, float> itp(funcName);
 		const float x0 = 0.0f, x1 = 6.28f;
 		itp.set(&TestFuncNonLin2, x0, x1);
@@ -258,8 +258,8 @@ PrecompData_test::PrecompData_test()
 
 	// Test - AutoSet (R --> R):  y = 1/(|x-2| + 0.1)   # Spike for x = 2
 	{
-		cout << "\n\nTest: Automatic irregular grid:    y = 1/(|x-2| + 0.1)" << endl;
 		const string funcName = "y = 1/(|x-2| + 0.1)";
+		cout << "\n\nTest: Automatic irregular grid:    " << funcName << endl;
 		PrecompData<nValues, float> itp(funcName);
 		const float x0 = 0.0f, x1 = 6.28f;
 		itp.AutoSet(&TestFuncNonLin2, x0, x1);
@@ -362,8 +362,8 @@ PrecompData_test::PrecompData_test()
     // Test - AutoSet:  y = sin(x)
     // Result: values too concentrated in the points with high absolute second derivative
     {
-        cout << "\n\nTest: Automatic irregular grid:    y = sin(x)" << endl;
         const string funcName = "y = sin(x)";
+		cout << "\n\nTest: Automatic irregular grid:    " << funcName << endl;
 		PrecompData<nValues, float> itp(funcName);
         const float x0 = 0.0f, x1 = 6.28f;
         itp.SetOversampling(1.5f);
@@ -377,7 +377,7 @@ PrecompData_test::PrecompData_test()
 				cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
 			}
         int n = 100;
-        cout << "Compare approximation with real sin(x) function (done on " << n << " points):" << endl;
+		cout << "Compare approximation with real " << funcName << " function (done on " << n << " points):" << endl;
         float error = 0.0f, avgErr = 0.0f;
         float minErrX = 1.0e20f, minErrY = 1.0e20f;
         float maxErrX = 0.0f,    maxErrY = 0.0f;
