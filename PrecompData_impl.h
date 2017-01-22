@@ -439,7 +439,7 @@ typename PrecompData<nPoints, TX, TY, ny>::YData PrecompData<nPoints, TX, TY, ny
     {
 		const TX    x      = xData[i];
 		const YData y      = yData[i];
-		const YData y_comp = FuncX(x);
+		const YData y_comp = FuncX1Yn(x);
 
         for(size_t j = 0; j < error.size(); ++j) {
             //error[j] += fabs(y_comp[j] - y[j]);                  // mean absolute error
@@ -461,7 +461,7 @@ TY PrecompData<nPoints, TX, TY, ny>::EvaluateAbsErrorKnownData() const
 {
 	//+TEST
 
-	const TY error = EvaluateErrorKnownData();
+	const YData error = EvaluateErrorKnownData();
 	return Norm(error);
 }
 
@@ -489,8 +489,8 @@ typename PrecompData<nPoints, TX, TY, ny>::YData PrecompData<nPoints, TX, TY, ny
 		// Set a random x
 		x = dist(gen);
 
-		const TY y      = Interpolate(x);
-		const TY y_comp = FuncX(x);
+		const YData y      = Interpolate(x);
+		const YData y_comp = FuncX1Yn(x);
 
 		for(size_t j = 0; j < error.size(); ++j) {
 			//error[j] += fabs(y_comp[j] - y[j]);                  // mean absolute error
@@ -512,7 +512,7 @@ TY PrecompData<nPoints, TX, TY, ny>::EvaluateAbsError(int nTestPoints) const
 {
 	//+TEST
 
-	const TY error = EvaluateError(nTestPoints);
+	const YData error = EvaluateError(nTestPoints);
 	return Norm(error);
 }
 

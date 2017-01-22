@@ -99,7 +99,6 @@ public:
     // Irregular grid, load from file
 	size_t  set(const std::string &dataFilename);      // grid contained in the file
 
-
 	/// Data retrieval
 
 	// Range UNchecked, 0 degree interpolation accessors
