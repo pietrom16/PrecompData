@@ -253,7 +253,10 @@ PrecompData_test::PrecompData_test()
 			for(size_t i = 0; i < nValues; ++i) {
 				cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
 			}
-		//+TODO - Compute error
+		float absErrKnown = itp.EvaluateAbsErrorKnownData();
+		float absErr      = itp.EvaluateAbsError(2*nValues);
+		cout << "Absolute error:  on known data = " << absErrKnown
+		     <<                "; on random data = " << absErr << endl;
 	}
 
 	// Test - AutoSet (R --> R):  y = 1/(|x-2| + 0.1)   # Spike for x = 2
@@ -271,7 +274,10 @@ PrecompData_test::PrecompData_test()
 			for(size_t i = 0; i < nValues; ++i) {
 				cout << i << ":  " << vx[i] << ", " << vy[i] << endl;
 			}
-		//+TODO - Compute error
+		float absErrKnown = itp.EvaluateAbsErrorKnownData();
+		float absErr      = itp.EvaluateAbsError(2*nValues);
+		cout << "Absolute error:  on known data = " << absErrKnown
+		     <<                "; on random data = " << absErr << endl;
 	}
 
 	// Test - Derivatives
