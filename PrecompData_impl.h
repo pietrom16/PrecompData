@@ -474,7 +474,7 @@ typename PrecompData<nPoints, TX, TY, ny>::YData PrecompData<nPoints, TX, TY, ny
 	//+TEST
 
 	TX    x;
-	YData error;
+	YData y, error;
 
 	std::random_device  rd;
 	std::mt19937        gen(rd());
@@ -489,7 +489,7 @@ typename PrecompData<nPoints, TX, TY, ny>::YData PrecompData<nPoints, TX, TY, ny
 		// Set a random x
 		x = dist(gen);
 
-		const YData y      = Interpolate(x);
+		Interpolate(x, y);
 		const YData y_comp = FuncX1Yn(x);
 
 		for(size_t j = 0; j < error.size(); ++j) {
