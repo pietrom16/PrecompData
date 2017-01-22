@@ -430,6 +430,8 @@ typename PrecompData<nPoints, TX, TY, ny>::YData PrecompData<nPoints, TX, TY, ny
 {
 	//+TEST
 
+	assert(FuncX1Yn);
+
 	YData error;
     
     for(size_t j = 0; j < error.size(); ++j)
@@ -472,6 +474,8 @@ template<int nPoints, typename TX, typename TY, int ny>
 typename PrecompData<nPoints, TX, TY, ny>::YData PrecompData<nPoints, TX, TY, ny>::EvaluateError(int nTestPoints) const
 {
 	//+TEST
+
+	assert(FuncX1Yn);
 
 	TX    x;
 	YData y, error;
