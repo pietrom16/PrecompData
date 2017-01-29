@@ -17,14 +17,14 @@ namespace Utilities {
 
 using namespace stdExt;
 
-template<int nPoints, typename TX, typename TY, int ny>
-PrecompData<nPoints, TX, TY, ny>::PrecompData()
+template<int nPoints, typename TX, typename TY>
+PrecompData<nPoints, TX, TY>::PrecompData()
     : PrecompData_base()
 {
 }
 
-template<int nPoints, typename TX, typename TY, int ny>
-PrecompData<nPoints, TX, TY, ny>::PrecompData(const std::string _funcName)
+template<int nPoints, typename TX, typename TY>
+PrecompData<nPoints, TX, TY>::PrecompData(const std::string _funcName)
     : PrecompData_base(_funcName)
 {
 }
@@ -32,12 +32,12 @@ PrecompData<nPoints, TX, TY, ny>::PrecompData(const std::string _funcName)
 
 // Precompute constant values
 
-template<int nPoints, typename TX, typename TY, int ny>
-int PrecompData<nPoints, TX, TY, ny>::PreComputeValues()
+template<int nPoints, typename TX, typename TY>
+int PrecompData<nPoints, TX, TY>::PreComputeValues()
 {
     //+CHECK
     // Set up conversion constants
-	kRealInt = yData.size()/(max - min);
+	kRealInt = xData.size()/(xMax - xMin);
 	kIntReal = 1/kRealInt;
 
     return 0;
@@ -47,17 +47,17 @@ int PrecompData<nPoints, TX, TY, ny>::PreComputeValues()
 // Coordinate <--> index transformations
 
 
-template<int nPoints, typename TX, typename TY, int ny>
-size_t PrecompData<nPoints, TX, TY, ny>::ScalarToIndex(TX x) const     // scalar --> index
+template<int nPoints, typename TX, typename TY>
+size_t PrecompData<nPoints, TX, TY>::ScalarToIndex(TX x) const     // scalar --> index
 {
-	return size_t(kRealInt*(x - min));
+	return size_t(kRealInt*(x - xMin));
 }
 
 
-template<int nPoints, typename TX, typename TY, int ny>
-TX PrecompData<nPoints, TX, TY, ny>::IndexToScalar(size_t i) const     // index --> scalar
+template<int nPoints, typename TX, typename TY>
+TX PrecompData<nPoints, TX, TY>::IndexToScalar(size_t i) const     // index --> scalar
 {
-	return min + kIntReal*TX(i);
+	return xMin + kIntReal*TX(i);
 }
 
 
@@ -66,82 +66,26 @@ TX PrecompData<nPoints, TX, TY, ny>::IndexToScalar(size_t i) const     // index 
 
 // Regular grid, computed
 
-template<int nPoints, typename TX, typename TY, int ny>
-size_t  PrecompData<nPoints, TX, TY, ny>::set(YData  (*Func)(TX x),
-                                              TX      xmin,
-                                              TX      xmax)
+template<int nPoints, typename TX, typename TY>
+size_t  PrecompData<nPoints, TX, TY>::set(TY  (*Func)(TX x),
+                                          TX  xmin,
+                                          TX  xmax)
 {
-    // Init
-    {
-        assert(Func != 0);
-        assert(nPoints > 0);
-		assert(xmin < xmax);
-
-        min = xmin;
-        max = xmax;
-
-		FuncX1Yn = Func;
-		FuncX1Y1 = 0;
-    }
-
-	// Find step, with these constraints: nPoints, min, max
-    {
-		const TX domainInterval = (max - min);
-
-		assert(domainInterval > 0.0f);
-
-		step = domainInterval/nPoints;
-    }
-
-    //+TEST
-	// Scan the interval on the x axis; store the computed values
-    {
-        for(size_t i = 0; i < nPoints; ++i)
-        {
-			// Transform  i --> x
-			const TX x = step*i + xmin;
-
-			const YData y = Func(x);
-
-			xData[i] = x;
-			yData[i] = y;
-
-            // Check independent and dependent vectors are aligned
-            assert(xData.size() == yData.size());
-        }
-    }
-
-    PreComputeValues();
-
-    regularGrid = true;
-
-    return yData.size();
-}
-
-
-template<int nPoints, typename TX, typename TY, int ny>
-size_t  PrecompData<nPoints, TX, TY, ny>::set(TY  (*Func)(TX x),
-                                              TX  xmin,
-                                              TX  xmax)
-{
-    static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
-
 	// Init
 	{
 		assert(Func != 0);
 		assert(nPoints > 0);
 		assert(xmin < xmax);
 
-		min = xmin;
-		max = xmax;
+		xMin = xmin;
+		xMax = xmax;
 
-		FuncX1Yn = 0;
-		FuncX1Y1 = Func;
+		FuncXY = Func;
 	}
 
 	// Find step, with these constraints: nPoints, min, max
 	{
-		const TX domainInterval = (max - min);
+		const TX domainInterval = (xMax - xMin);
 
 		assert(domainInterval > 0.0f);
 
@@ -151,19 +95,18 @@ size_t  PrecompData<nPoints, TX, TY, ny>::set(TY  (*Func)(TX x),
 	//+TEST
 	// Scan the interval on the x axis; store the computed values
 	{
+		// Check independent and dependent vectors are aligned
+		assert(xData.size() == yData.size());
+
 		for(size_t i = 0; i < nPoints; ++i)
 		{
 			// Transform  i --> x
-			const TX x = step*i + xmin;
+			const TX x = step*i + xMin;
 
-			const TY y_scalar = Func(x);
-			const YData y { y_scalar };
+			const TY y = FuncXY(x);
 
 			xData[i] = x;
 			yData[i] = y;
-
-			// Check independent and dependent vectors are aligned
-			assert(xData.size() == yData.size());
 		}
 	}
 
@@ -182,37 +125,15 @@ size_t  PrecompData<nPoints, TX, TY, ny>::set(TY  (*Func)(TX x),
  *    - Pick the remaining points from regions of the function with largest second derivative.
  */
 
-template<int nPoints, typename TX, typename TY, int ny>
-size_t  PrecompData<nPoints, TX, TY, ny>::AutoSet(YData (*Func)(TX x), TX xmin, TX xmax)
+template<int nPoints, typename TX, typename TY>
+size_t  PrecompData<nPoints, TX, TY>::AutoSet(TY (*Func)(TX x), TX xmin, TX xmax)
 {
-	FuncX1Yn = Func;
-	FuncX1Y1 = 0;
+	FuncXY = Func;
 
-	min = xmin;
-	max = xmax;
+	xMin = xmin;
+	xMax = xmax;
 
-	PickBestPoints(Func, nPoints, overSampling);
-
-    PreComputeValues();
-
-    regularGrid = false;
-
-    return yData.size();
-}
-
-
-template<int nPoints, typename TX, typename TY, int ny>
-size_t  PrecompData<nPoints, TX, TY, ny>::AutoSet(TY (*Func)(TX x), TX xmin, TX xmax)
-{
-    static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
-    
-	FuncX1Yn = 0;
-	FuncX1Y1 = Func;
-
-	min = xmin;
-	max = xmax;
-
-	PickBestPoints(Func, overSampling);
+	PickBestPoints(FuncXY, overSampling);
 
     PreComputeValues();
 
@@ -226,20 +147,8 @@ size_t  PrecompData<nPoints, TX, TY, ny>::AutoSet(TY (*Func)(TX x), TX xmin, TX 
 
 // Range UNchecked, 0 degree interpolation accessors
 
-template<int nPoints, typename TX, typename TY, int ny>
-size_t PrecompData<nPoints, TX, TY, ny>::operator()(TX _x, TY &_y) const
-{
-	static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
-
-	const size_t i = ScalarToIndex(_x);
-	_y = yData[i];
-
-	return i;
-}
-
-
-template<int nPoints, typename TX, typename TY, int ny>
-size_t PrecompData<nPoints, TX, TY, ny>::operator()(TX _x, YData &_y) const
+template<int nPoints, typename TX, typename TY>
+size_t PrecompData<nPoints, TX, TY>::operator()(TX _x, TY &_y) const
 {
 	const size_t i = ScalarToIndex(_x);
 	_y = yData[i];
@@ -248,45 +157,22 @@ size_t PrecompData<nPoints, TX, TY, ny>::operator()(TX _x, YData &_y) const
 }
 
 
-template<int nPoints, typename TX, typename TY, int ny>
-TY  PrecompData<nPoints, TX, TY, ny>::operator()(TX _x) const
+template<int nPoints, typename TX, typename TY>
+TY  PrecompData<nPoints, TX, TY>::operator()(TX _x) const
 {
-	static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
-
 	const size_t i = ScalarToIndex(_x);
-	const YData yd = yData[i];
-	return yd.front();
+	return yData[i];
 }
 
 
 // Range checked, 0 degree interpolation accessors
 
-template<int nPoints, typename TX, typename TY, int ny>
-size_t PrecompData<nPoints, TX, TY, ny>::get(TX _x, TY &_y) const
-{
-	static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
-
-	size_t i = 0;
-	if(_x < min) { _x = min; i = wrn_x_less_than_min; }
-	if(_x > max) { _x = max; i = wrn_x_more_than_max; }
-
-	if(i == 0)
-		return operator()(_x, _y);
-
-	operator()(_x, _y);
-
-	return i;
-}
-
-template<int nPoints, typename TX, typename TY, int ny>
-size_t PrecompData<nPoints, TX, TY, ny>::get(TX _x, YData &_y) const
+template<int nPoints, typename TX, typename TY>
+size_t PrecompData<nPoints, TX, TY>::get(TX _x, TY &_y) const
 {
 	size_t i = 0;
-	if(_x < min) { _x = min; i = wrn_x_less_than_min; }
-	if(_x > max) { _x = max; i = wrn_x_more_than_max; }
-
-	if(i == 0)
-		return operator()(_x, _y);
+	if(_x < xMin) { _x = xMin; i = wrn_x_less_than_min; }
+	if(_x > xMax) { _x = xMax; i = wrn_x_more_than_max; }
 
 	operator()(_x, _y);
 
@@ -296,18 +182,16 @@ size_t PrecompData<nPoints, TX, TY, ny>::get(TX _x, YData &_y) const
 
 // Range checked accessors, linear interpolation
 
-template<int nPoints, typename TX, typename TY, int ny>
-size_t PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x, TY &_y) const
+template<int nPoints, typename TX, typename TY>
+size_t PrecompData<nPoints, TX, TY>::Interpolate(TX _x, TY &_y) const
 {
-	static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
-
-	if(_x <= min) {
-		_y = yData[0][0];		//+TEST
+	if(_x <= xMin) {
+		_y = yData[0];
 		return wrn_x_less_than_min;
 	}
 
-	if(_x >= max) {
-		_y = yData.back()[0];		//+TEST
+	if(_x >= xMax) {
+		_y = yData.back();
 		return wrn_x_more_than_max;
 	}
 
@@ -320,45 +204,14 @@ size_t PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x, TY &_y) const
 	assert(_x <= x1);
 
 	//+TEST
-	_y = yData[i][0] + (yData[i + 1][0] - yData[i][0])*(_x - x0)/(x1 - x0);
+	_y = yData[i] + (yData[i + 1] - yData[i])*(_x - x0)/(x1 - x0);
 
 	return i;
 }
 
 
-template<int nPoints, typename TX, typename TY, int ny>
-size_t PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x, YData &_y) const
-{
-	if(_x < min) {	//+TEST
-		for(int j = 0; j < ny; ++j)
-			_y[j] = yData[0][j];
-		return wrn_x_less_than_min;
-	}
-
-	if(_x > max) {	//+TEST
-		for(int j = 0; j < ny; ++j)
-			_y[j] = yData.back()[j];
-		return wrn_x_more_than_max;
-	}
-
-	const size_t i = ScalarToIndex(_x);
-
-	const TX x0 = IndexToScalar(i);
-	const TX x1 = IndexToScalar(i + 1);
-
-	assert(_x >= x0);
-	assert(_x <= x1);
-
-	//+TEST
-	for(int j = 0; j < ny; ++j)
-		_y[j] = yData[i][j] + (yData[i + 1][j] - yData[i][j])*(_x - x0)/(x1 - x0);
-
-	return i;
-}
-
-
-template<int nPoints, typename TX, typename TY, int ny>
-TY PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x)
+template<int nPoints, typename TX, typename TY>
+TY PrecompData<nPoints, TX, TY>::Interpolate(TX _x)
 {
 	TY y;
 
@@ -370,11 +223,11 @@ TY PrecompData<nPoints, TX, TY, ny>::Interpolate(TX _x)
 
 // Range check
 
-template<int nPoints, typename TX, typename TY, int ny>
-int PrecompData<nPoints, TX, TY, ny>::RangeCheck(TX x)
+template<int nPoints, typename TX, typename TY>
+int PrecompData<nPoints, TX, TY>::RangeCheck(TX x)
 {
-	if(x < min) return -1;
-	if(x > max) return 1;
+	if(x < xMin) return -1;
+	if(x > xMax) return 1;
 
 	return 0;	// OK, in range
 }
@@ -382,31 +235,9 @@ int PrecompData<nPoints, TX, TY, ny>::RangeCheck(TX x)
 
 // Get the whole value set
 
-template<int nPoints, typename TX, typename TY, int ny>
-int PrecompData<nPoints, TX, TY, ny>::get(std::vector<TX> &_xData , std::vector<TY> &_yData) const
+template<int nPoints, typename TX, typename TY>
+int PrecompData<nPoints, TX, TY>::get(std::vector<TX> &_xData , std::vector<TY> &_yData) const
 {
-	static_assert(ny == 1, "Member function valid for one dimesional dependent variable, only.");
-
-	if(_xData.capacity() < xData.size())
-		_xData.reserve(xData.size());
-
-	std::copy_n(xData.cbegin(), xData.size(), _xData.begin());
-
-	_yData.clear();
-	for(size_t i = 0; i < yData.size(); ++i)
-	{
-		_yData.push_back(yData[i][0]);
-	}
-
-	return 0;
-}
-
-
-template<int nPoints, typename TX, typename TY, int ny>
-int PrecompData<nPoints, TX, TY, ny>::get(std::vector<TX> &_xData , std::vector<YData> &_yData) const
-{
-    //+TEST
-
 	if(_xData.capacity() < xData.size())
 		_xData.reserve(xData.size());
 
@@ -423,40 +254,29 @@ int PrecompData<nPoints, TX, TY, ny>::get(std::vector<TX> &_xData , std::vector<
 /// Evaluate error
 
 
-// Error on each dimension on known data
+// Error on known data
 
-template<int nPoints, typename TX, typename TY, int ny>
-typename PrecompData<nPoints, TX, TY, ny>::YData PrecompData<nPoints, TX, TY, ny>::EvaluateErrorKnownData() const
+template<int nPoints, typename TX, typename TY>
+TY PrecompData<nPoints, TX, TY>::EvaluateErrorKnownData() const
 {
 	//+TEST
 
-	assert(FuncX1Yn);
+	assert(FuncXY);
+	if(xData.size() == 0) return 0.0;
 
-	YData error;
+	TY  error = 0.0;
     
-    for(size_t j = 0; j < error.size(); ++j)
-        error[j] = 0.0;
-
-	std::cerr << "Loop: 0 ... < " << xData.size() << std::endl; //+T+
 	for(size_t i = 0; i < xData.size(); ++i)
     {
-		const TX    x      = xData[i];
-		std::cerr << "x = " << x << std::endl; //+T+
-		const YData y      = yData[i];
-		std::cerr << "y[0] = " << y[0] << std::endl; //+T+
-		const YData y_comp = FuncX1Yn(x);
-		std::cerr << "y_comp[0] = " << y_comp[0] << std::endl; //+T+
+		const TX  x = xData[i];
+		const TY  y = yData[i];
+		const TY  y_comp = FuncXY(x);
 
-		std::cerr << "Looping: 0 ... < " << error.size() << std::endl; //+T+
-        for(size_t j = 0; j < error.size(); ++j) {
-			std::cerr << j << std::endl; //+T+
-            //error[j] += fabs(y_comp[j] - y[j]);                  // mean absolute error
-            error[j] += (y_comp[j] - y[j])*(y_comp[j] - y[j]);     // mean squared error
-        }
+		//error += fabs(y_comp - y);            // mean absolute error
+		error += (y_comp - y)*(y_comp - y);     // mean squared error
     }
 
-    for(size_t j = 0; j < error.size(); ++j)
-        error[j] /= xData.size();
+	error /= xData.size();
 
     return error;
 }
@@ -464,35 +284,29 @@ typename PrecompData<nPoints, TX, TY, ny>::YData PrecompData<nPoints, TX, TY, ny
 
 // Absolute error on known data
 
-template<int nPoints, typename TX, typename TY, int ny>
-TY PrecompData<nPoints, TX, TY, ny>::EvaluateAbsErrorKnownData() const
+template<int nPoints, typename TX, typename TY>
+TY PrecompData<nPoints, TX, TY>::EvaluateAbsErrorKnownData() const
 {
-	//+TEST
-
-	const YData error = EvaluateErrorKnownData();
-	return Norm(error);
+	return Norm(EvaluateErrorKnownData());
 }
 
 
-// Error on each dimension on random points
+// Error on random points
 
-template<int nPoints, typename TX, typename TY, int ny>
-typename PrecompData<nPoints, TX, TY, ny>::YData PrecompData<nPoints, TX, TY, ny>::EvaluateError(int nTestPoints) const
+template<int nPoints, typename TX, typename TY>
+TY PrecompData<nPoints, TX, TY>::EvaluateError(int nTestPoints) const
 {
 	//+TEST
 
-	assert(FuncX1Yn);
+	assert(FuncXY);
+	if(xData.size() == 0) return 0.0;
 
-	TX    x;
-	YData y, error;
+	TX  x;
+	TY  y, error = 0.0;
 
-	std::random_device  rd;
-	std::mt19937        gen(rd());
-
-	for(size_t j = 0; j < error.size(); ++j)
-		error[j] = 0.0;
-
-	std::uniform_real_distribution<> dist(min, max);
+	std::random_device                rd;
+	std::mt19937                      gen(rd());
+	std::uniform_real_distribution<>  dist(xMin, xMax);
 
 	for(size_t i = 0; i < nTestPoints; ++i)
 	{
@@ -500,16 +314,13 @@ typename PrecompData<nPoints, TX, TY, ny>::YData PrecompData<nPoints, TX, TY, ny
 		x = dist(gen);
 
 		Interpolate(x, y);
-		const YData y_comp = FuncX1Yn(x);
+		const TY y_comp = FuncXY(x);
 
-		for(size_t j = 0; j < error.size(); ++j) {
-			//error[j] += fabs(y_comp[j] - y[j]);                  // mean absolute error
-			error[j] += (y_comp[j] - y[j])*(y_comp[j] - y[j]);     // mean squared error
-		}
+		//error += fabs(y_comp - y);            // mean absolute error
+		error += (y_comp - y)*(y_comp - y);     // mean squared error
 	}
 
-	for(size_t j = 0; j < error.size(); ++j)
-		error[j] /= xData.size();
+	error /= xData.size();
 
 	return error;
 }
@@ -517,92 +328,43 @@ typename PrecompData<nPoints, TX, TY, ny>::YData PrecompData<nPoints, TX, TY, ny
 
 // Absolute error on random points
 
-template<int nPoints, typename TX, typename TY, int ny>
-TY PrecompData<nPoints, TX, TY, ny>::EvaluateAbsError(int nTestPoints) const
+template<int nPoints, typename TX, typename TY>
+TY PrecompData<nPoints, TX, TY>::EvaluateAbsError(int nTestPoints) const
 {
-	//+TEST
-
-	const YData error = EvaluateError(nTestPoints);
-	return Norm(error);
+	return Norm(EvaluateError(nTestPoints));
 }
 
 
 /// Math functions
 
 
-template<int nPoints, typename TX, typename TY, int ny>
-TY PrecompData<nPoints, TX, TY, ny>::Norm(const YData &y) const
+template<int nPoints, typename TX, typename TY>
+TY PrecompData<nPoints, TX, TY>::Norm(const TY &y) const
 {
-    TY norm = 0.0;
-    
-    for(size_t i = 0; i < ny; ++i)
-        norm += y[i] * y[i];
-
-    norm = std::sqrt(norm);
-
-    return norm;
+	return std::fabs(y);
 }
 
 
-template<int nPoints, typename TX, typename TY, int ny>
-TY PrecompData<nPoints, TX, TY, ny>::FirstDerivative(TX x1, TY y1, TX x2, TY y2) const
+template<int nPoints, typename TX, typename TY>
+TY PrecompData<nPoints, TX, TY>::FirstDerivative(TX x1, TY y1, TX x2, TY y2) const
 {
     /// First derivative (central differences):  d1 = [f(x+1) - f(x)] / [(x+1) - x]
     return  (y2 - y1)/(x2 - x1);
 }
 
 
-template<int nPoints, typename TX, typename TY, int ny>
-TY PrecompData<nPoints, TX, TY, ny>::SecondDerivative(TX x1, TY y1, TX x2, TY y2, TX x3, TY y3) const
+template<int nPoints, typename TX, typename TY>
+TY PrecompData<nPoints, TX, TY>::SecondDerivative(TX x1, TY y1, TX x2, TY y2, TX x3, TY y3) const
 {
     /// Second derivative (central differences):  d2 = [f(x-1) - 2f(x) + f(x+1)] / {[(x+1) - (x-1)]/2}^2
     return  (y1 - 2*y2 + y3)/std::pow(0.5f*(x3 - x1), 2);
 }
 
 
-// Average of second derivative on all ny dimensions
-
-template<int nPoints, typename TX, typename TY, int ny>
-TY PrecompData<nPoints, TX, TY, ny>::SecondDerivativeAvg(TX x1, YData y1, TX x2, YData y2, TX x3, YData y3) const
-{
-	//+TEST
-
-	TY d2avg = 0.0;
-
-	for(size_t i = 0; i < ny; ++i)
-	{
-		d2avg += SecondDerivative(x1, y1[i], x2, y2[i], x3, y3[i]);
-	}
-
-	d2avg /= ny;
-
-	return d2avg;
-}
-
-
-// Maximum component of the absolute value of the second derivative on all ny dimensions
-
-template<int nPoints, typename TX, typename TY, int ny>
-TY PrecompData<nPoints, TX, TY, ny>::SecondDerivativeAbsMax(TX x1, YData y1, TX x2, YData y2, TX x3, YData y3) const
-{
-	//+TEST
-
-	TY d2, d2max = 0.0;
-
-	for(size_t i = 0; i < ny; ++i)
-	{
-		d2 = std::abs(SecondDerivative(x1, y1[i], x2, y2[i], x3, y3[i]));
-
-		if(d2 > d2max)
-			d2max = d2;
-	}
-
-	return d2max;
-}
-
-
-template<int nPoints, typename TX, typename TY, int ny>
-int PrecompData<nPoints, TX, TY, ny>::PickBestPoints(YData (*Func)(TX x), const float overSampling)
+//+D+
+/*
+template<int nPoints, typename TX, typename TY>
+int PrecompData<nPoints, TX, TY>::PickBestPoints(YData (*Func)(TX x), const float overSampling)
 {
     struct Point {
 		TX x; TY y;
@@ -684,10 +446,11 @@ int PrecompData<nPoints, TX, TY, ny>::PickBestPoints(YData (*Func)(TX x), const 
 
     return 0;
 }
+*/
 
 
-template<int nPoints, typename TX, typename TY, int ny>
-int PrecompData<nPoints, TX, TY, ny>::PickBestPoints(TY (*Func)(TX x), const float overSampling)
+template<int nPoints, typename TX, typename TY>
+int PrecompData<nPoints, TX, TY>::PickBestPoints(TY (*Func)(TX x), const float overSampling)
 {
     struct Point {
         TX x; TY y;
@@ -705,12 +468,12 @@ int PrecompData<nPoints, TX, TY, ny>::PickBestPoints(TY (*Func)(TX x), const flo
     /// Oversample
 
     const size_t nSamples = size_t(overSampling*nPoints);
-	const TX step = (max - min)/nSamples;
+	const TX step = (xMax - xMin)/nSamples;
 
     std::vector<PointCurv> samples;
     samples.reserve(nSamples);
 
-	TX x1 = min;
+	TX x1 = xMin;
     TX x2 = x1 + step;
     TX x3 = x2 + step;
     TY y1 = Func(x1);
@@ -741,12 +504,12 @@ int PrecompData<nPoints, TX, TY, ny>::PickBestPoints(TY (*Func)(TX x), const flo
     std::vector<Point> points;
     points.resize(nPoints);
 
-	points[0].x = min;               // always get the first point
+	points[0].x = xMin;               // always get the first point
 
     for(size_t i = 1, j = 0; i < nPoints - 1; ++i, ++j)
         points[i].x = samples[j].x;
 
-	points[nPoints - 1].x = max;     // always get the last point
+	points[nPoints - 1].x = xMax;     // always get the last point
 
     for(size_t i = 0; i < nPoints; ++i)
         points[i].y = Func(points[i].x);
@@ -759,7 +522,7 @@ int PrecompData<nPoints, TX, TY, ny>::PickBestPoints(TY (*Func)(TX x), const flo
     for(size_t i = 0; i < points.size(); ++i)
     {
 		xData[i] = points[i].x;
-		yData[i][0] = points[i].y;
+		yData[i] = points[i].y;
     }
 
     return 0;

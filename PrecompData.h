@@ -51,30 +51,24 @@ namespace Utilities {
 
 /** PrecompData
 	Set of points approximating a function with one independent variable
-	an n dependent variables.
-	f: x --> Y
+	an one dependent variable.
+	f: x --> y
   */
 
 template<
     int nPoints = 100,     /* number of points to precompute  */
     typename TX = float,   /* data type of independent vector */
-    typename TY = float,   /* data type of dependent vector   */
-    int ny = 1             /* number of dimensions of the dependent vector */
+    typename TY = float    /* data type of dependent vector   */
 >
 class PrecompData : public PrecompData_base
 {
 public:
 
-	// Data types for the dependent data and index
-	typedef std::array<TY, ny> YData;
-
-public:
-
 	PrecompData();
 	PrecompData(const std::string _funcName);
 
-	int nxDimensions() const { return 1;  }
-	int nyDimensions() const { return ny; }
+	int nxDimensions() const { return 1; }
+	int nyDimensions() const { return 1; }
 
     // Precompute constant values
 	int PreComputeValues();
@@ -86,11 +80,9 @@ public:
 	/// Data loading
 	
 	// Regular grid, computed
-	size_t  set(YData (*Func)(TX x), TX xmin, TX xmax);
 	size_t  set(TY (*Func)(TX x), TX xmin, TX xmax);
 
     // Automatic irregular grid, computed
-	size_t  AutoSet(YData (*Func)(TX x), TX xmin, TX xmax);
 	size_t  AutoSet(TY (*Func)(TX x), TX xmin, TX xmax);
 
     // Regular grid, load from file
@@ -103,16 +95,13 @@ public:
 
 	// Range UNchecked, 0 degree interpolation accessors
 	size_t operator()(TX _x, TY &_y) const;
-	size_t operator()(TX _x, YData &_y) const;
 	TY     operator()(TX _x) const;
 
 	// Range checked, 0 degree interpolation accessors
 	size_t get(TX _x, TY &_y) const;
-	size_t get(TX _x, YData &_y) const;
 
 	// Range checked accessors, linear interpolation
 	size_t Interpolate(TX _x, TY &_y) const;
-	size_t Interpolate(TX _x, YData &_y) const;
 	TY     Interpolate(TX _x);
 
 	int RangeCheck(TX _x);
@@ -120,15 +109,14 @@ public:
     // Get the whole value set
 	int NPoints() const { return nPoints; }
 	int get(std::vector<TX> &_xData, std::vector<TY> &_yData) const;
-	int get(std::vector<TX> &_xData, std::vector<YData> &_yData) const;
 	int Dump(int n = 0) const;
 	int DumpElement(size_t j) const;
 
     // Evaluate error
-	YData  EvaluateErrorKnownData() const;              // error on each dimension on known data
-	TY     EvaluateAbsErrorKnownData() const;           // absolute error on known data
-	YData  EvaluateError(int nTestPoints) const;        // error on each dimension on random points
-	TY     EvaluateAbsError(int nTestPoints) const;     // absolute error on random points
+	TY  EvaluateErrorKnownData() const;              // error on known data
+	TY  EvaluateAbsErrorKnownData() const;           // absolute error on known data
+	TY  EvaluateError(int nTestPoints) const;        // error on random points
+	TY  EvaluateAbsError(int nTestPoints) const;     // absolute error on random points
 
     /// GPGPU
 
@@ -152,23 +140,21 @@ public:
 #endif // PRECOMPDATA_DEVICE
 
 protected:
-	TY Norm(const YData&) const;
+	TY Norm(const TY&) const;
 	TY FirstDerivative(TX x1, TY y1, TX x2, TY y2) const;
 	TY SecondDerivative(TX x1, TY y1, TX x2, TY y2, TX x3, TY y3) const;
-	TY SecondDerivativeAvg(TX x1, YData y1, TX x2, YData y2, TX x3, YData y3) const;
-	TY SecondDerivativeAbsMax(TX x1, YData y1, TX x2, YData y2, TX x3, YData y3) const;
-	int PickBestPoints(YData (*Func)(TX x), const float overSampling = 2.0f);
 	int PickBestPoints(TY (*Func)(TX x), const float overSampling = 2.0f);
 
 private:
 	
-	YData (*FuncX1Yn)(TX _x);
-	TY    (*FuncX1Y1)(TX _x);
+	TY (*FuncXY)(TX _x);
 
-	std::array<TX, nPoints>     xData;
-	std::array<YData, nPoints>  yData;
+	std::array<TX, nPoints>  xData;
+	std::array<TY, nPoints>  yData;
 
-	TX  min, max, step;
+	TX  step;
+	TX  xMin, xMax;
+	TY  yMin, yMax;
 	TX  kRealInt, kIntReal;     // conversion factors
 
 #ifdef PRECOMPDATA_DEVICE

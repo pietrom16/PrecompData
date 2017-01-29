@@ -1,6 +1,8 @@
 # PrecompData - TODO
 
 
+- Review preconditions: substitute asserts with error return values, if possible.
+- Compute error on a fixed set of points.
 - Making transition to multidimensional data...
     - Precompute regular grid, n dimensional functions.
 	- Precompute irregular grid, one dimensional functions. [OPTIMIZE/TEST]
