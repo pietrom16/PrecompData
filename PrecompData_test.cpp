@@ -28,7 +28,7 @@ float TestFuncNonLin1(float x) {        //   y = |x|
     return fabs(x);
 }
 
-float TestFuncNonLin2(float x) {        //   y = 1/(|x-2| + 0.1)   # Spike for x = 2
+float TestSpike1(float x) {             //   y = 1/(|x-2| + 0.1)   # Spike for x = 2
     return 1/(fabs(x - 2.0f) + 0.1f);
 }
 
@@ -105,20 +105,20 @@ PrecompData_test::PrecompData_test()
 		float y, y_ok;
 
 		x = 0.0f;
-		y_ok = 0.0f;
-		y = TestFuncNonLin2(x);
+		y_ok = 0.47619f;
+		y = TestSpike1(x);
 		cerr << "Expected result = " << y_ok << ";  Actual result = " << y << endl;
 		assert(abs(y - y_ok) < 1.0e-2f);
 
-		x = 3.141f;
-		y_ok = -1.0f;
-		y = TestFuncNonLin2(x);
+		x = 1.0f;
+		y_ok = 0.90909f;
+		y = TestSpike1(x);
 		cerr << "Expected result = " << y_ok << ";  Actual result = " << y << endl;
 		assert(abs(y - y_ok) < 1.0e-2f);
 
-		x = 6.282f;
-		y_ok = 1.0f;
-		y = TestFuncNonLin2(x);
+		x = 2.0f;
+		y_ok = 10.0f;
+		y = TestSpike1(x);
 		cerr << "Expected result = " << y_ok << ";  Actual result = " << y << endl;
 		assert(abs(y - y_ok) < 1.0e-2f);
 
@@ -231,7 +231,7 @@ PrecompData_test::PrecompData_test()
 		cout << "\n\nTest: Regular grid:    " << funcName << endl;
 		PrecompData<nValues, float> itp(funcName);
 		const float x0 = 0.0f, x1 = 6.28f;
-		itp.set(&TestFuncNonLin2, x0, x1);
+		itp.set(&TestSpike1, x0, x1);
 		cerr << "x0 = " << x0 << "  x1 = " << x1 << "  nValues = " << nValues << endl;  //+T+
 		std::vector<float> vx, vy;
 		itp.get(vx, vy);
@@ -252,7 +252,7 @@ PrecompData_test::PrecompData_test()
 		cout << "\n\nTest: Automatic irregular grid:    " << funcName << endl;
 		PrecompData<nValues, float> itp(funcName);
 		const float x0 = 0.0f, x1 = 6.28f;
-		itp.AutoSet(&TestFuncNonLin2, x0, x1);
+		itp.AutoSet(&TestSpike1, x0, x1);
 		cerr << "x0 = " << x0 << "  x1 = " << x1 << "  nValues = " << nValues << endl;  //+T+
 		std::vector<float> vx, vy;
 		itp.get(vx, vy);
