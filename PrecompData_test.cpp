@@ -14,7 +14,7 @@
 using namespace std;
 using Utilities::PrecompData;
 
-typedef PrecompData<100, float, float, 2> pcd12;  // f: x --> (y, z)
+typedef PrecompData<100, float, float> pcd;  // f: x --> y
 
 float TestFunc(float x) {
 	return sin(x);
@@ -34,13 +34,6 @@ float TestFuncNonLin2(float x) {        //   y = 1/(|x-2| + 0.1)   # Spike for x
 
 float TestFuncNonLinSin(float x) {      //   y = sin(x)
     return sin(x);
-}
-
-pcd12::YData TestFunc12(float x) {      //   y1 = sin(x); y2 = cos(x)
-	pcd12::YData y;
-	y[0] = sin(x);
-	y[1] = cos(x);
-	return y;
 }
 
 
@@ -76,7 +69,7 @@ PrecompData_test::PrecompData_test()
 	cout << fixed;
 
 	const int    nValues = 20;
-	const float  tol = 0.01f;    // tolerance
+	const float  tol     = 0.01f;    // tolerance
 	int          verbose = 1;
 
     // Test - Conversions ScalarToIndex
@@ -109,31 +102,25 @@ PrecompData_test::PrecompData_test()
 	{
 		cout << "\n\nTest: Test mathematical functions: " << endl;
 		float x;
-		pcd12::YData y, y_ok;
+		float y, y_ok;
 
 		x = 0.0f;
-		y_ok[0] = 0.0;
-		y_ok[1] = 1.0;
-		y = TestFunc12(x);
-		cerr << "Expected result = [" << y_ok[0] << ", " << y_ok[1] << "];  Actual result = [" << y[0] << ", " << y[1] << "]" << endl;
-		assert(abs(y[0] - y_ok[0]) < 1.0e-2f);
-		assert(abs(y[1] - y_ok[1]) < 1.0e-2f);
+		y_ok = 0.0f;
+		y = TestFuncNonLin2(x);
+		cerr << "Expected result = " << y_ok << ";  Actual result = " << y << endl;
+		assert(abs(y - y_ok) < 1.0e-2f);
 
 		x = 3.141f;
-		y_ok[0] = 0.0;
-		y_ok[1] = -1.0;
-		y = TestFunc12(x);
-		cerr << "Expected result = [" << y_ok[0] << ", " << y_ok[1] << "];  Actual result = [" << y[0] << ", " << y[1] << "]" << endl;
-		assert(abs(y[0] - y_ok[0]) < 1.0e-2f);
-		assert(abs(y[1] - y_ok[1]) < 1.0e-2f);
+		y_ok = -1.0f;
+		y = TestFuncNonLin2(x);
+		cerr << "Expected result = " << y_ok << ";  Actual result = " << y << endl;
+		assert(abs(y - y_ok) < 1.0e-2f);
 
 		x = 6.282f;
-		y_ok[0] = 0.0;
-		y_ok[1] = 1.0;
-		y = TestFunc12(x);
-		cerr << "Expected result = [" << y_ok[0] << ", " << y_ok[1] << "];  Actual result = [" << y[0] << ", " << y[1] << "]" << endl;
-		assert(abs(y[0] - y_ok[0]) < 1.0e-2f);
-		assert(abs(y[1] - y_ok[1]) < 1.0e-2f);
+		y_ok = 1.0f;
+		y = TestFuncNonLin2(x);
+		cerr << "Expected result = " << y_ok << ";  Actual result = " << y << endl;
+		assert(abs(y - y_ok) < 1.0e-2f);
 
 		cout << " OK" << endl;
 	}
@@ -401,37 +388,6 @@ PrecompData_test::PrecompData_test()
         cout << "Result:  minimum error = [" << minErrX << ", " << minErrY
              <<      "];  maximum error = [" << maxErrX << ", " << maxErrY
              <<      "];  average error = " << avgErr << endl;
-    }
-
-	// Test - Multidimensions: Storage of data in an 1xM space
-    {
-		cout << "\n\nTest: Storage of data in an 1xM space:" << endl;
-        const string funcName = "Multidimensions";
-		pcd12 itp(funcName);
-		itp.SetComment("Y = f(x)    Y = [y1, y2]");
-		const float x0 = 0.00f;
-		const float x1 = 6.28f;
-		const float step = 0.5f*(x1 - x0)/nValues;
-		itp.set(&TestFunc12, x0, x1);
-		float x = x0;
-		float error, totalError = 0.0f;
-		pcd12::YData y;
-
-		for(int i = 0; i < nValues; ++i)
-		{
-			itp(x, y);
-			error = fabs(TestFunc12(x)[0] - y[0]) + fabs(TestFunc12(x)[1] - y[1]);
-			if(verbose > 1)
-				cout << i << ":\t" << funcName << "[" << x << "] = "
-				     << "[" << TestFunc12(x)[0] << ", " << TestFunc12(x)[1] << "] "
-				     << "~ [" << y[0] << ", " << y[1] << "]"
-				     << " - Error = " << error
-				     << endl;
-			totalError += error;
-			x += step;
-		}
-
-		cout << "Total error = " << totalError << endl;
     }
 
 }
