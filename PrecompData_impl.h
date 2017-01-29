@@ -437,13 +437,19 @@ typename PrecompData<nPoints, TX, TY, ny>::YData PrecompData<nPoints, TX, TY, ny
     for(size_t j = 0; j < error.size(); ++j)
         error[j] = 0.0;
 
-    for(size_t i = 0; i < xData.size(); ++i)
+	std::cerr << "Loop: 0 ... < " << xData.size() << std::endl; //+T+
+	for(size_t i = 0; i < xData.size(); ++i)
     {
 		const TX    x      = xData[i];
+		std::cerr << "x = " << x << std::endl; //+T+
 		const YData y      = yData[i];
+		std::cerr << "y[0] = " << y[0] << std::endl; //+T+
 		const YData y_comp = FuncX1Yn(x);
+		std::cerr << "y_comp[0] = " << y_comp[0] << std::endl; //+T+
 
+		std::cerr << "Looping: 0 ... < " << error.size() << std::endl; //+T+
         for(size_t j = 0; j < error.size(); ++j) {
+			std::cerr << j << std::endl; //+T+
             //error[j] += fabs(y_comp[j] - y[j]);                  // mean absolute error
             error[j] += (y_comp[j] - y[j])*(y_comp[j] - y[j]);     // mean squared error
         }
