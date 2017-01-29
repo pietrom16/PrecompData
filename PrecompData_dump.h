@@ -25,30 +25,32 @@ using namespace stdExt;
  *      if < 0, dump |n| random points.
  */
 
-template<int nPoints, typename TX, typename TY, int ny>
-int PrecompData<nPoints, TX, TY, ny>::Dump(int n) const
+template<int nPoints, typename TX, typename TY>
+int PrecompData<nPoints, TX, TY>::Dump(int n) const
 {
 	using std::cout;
 	using std::endl;
 
-	if(n > int(xData.size()) || n == 0)
-		n = xData.size();
+	const size_t maxDataElems = std::max(xData.size(), yData.size());
+
+	if(n > int(maxDataElems) || n == 0)
+		n = int(maxDataElems);
 
 	cout << "\n\n----------------------------------------------------------------\n";
 	cout << "Dump: " << funcName << "\n" << comment << "\nStatus: " << status << "\n";
 	cout << "Regular grid: " << regularGrid << "\nOversampling: " << overSampling << "\n";
 	cout << "N points = " << nPoints << "\n";
 	cout << "Number of components of independent variable = " << 1 << "\n";
-	cout << "Number of components of dependent variable   = " << ny << "\n";
-	cout << "Min  = " << min << "\n";
-	cout << "Max  = " << max << "\n";
+	cout << "Number of components of dependent variable   = " << 1 << "\n";
+	cout << "Min  = " << xMin << "\n";
+	cout << "Max  = " << xMax << "\n";
 	cout << "Step = " << step << "\n";
 	cout << "kRealInt = " << kRealInt << "\n";
 	cout << "kIntReal = " << kIntReal << "\n";
 
-	if(n > 0)			// dump all or the first n points
+	if(n >= 0)			// dump all or the first n points
 	{
-		if(n == int(xData.size()))
+		if(n == int(maxDataElems))
 			cout << "Dump all points:" << endl;
 		else
 			cout << "Dump the first " << n << " points:" << endl;
@@ -74,19 +76,6 @@ int PrecompData<nPoints, TX, TY, ny>::Dump(int n) const
 		}
 	}
 
-	if(xData.size() != yData.size())
-	{
-		cout << "Warning: size of independent and dependent data do not match." << endl;
-		for(size_t j = 0; j < yData.size(); ++j)
-		{
-			for(size_t i = 0; i < ny; ++i)
-			{
-				cout << "  " << yData[j][i];
-			}
-			cout << endl;
-		}
-	}
-
 	cout << "Dump complete.\n";
 	cout << "----------------------------------------------------------------\n";
 
@@ -99,27 +88,26 @@ int PrecompData<nPoints, TX, TY, ny>::Dump(int n) const
  *  j : index of the point to dump.
  */
 
-template<int nPoints, typename TX, typename TY, int ny>
-int PrecompData<nPoints, TX, TY, ny>::DumpElement(size_t j) const
+template<int nPoints, typename TX, typename TY>
+int PrecompData<nPoints, TX, TY>::DumpElement(size_t j) const
 {
-	using std::cout;
-	using std::endl;
-
-	assert(j < xData.size());
-
-	cout << "  " << xData[j];
-
-	if(xData.size() == yData.size())
-	{
-		cout << " --> ";
-
-		for(size_t i = 0; i < ny; ++i)
-		{
-			cout << "  " << yData[j][i];
-		}
+	if(j < xData.size() && j < yData.size()) {
+		std::cout << "  " << xData[j] << " --> " << yData[j] << std::endl;
+		return 0;
 	}
 
-	cout << endl;
+	if(j < xData.size() && j >= yData.size()) {
+		std::cout << "  " << xData[j] << " --> ?" << std::endl;
+		return 0;
+	}
+
+	if(j >= xData.size() && j < yData.size()) {
+		std::cout << "   ? --> " << yData[j] << std::endl;
+		return 0;
+	}
+
+	if(j >= xData.size() && j >= yData.size())
+		return -1;
 
 	return 0;
 }
