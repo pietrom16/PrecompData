@@ -70,7 +70,7 @@ PrecompData_test::PrecompData_test()
 
 	const int    nValues = 20;
 	const float  tol     = 0.01f;    // tolerance
-	int          verbose = 1;
+	int          verbose = 2;
 
     // Test - Conversions ScalarToIndex
     {
@@ -353,7 +353,8 @@ PrecompData_test::PrecompData_test()
     }
 
     // Test - AutoSet:  y = sin(x)
-    // Result: values too concentrated in the points with high absolute second derivative
+	// Result: values too concentrated in the points with high absolute second derivative.
+	//         Large errors at the end of the interval.
     {
         const string funcName = "y = sin(x)";
 		cout << "\n\nTest: Automatic irregular grid:    " << funcName << endl;
