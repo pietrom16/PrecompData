@@ -238,6 +238,7 @@ int PrecompData<nPoints, TX, TY>::RangeCheck(TX x)
 template<int nPoints, typename TX, typename TY>
 int PrecompData<nPoints, TX, TY>::get(std::vector<TX> &_xData , std::vector<TY> &_yData) const
 {
+	//+B+++ copy_n does not resize the vector
 	if(_xData.capacity() < xData.size())
 		_xData.reserve(xData.size());
 
