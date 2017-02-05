@@ -377,7 +377,10 @@ PrecompData_test::PrecompData_test()
         float maxErrX = 0.0f,    maxErrY = 0.0f;
         float x = x0, step = (x1 - x0)/n;
         for(int i = 0; i < n; ++i) {
-            error = fabs(sin(x) - itp.Interpolate(x));
+			float interp;
+			const size_t r = itp.Interpolate(x, interp);
+			if(r == PrecompData_base::wrn_x_less_than_min || r == PrecompData_base::wrn_x_more_than_max) { cout << "Out of range" << endl; }
+			error = fabs(sin(x) - interp);
 			if(verbose > 1)
 				cout << i << ": \t" << x << ", \t " << sin(x) << ", \t " << itp.Interpolate(x) << ", \t " << error << endl;
             if(error < minErrY) { minErrX = x; minErrY = error; }
