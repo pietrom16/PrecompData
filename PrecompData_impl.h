@@ -203,8 +203,10 @@ size_t PrecompData<nPoints, TX, TY>::Interpolate(TX _x, TY &_y) const
 	assert(_x >= x0);
 	assert(_x <= x1);
 
-	//+TEST
-	_y = yData[i] + (yData[i + 1] - yData[i])*(_x - x0)/(x1 - x0);
+	if(i < yData.size())
+		_y = yData[i] + (yData[i + 1] - yData[i])*(_x - x0)/(x1 - x0);	//+TEST
+	else
+		_y = yData.back();
 
 	return i;
 }
