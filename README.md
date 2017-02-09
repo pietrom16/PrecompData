@@ -17,6 +17,7 @@ Purpose: improve performance avoiding the realtime computation of complex functi
 
 ### TODO
 
+- Check the performance gain and the approximation error.
 - Precompute regular grid, n dimensional functions.
 - Precompute irregular grid, n dimensional functions.
 - Load data from file.
