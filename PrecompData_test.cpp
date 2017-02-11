@@ -36,6 +36,9 @@ float TestFuncNonLinSin(float x) {      //   y = sin(x)
     return sin(x);
 }
 
+float TestFuncExpensive(float x) {		// a computationally expensive function
+	return (sin(x) + cos(x/2) + sqrt(fabs(x)))/log(fabs(x) + 2);
+}
 
 namespace Utilities {
 
