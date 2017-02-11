@@ -402,9 +402,10 @@ PrecompData_test::PrecompData_test()
 	{
 		cout << "\n\nTest: Performance of computed vs precomputed function:" << endl;
 		const string funcName = "TestFunc";
+		const int multiplier = 1000;
 		PrecompData<nValues, float> itp(funcName);
 		const float x0 = 0.0f, x1 = 6.28f;
-		const float step = 0.5f*(x1 - x0)/nValues;
+		const float step = 0.5f*(x1 - x0)/(multiplier*nValues);
 		itp.set(&TestFuncExpensive, x0, x1);
 		float x = x0;
 		float err = 0.0f;
@@ -415,18 +416,29 @@ PrecompData_test::PrecompData_test()
 		chrono::time_point<chrono::system_clock> end = chrono::system_clock::now();
 		chrono::duration<float> timeComp = start - start;
 		chrono::duration<float> timePrecomp = start - start;
-		for(int i = 0; i < nValues; ++i)
+		x = x0;
+		start = chrono::system_clock::now();
+		for(int i = 0; i < multiplier*nValues; ++i)
 		{
-			start = chrono::system_clock::now();
 			const float y_comp = TestFuncExpensive(x);
-			end = chrono::system_clock::now();
-			timeComp += end - start;
-
-			start = chrono::system_clock::now();
+			x += step;
+		}
+		end = chrono::system_clock::now();
+		timeComp += end - start;
+		x = x0;
+		start = chrono::system_clock::now();
+		for(int i = 0; i < multiplier*nValues; ++i)
+		{
 			const float y_prec = itp.Interpolate(x);
-			end = chrono::system_clock::now();
-			timePrecomp += end - start;
-
+			x += step;
+		}
+		end = chrono::system_clock::now();
+		timePrecomp += end - start;
+		x = x0;
+		for(int i = 0; i < multiplier*nValues; ++i)
+		{
+			const float y_comp = TestFuncExpensive(x);
+			const float y_prec = itp.Interpolate(x);
 			err += fabs(y_prec - y_comp);
 			x += step;
 		}
