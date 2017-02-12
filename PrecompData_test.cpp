@@ -411,7 +411,6 @@ PrecompData_test::PrecompData_test()
 		float err = 0.0f;
 		itp.Interpolation(1);
 		cout << "Interpolation: " << itp.Interpolation() << endl;
-		//+TODO - Measure time
 		chrono::time_point<chrono::system_clock> start = chrono::system_clock::now();
 		chrono::time_point<chrono::system_clock> end = chrono::system_clock::now();
 		chrono::duration<float> timeComp = start - start;
