@@ -449,6 +449,21 @@ PrecompData_test::PrecompData_test()
 		cout << "\nPreComp time = " << timePrecompSecs.count();
 		cout << "\nImprovement  = " << 100.0*(timeComp - timePrecomp)/timeComp << "%" << endl;
 	}
+
+	// Test - Performance of computed vs precomputed function (linear interpolation)
+	{
+		cout << "\n\nTest: Performance of computed vs precomputed function:" << endl;
+		const string funcName = "TestFunc";
+		PrecompData<nValues, float> itp(funcName);
+		const float x0 = 0.0f, x1 = 6.28f;
+		itp.set(&TestFuncExpensive, x0, x1);
+		itp.Interpolation(1);
+		cout << "Interpolation: " << itp.Interpolation() << endl;
+		cout << "Performance improvement = " << itp.PerformanceImprovement() << endl;
+		cout << "Total error             = " << itp.EvaluateAbsError(10*nValues) << endl;
+	}
+
+	cout << endl;
 }
 
 
