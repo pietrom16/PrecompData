@@ -119,7 +119,7 @@ public:
 	TY  EvaluateAbsError(int nTestPoints) const;     // absolute error on random points
 
 	// Performance evaluation
-	float PerformanceImprovement(int _nTestPoints = 0) const;   // better if > 1, worse if in [0, 1], error if < 0
+	float PerformanceImprovement(int _nTestPoints = 0);   // better if > 1, worse if in [0, 1], error if < 0
 
     /// GPGPU
 

@@ -341,7 +341,7 @@ TY PrecompData<nPoints, TX, TY>::EvaluateAbsError(int nTestPoints) const
 // Performance evaluation
 
 template<int nPoints, typename TX, typename TY>
-float PrecompData<nPoints, TX, TY>::PerformanceImprovement(int _nTestPoints) const
+float PrecompData<nPoints, TX, TY>::PerformanceImprovement(int _nTestPoints)
 {
 	using namespace std::chrono;
 
