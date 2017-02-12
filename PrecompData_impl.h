@@ -337,6 +337,19 @@ TY PrecompData<nPoints, TX, TY>::EvaluateAbsError(int nTestPoints) const
 }
 
 
+// Performance evaluation
+
+float PrecompData<nPoints, TX, TY>::PerformanceImprovement(int _nPoints) const
+{
+	// better if > 1, worse otherwise
+	float ratio = 0.0;
+
+	//+TODO
+
+	return ratio;
+}
+
+
 /// Math functions
 
 

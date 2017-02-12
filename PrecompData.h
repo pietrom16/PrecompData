@@ -118,6 +118,9 @@ public:
 	TY  EvaluateError(int nTestPoints) const;        // error on random points
 	TY  EvaluateAbsError(int nTestPoints) const;     // absolute error on random points
 
+	// Performance evaluation
+	float PerformanceImprovement(int _nPoints = 0) const;   // better if > 1, worse otherwise
+
     /// GPGPU
 
 #ifdef PRECOMPDATA_DEVICE
