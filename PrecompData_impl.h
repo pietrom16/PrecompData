@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cmath>
+#include <chrono>
 #include <functional>
 #include <iostream>  //+T+++
 #include <limits>
@@ -339,12 +340,54 @@ TY PrecompData<nPoints, TX, TY>::EvaluateAbsError(int nTestPoints) const
 
 // Performance evaluation
 
-float PrecompData<nPoints, TX, TY>::PerformanceImprovement(int _nPoints) const
+template<int nPoints, typename TX, typename TY>
+float PrecompData<nPoints, TX, TY>::PerformanceImprovement(int _nTestPoints) const
 {
-	// better if > 1, worse otherwise
+	using namespace std::chrono;
+
+	// Better if > 1, worse if in [0, 1], error if < 0
 	float ratio = 0.0;
 
-	//+TODO
+	if(FuncXY == 0) return -1.0;
+
+	if(_nTestPoints == 0) _nTestPoints = 10*nPoints;
+
+	const TX step = (xMax - xMin)/_nTestPoints;
+
+	duration<float> timeComp;
+	duration<float> timePrecomp;
+
+	// Find time to do real-time computations
+	{
+		time_point<system_clock> start = system_clock::now();
+
+		TX x = xMin;
+		for(int i = 0; i < _nTestPoints; ++i)
+		{
+			const float y_comp = FuncXY(x);
+			x += step;
+		}
+
+		time_point<system_clock> end = system_clock::now();
+		timeComp = start - start;
+	}
+
+	// Find time to interpolate with precomputations
+	{
+		time_point<system_clock> start = system_clock::now();
+
+		TX x = xMin;
+		for(int i = 0; i < _nTestPoints; ++i)
+		{
+			const float y_comp = Interpolate(x);
+			x += step;
+		}
+
+		time_point<system_clock> end = system_clock::now();
+		timePrecomp = start - start;
+	}
+
+	ratio = timeComp/timePrecomp;
 
 	return ratio;
 }
