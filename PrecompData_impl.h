@@ -13,6 +13,7 @@
 #include <iostream>  //+T+++
 #include <limits>
 #include <random>
+#include <vector>
 
 namespace Utilities {
 
@@ -357,6 +358,9 @@ float PrecompData<nPoints, TX, TY>::PerformanceImprovement(int _nTestPoints)
 	duration<float> timeComp;
 	duration<float> timePrecomp;
 
+	std::vector<float> results;  // store them to avoid loop optimizations
+	results.resize(_nTestPoints);
+
 	// Find time to do real-time computations
 	{
 		time_point<system_clock> start = system_clock::now();
@@ -364,12 +368,12 @@ float PrecompData<nPoints, TX, TY>::PerformanceImprovement(int _nTestPoints)
 		TX x = xMin;
 		for(int i = 0; i < _nTestPoints; ++i)
 		{
-			const float y_comp = FuncXY(x);
+			results[i] = FuncXY(x);
 			x += step;
 		}
 
 		time_point<system_clock> end = system_clock::now();
-		timeComp = start - start;
+		timeComp = end - start;
 	}
 
 	// Find time to interpolate with precomputations
@@ -379,13 +383,15 @@ float PrecompData<nPoints, TX, TY>::PerformanceImprovement(int _nTestPoints)
 		TX x = xMin;
 		for(int i = 0; i < _nTestPoints; ++i)
 		{
-			const float y_comp = Interpolate(x);
+			results[i] = Interpolate(x);
 			x += step;
 		}
 
 		time_point<system_clock> end = system_clock::now();
-		timePrecomp = start - start;
+		timePrecomp = end - start;
 	}
+
+	std::cout << "timeComp = " << timeComp.count() << "   timePrecomp = " << timePrecomp.count() << std::endl; //+T+++
 
 	ratio = timeComp/timePrecomp;
 
