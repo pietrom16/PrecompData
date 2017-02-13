@@ -1,6 +1,8 @@
 # PrecompData - TODO
 
 
+- Test whether it is worth to precompute the data, in terms of performance and memory requirements.
+    - Using std::chrono; look for a function that measures the process time, not the absolute one.
 - Review preconditions: substitute asserts with error return values, if possible.
 - Compute error on a fixed set of points.
 - Making transition to multidimensional data...
@@ -9,7 +11,6 @@
 	- Precompute irregular grid, n dimensional functions.
 - Load data from file.
 - Second degree (quadratic) interpolation.
-- Test whether it is worth to precompute the data, in terms of performance and memory requirements.
 - Add a version member variable.
 - Check input parameters of most functions (assert).
 - Consider using a proper matrix library.
