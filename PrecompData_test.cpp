@@ -456,10 +456,11 @@ PrecompData_test::PrecompData_test()
 		const string funcName = "TestFunc";
 		PrecompData<nValues, float> itp(funcName);
 		const float x0 = 0.0f, x1 = 6.28f;
+		const int nTestPoints = 10000;
 		itp.set(&TestFuncExpensive, x0, x1);
 		itp.Interpolation(1);
 		cout << "Interpolation: " << itp.Interpolation() << endl;
-		cout << "Performance improvement = " << itp.PerformanceImprovement() << endl;
+		cout << "Performance improvement = " << itp.PerformanceImprovement(nTestPoints) << endl;
 		cout << "Total error             = " << itp.EvaluateAbsError(10*nValues) << endl;
 	}
 
