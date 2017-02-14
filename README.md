@@ -13,14 +13,13 @@ Purpose: improve performance avoiding the realtime computation of complex functi
 - First degree (linear) interpolation for functions of one variable.
 - Copy data on GPU/device memory. [TEST]
 - Precompute irregular grid, one dimensional functions. [OPTIMIZE/TEST]
+- Test whether it is worth to precompute the data, in terms of performance, approximation error and memory requirements.
 
 
 ### TODO
 
-- Check the performance gain and the approximation error.
 - Precompute regular grid, n dimensional functions.
 - Precompute irregular grid, n dimensional functions.
-- Test whether it is worth to precompute the data, in terms of performance and memory requirements.
 - Load data from file.
 - Second degree (quadratic) interpolation.
 

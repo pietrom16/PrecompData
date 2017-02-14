@@ -1,8 +1,6 @@
 # PrecompData - TODO
 
 
-- Test whether it is worth to precompute the data, in terms of performance and memory requirements.
-    - Using std::chrono; look for a function that measures the process time, not the absolute one.
 - Review preconditions: substitute asserts with error return values, if possible.
 - Copy data on device memory.
 - Compute error on a fixed set of points.
