@@ -344,8 +344,6 @@ TY PrecompData<nPoints, TX, TY>::EvaluateAbsError(int nTestPoints) const
 template<int nPoints, typename TX, typename TY>
 float PrecompData<nPoints, TX, TY>::PerformanceImprovement(int _nTestPoints)
 {
-	using namespace std::chrono;
-
 	// Better if > 1, worse if in [0, 1], error if < 0
 	float ratio = 0.0;
 
@@ -390,8 +388,6 @@ float PrecompData<nPoints, TX, TY>::PerformanceImprovement(int _nTestPoints)
 		const std::clock_t end = std::clock();
 		timePrecomp = (float)(end - start) / CLOCKS_PER_SEC;
 	}
-
-	std::cout << "**** timeComp = " << timeComp << "   timePrecomp = " << timePrecomp << std::endl; //+T+++
 
 	ratio = timeComp/timePrecomp;
 
