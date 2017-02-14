@@ -355,15 +355,15 @@ float PrecompData<nPoints, TX, TY>::PerformanceImprovement(int _nTestPoints)
 
 	const TX step = (xMax - xMin)/_nTestPoints;
 
-	duration<float> timeComp;
-	duration<float> timePrecomp;
+	// Computation and precomputation times in seconds
+	float timeComp, timePrecomp;
 
 	std::vector<float> results;  // store them to avoid loop optimizations
 	results.resize(_nTestPoints);
 
 	// Find time to do real-time computations
 	{
-		time_point<system_clock> start = system_clock::now();
+		const std::clock_t start = std::clock();
 
 		TX x = xMin;
 		for(int i = 0; i < _nTestPoints; ++i)
@@ -372,13 +372,13 @@ float PrecompData<nPoints, TX, TY>::PerformanceImprovement(int _nTestPoints)
 			x += step;
 		}
 
-		time_point<system_clock> end = system_clock::now();
-		timeComp = end - start;
+		const std::clock_t end = std::clock();
+		timeComp = (float)(end - start) / CLOCKS_PER_SEC;
 	}
 
 	// Find time to interpolate with precomputations
 	{
-		time_point<system_clock> start = system_clock::now();
+		const std::clock_t start = std::clock();
 
 		TX x = xMin;
 		for(int i = 0; i < _nTestPoints; ++i)
@@ -387,11 +387,11 @@ float PrecompData<nPoints, TX, TY>::PerformanceImprovement(int _nTestPoints)
 			x += step;
 		}
 
-		time_point<system_clock> end = system_clock::now();
-		timePrecomp = end - start;
+		const std::clock_t end = std::clock();
+		timePrecomp = (float)(end - start) / CLOCKS_PER_SEC;
 	}
 
-	std::cout << "timeComp = " << timeComp.count() << "   timePrecomp = " << timePrecomp.count() << std::endl; //+T+++
+	std::cout << "**** timeComp = " << timeComp << "   timePrecomp = " << timePrecomp << std::endl; //+T+++
 
 	ratio = timeComp/timePrecomp;
 
