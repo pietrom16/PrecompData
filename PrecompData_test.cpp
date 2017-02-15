@@ -430,7 +430,9 @@ int main()
 {
     using namespace Utilities;
 
-    PrecompData_test test;
+	cout << "Test: " << " version " << PrecompData_base::version << endl;
+
+	PrecompData_test test;
 
     return 0;
 }

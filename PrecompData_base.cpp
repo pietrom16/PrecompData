@@ -9,6 +9,9 @@
 namespace Utilities {
 
 
+const std::string PrecompData_base::version = PrecompData_VERSION_MAJOR "." PrecompData_VERSION_MINOR "." PrecompData_VERSION_PATCH;
+
+
 PrecompData_base::PrecompData_base()
     : interpolation(0), status(0), regularGrid(false), overSampling(2.0f)
 {

@@ -12,11 +12,6 @@ message("==============================================")
 
 project(${PRJ})
 
-# Version number
-set (${PRJ}_VERSION_MAJOR 1)
-set (${PRJ}_VERSION_MINOR 3)
-set (${PRJ}_VERSION_PATCH 0)
-
 # add_definitions (-DPRECOMPDATA_DEVICE)
 
 # Specify the build type on the command line: Release, Debug, RelWithDebInfo, MinSizeRel

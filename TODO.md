@@ -10,7 +10,6 @@
 	- Precompute irregular grid, n dimensional functions.
 - Load data from file.
 - Second degree (quadratic) interpolation.
-- Add a version member variable.
 - Check input parameters of most functions (assert).
 - Consider using a proper matrix library.
 - Option to add noise to data.

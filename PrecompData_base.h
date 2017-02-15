@@ -8,6 +8,12 @@
 
 #include <string>
 
+// Version
+#define PrecompData_VERSION_MAJOR "1"
+#define PrecompData_VERSION_MINOR "3"
+#define PrecompData_VERSION_PATCH "1"
+#define PrecompData_VERSION "1.3.1"
+
 namespace Utilities {
 
 
@@ -43,6 +49,8 @@ public:
 public:
 	// Test
 	friend class PrecompData_test;
+
+	static const std::string version;
 
 protected:
 
