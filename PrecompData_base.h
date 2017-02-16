@@ -39,7 +39,8 @@ public:
 public:
 	// Error return values
 	static const size_t err_no_data              = size_t(-1),
-	                    err_device_not_available = size_t(-2);
+	                    err_no_function          = size_t(-2),
+	                    err_device_not_available = size_t(-3);
 
 	// Warning return values
 	static const size_t wrn_x_less_than_min      = size_t(-101),
