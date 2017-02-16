@@ -1,7 +1,11 @@
 # PrecompData - TODO
 
 
+- Redesign error reporting:
+    - Use a status member variable with latest error/warning/success.
+	- Function return values do not represent success/failure but values.
 - Review preconditions: substitute asserts with error return values, if possible.
+    - Check input parameters of most functions (assert).
 - Copy data on device memory.
 - Compute error on a fixed set of points.
 - Making transition to multidimensional data...
@@ -10,7 +14,6 @@
 	- Precompute irregular grid, n dimensional functions.
 - Load data from file.
 - Second degree (quadratic) interpolation.
-- Check input parameters of most functions (assert).
 - Consider using a proper matrix library.
 - Option to add noise to data.
 - Dynamic resolution, i.e. add new points to the pre-calculated ones when they are in regions not currently covered.
