@@ -11,7 +11,6 @@
 #define STLEXT_HPP
 
 #include <array>
-#include <cassert>
 
 namespace stdExt {
 
