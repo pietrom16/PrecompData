@@ -10,9 +10,9 @@
 
 // Version
 #define PrecompData_VERSION_MAJOR "1"
-#define PrecompData_VERSION_MINOR "3"
-#define PrecompData_VERSION_PATCH "1"
-#define PrecompData_VERSION "1.3.1"
+#define PrecompData_VERSION_MINOR "4"
+#define PrecompData_VERSION_PATCH "0"
+#define PrecompData_VERSION "1.4.0"
 
 namespace Utilities {
 
