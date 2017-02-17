@@ -72,6 +72,14 @@ int main()
 
 - For a full set of examples, look at the test file `PrecompData_test.cpp`.
 
+### Error reporting
+
+    - The Status() member function returns the latest error/warning/success value:
+	    Success: 0
+		Error:   [-1, -100]
+		Warning: < -100
+	- When any member function is called, the status is reset.
+
 
 ### References
 

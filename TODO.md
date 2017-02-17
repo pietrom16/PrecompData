@@ -1,11 +1,6 @@
 # PrecompData - TODO
 
 
-- Redesign error reporting:
-    - Use a status member variable with latest error/warning/success.
-	- Function return values do not represent success/failure but values.
-- Review preconditions: substitute asserts with error return values, if possible.
-    - Check input parameters of most functions (assert).
 - Copy data on device memory.
 - Compute error on a fixed set of points.
 - Making transition to multidimensional data...
