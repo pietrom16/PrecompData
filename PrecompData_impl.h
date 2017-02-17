@@ -75,12 +75,24 @@ size_t  PrecompData<nPoints, TX, TY>::set(TY  (*Func)(TX x),
 {
 	// Init
 	{
-		assert(Func != 0);
-		assert(nPoints > 0);
-		assert(xmin < xmax);
+		if(Func == 0) {
+			status = err_no_function;
+			return 0;
+		}
 
-		xMin = xmin;
-		xMax = xmax;
+		if(nPoints <= 0) {
+			status = err_no_data;
+			return 0;
+		}
+
+		if(xmin < xmax) {
+			xMin = xmin;
+			xMax = xmax;
+		}
+		else {
+			xMin = xmax;
+			xMax = xmin;
+		}
 
 		FuncXY = Func;
 	}
@@ -115,6 +127,8 @@ size_t  PrecompData<nPoints, TX, TY>::set(TY  (*Func)(TX x),
 	PreComputeValues();
 
 	regularGrid = true;
+
+	status = 0;
 
 	return yData.size();
 }
