@@ -75,6 +75,8 @@ size_t  PrecompData<nPoints, TX, TY>::set(TY  (*Func)(TX x),
 {
 	// Init
 	{
+		status = 0;
+
 		if(Func == 0) {
 			status = err_no_function;
 			return 0;
@@ -123,8 +125,6 @@ size_t  PrecompData<nPoints, TX, TY>::set(TY  (*Func)(TX x),
 
 	regularGrid = true;
 
-	status = 0;
-
 	return yData.size();
 }
 
@@ -141,6 +141,8 @@ size_t  PrecompData<nPoints, TX, TY>::AutoSet(TY (*Func)(TX x), TX xmin, TX xmax
 {
 	// Init
 	{
+		status = 0;
+
 		if(Func == 0) {
 			status = err_no_function;
 			return 0;
@@ -284,12 +286,26 @@ int PrecompData<nPoints, TX, TY>::get(std::vector<TX> &_xData , std::vector<TY> 
 // Error on known data
 
 template<int nPoints, typename TX, typename TY>
-TY PrecompData<nPoints, TX, TY>::EvaluateErrorKnownData() const
+TY PrecompData<nPoints, TX, TY>::EvaluateErrorKnownData()
 {
 	//+TEST
 
-	assert(FuncXY);
-	if(xData.size() == 0) return 0.0;
+	// Init
+	{
+		status = 0;
+
+		if(FuncXY == 0) {
+			status = err_no_function;
+			return 0;
+		}
+
+		if(nPoints <= 0) {
+			status = err_no_data;
+			return 0;
+		}
+
+		if(xData.size() == 0) return 0.0;
+	}
 
 	TY  error = 0.0;
     
@@ -312,7 +328,7 @@ TY PrecompData<nPoints, TX, TY>::EvaluateErrorKnownData() const
 // Absolute error on known data
 
 template<int nPoints, typename TX, typename TY>
-TY PrecompData<nPoints, TX, TY>::EvaluateAbsErrorKnownData() const
+TY PrecompData<nPoints, TX, TY>::EvaluateAbsErrorKnownData()
 {
 	return Norm(EvaluateErrorKnownData());
 }
@@ -321,12 +337,26 @@ TY PrecompData<nPoints, TX, TY>::EvaluateAbsErrorKnownData() const
 // Error on random points
 
 template<int nPoints, typename TX, typename TY>
-TY PrecompData<nPoints, TX, TY>::EvaluateError(int nTestPoints) const
+TY PrecompData<nPoints, TX, TY>::EvaluateError(int nTestPoints)
 {
 	//+TEST
 
-	assert(FuncXY);
-	if(xData.size() == 0) return 0.0;
+	// Init
+	{
+		status = 0;
+
+		if(FuncXY == 0) {
+			status = err_no_function;
+			return 0;
+		}
+
+		if(nPoints <= 0) {
+			status = err_no_data;
+			return 0;
+		}
+
+		if(xData.size() == 0) return 0.0;
+	}
 
 	TX  x;
 	TY  y, error = 0.0;
@@ -356,7 +386,7 @@ TY PrecompData<nPoints, TX, TY>::EvaluateError(int nTestPoints) const
 // Absolute error on random points
 
 template<int nPoints, typename TX, typename TY>
-TY PrecompData<nPoints, TX, TY>::EvaluateAbsError(int nTestPoints) const
+TY PrecompData<nPoints, TX, TY>::EvaluateAbsError(int nTestPoints)
 {
 	return Norm(EvaluateError(nTestPoints));
 }
@@ -367,10 +397,25 @@ TY PrecompData<nPoints, TX, TY>::EvaluateAbsError(int nTestPoints) const
 template<int nPoints, typename TX, typename TY>
 float PrecompData<nPoints, TX, TY>::PerformanceImprovement(int _nTestPoints)
 {
+	// Init
+	{
+		status = 0;
+
+		if(FuncXY == 0) {
+			status = err_no_function;
+			return -1.0;
+		}
+
+		if(nPoints <= 0) {
+			status = err_no_data;
+			return 0;
+		}
+
+		if(xData.size() == 0) return 0.0;
+	}
+
 	// Better if > 1, worse if in [0, 1], error if < 0
 	float ratio = 0.0;
-
-	if(FuncXY == 0) return -1.0;
 
 	if(_nTestPoints == 0) _nTestPoints = 10*nPoints;
 
@@ -547,6 +592,21 @@ int PrecompData<nPoints, TX, TY>::PickBestPoints(TY (*Func)(TX x), const float o
         PointCurv(TX _x = 0.0, TY _d2 = 0.0) : x(_x), d2(_d2) {}
         bool operator> (const PointCurv &p) const { return fabs(d2) > fabs(p.d2); }
     };
+
+	// Init
+	{
+		status = 0;
+
+		if(Func == 0) {
+			status = err_no_function;
+			return status;
+		}
+
+		if(nPoints <= 0) {
+			status = err_no_data;
+			return status;
+		}
+	}
 
     /// Oversample
 

@@ -113,10 +113,10 @@ public:
 	int DumpElement(size_t j) const;
 
     // Evaluate error
-	TY  EvaluateErrorKnownData() const;              // error on known data
-	TY  EvaluateAbsErrorKnownData() const;           // absolute error on known data
-	TY  EvaluateError(int nTestPoints) const;        // error on random points
-	TY  EvaluateAbsError(int nTestPoints) const;     // absolute error on random points
+	TY  EvaluateErrorKnownData();              // error on known data
+	TY  EvaluateAbsErrorKnownData();           // absolute error on known data
+	TY  EvaluateError(int nTestPoints);        // error on random points
+	TY  EvaluateAbsError(int nTestPoints);     // absolute error on random points
 
 	// Performance evaluation
 	float PerformanceImprovement(int _nTestPoints = 0);   // better if > 1, worse if in [0, 1], error if < 0
