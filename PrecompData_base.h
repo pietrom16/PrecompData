@@ -31,21 +31,21 @@ public:
 	size_t       SetOversampling(float ovs);
 	float        Oversamping()  const { return overSampling; }
 
-	int  Status() const { return status; }
-
 	int  Interpolation() const { return interpolation; }
 	void Interpolation(int order);
 
 public:
+	int  Status() const { return status; }
+
 	// Error return values
-	static const size_t err_no_data              = size_t(-1),
-	                    err_no_function          = size_t(-2),
-	                    err_device_not_available = size_t(-3);
+	static const int err_no_data              = -1,
+	                 err_no_function          = -2,
+	                 err_device_not_available = -3;
 
 	// Warning return values
-	static const size_t wrn_x_less_than_min      = size_t(-101),
-	                    wrn_x_more_than_max      = size_t(-102),
-	                    wrn_invalid_oversampling = size_t(-103);
+	static const int wrn_x_less_than_min      = -101,
+	                 wrn_x_more_than_max      = -102,
+	                 wrn_invalid_oversampling = -103;
 
 public:
 	// Test
