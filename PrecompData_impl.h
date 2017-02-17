@@ -85,16 +85,11 @@ size_t  PrecompData<nPoints, TX, TY>::set(TY  (*Func)(TX x),
 			return 0;
 		}
 
-		if(xmin < xmax) {
-			xMin = xmin;
-			xMax = xmax;
-		}
-		else {
-			xMin = xmax;
-			xMax = xmin;
-		}
+		if(xmin > xmax) std::swap(xmin, xmax);
 
 		FuncXY = Func;
+		xMin = xmin;
+		xMax = xmax;
 	}
 
 	// Find step, with these constraints: nPoints, min, max
@@ -144,10 +139,24 @@ size_t  PrecompData<nPoints, TX, TY>::set(TY  (*Func)(TX x),
 template<int nPoints, typename TX, typename TY>
 size_t  PrecompData<nPoints, TX, TY>::AutoSet(TY (*Func)(TX x), TX xmin, TX xmax)
 {
-	FuncXY = Func;
+	// Init
+	{
+		if(Func == 0) {
+			status = err_no_function;
+			return 0;
+		}
 
-	xMin = xmin;
-	xMax = xmax;
+		if(nPoints <= 0) {
+			status = err_no_data;
+			return 0;
+		}
+
+		if(xmin > xmax) std::swap(xmin, xmax);
+
+		FuncXY = Func;
+		xMin = xmin;
+		xMax = xmax;
+	}
 
 	PickBestPoints(FuncXY, overSampling);
 
