@@ -22,6 +22,7 @@ Purpose: improve performance avoiding the realtime computation of complex functi
 - Precompute irregular grid, n dimensional functions.
 - Load data from file.
 - Second degree (quadratic) interpolation.
+- Spline interpolation.
 
 
 ### Requirements
